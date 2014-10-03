@@ -1,0 +1,11 @@
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\bin\Release\BobbyFischer.exe.config
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\bin\Release\BobbyFischer.exe
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\bin\Release\BobbyFischer.pdb
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.Difficulty.resources
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.Board.resources
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.PawnTransformation.resources
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.Properties.Resources.resources
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.GameOver.resources
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.csproj.GenerateResource.Cache
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.exe
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.pdb

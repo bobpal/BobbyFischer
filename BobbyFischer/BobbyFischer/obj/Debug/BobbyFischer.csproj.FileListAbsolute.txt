@@ -1,0 +1,14 @@
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\bin\Debug\BobbyFischer.exe.config
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\bin\Debug\BobbyFischer.exe
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\bin\Debug\BobbyFischer.pdb
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\bin\Debug\BobbyFischer.exe.CodeAnalysisLog.xml
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\bin\Debug\BobbyFischer.exe.lastcodeanalysissucceeded
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\obj\Debug\BobbyFischer.csprojResolveAssemblyReference.cache
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\obj\Debug\BobbyFischer.Difficulty.resources
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\obj\Debug\BobbyFischer.Board.resources
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\obj\Debug\BobbyFischer.PawnTransformation.resources
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\obj\Debug\BobbyFischer.Properties.Resources.resources
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\obj\Debug\BobbyFischer.GameOver.resources
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\obj\Debug\BobbyFischer.csproj.GenerateResource.Cache
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\obj\Debug\BobbyFischer.exe
+C:\Users\Robert\Documents\Robert Palagano\BobbyFischer\BobbyFischer\obj\Debug\BobbyFischer.pdb
