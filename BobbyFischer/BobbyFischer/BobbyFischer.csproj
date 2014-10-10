@@ -84,14 +84,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="GameOver.resx">
       <DependentUpon>GameOver.cs</DependentUpon>
     </EmbeddedResource>
@@ -99,6 +94,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -109,22 +109,22 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\bBishop.png" />
+    <None Include="Resources\oBishop.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\bKing.png" />
+    <None Include="Resources\oKing.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\bKnight.png" />
+    <None Include="Resources\oKnight.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\bPawn.png" />
+    <None Include="Resources\oPawn.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\bQueen.png" />
+    <None Include="Resources\oQueen.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\bRook.png" />
+    <None Include="Resources\oRook.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\check.png" />

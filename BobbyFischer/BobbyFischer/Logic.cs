@@ -66,7 +66,7 @@ namespace BobbyFischer
                         board[x, 6].color = "onyx";
                         board[x, 6].job = "Pawn";
                         board[x, 6].firstMove = true;
-                        board[x, 6].picture = Resources.bPawn;
+                        board[x, 6].picture = Resources.oPawn;
                     }
 
                     else if(y == 7)
@@ -115,14 +115,14 @@ namespace BobbyFischer
             board[5, 0].picture = Resources.mBishop;
             board[6, 0].picture = Resources.mKnight;
             board[7, 0].picture = Resources.mRook;
-            board[0, 7].picture = Resources.bRook;
-            board[1, 7].picture = Resources.bKnight;
-            board[2, 7].picture = Resources.bBishop;
-            board[3, 7].picture = Resources.bQueen;
-            board[4, 7].picture = Resources.bKing;
-            board[5, 7].picture = Resources.bBishop;
-            board[6, 7].picture = Resources.bKnight;
-            board[7, 7].picture = Resources.bRook;
+            board[0, 7].picture = Resources.oRook;
+            board[1, 7].picture = Resources.oKnight;
+            board[2, 7].picture = Resources.oBishop;
+            board[3, 7].picture = Resources.oQueen;
+            board[4, 7].picture = Resources.oKing;
+            board[5, 7].picture = Resources.oBishop;
+            board[6, 7].picture = Resources.oKnight;
+            board[7, 7].picture = Resources.oRook;
         }
 
         public List<Chess.move> getMoves(Chess.coordinate spot)
@@ -546,23 +546,23 @@ namespace BobbyFischer
                 {
                     case 0:
                         board[newSpot.x, newSpot.y].job = "Queen";
-                        board[newSpot.x, newSpot.y].picture = Resources.bQueen;
-                        coordinateToPictureBox(newSpot).Image = Resources.bQueen;
+                        board[newSpot.x, newSpot.y].picture = Resources.oQueen;
+                        coordinateToPictureBox(newSpot).Image = Resources.oQueen;
                         break;
                     case 1:
                         board[newSpot.x, newSpot.y].job = "Rook";
-                        board[newSpot.x, newSpot.y].picture = Resources.bRook;
-                        coordinateToPictureBox(newSpot).Image = Resources.bRook;
+                        board[newSpot.x, newSpot.y].picture = Resources.oRook;
+                        coordinateToPictureBox(newSpot).Image = Resources.oRook;
                         break;
                     case 2:
                         board[newSpot.x, newSpot.y].job = "Bishop";
-                        board[newSpot.x, newSpot.y].picture = Resources.bBishop;
-                        coordinateToPictureBox(newSpot).Image = Resources.bBishop;
+                        board[newSpot.x, newSpot.y].picture = Resources.oBishop;
+                        coordinateToPictureBox(newSpot).Image = Resources.oBishop;
                         break;
                     case 3:
                         board[newSpot.x, newSpot.y].job = "Knight";
-                        board[newSpot.x, newSpot.y].picture = Resources.bKnight;
-                        coordinateToPictureBox(newSpot).Image = Resources.bKnight;
+                        board[newSpot.x, newSpot.y].picture = Resources.oKnight;
+                        coordinateToPictureBox(newSpot).Image = Resources.oKnight;
                         break;
                     default:
                         break;
@@ -851,22 +851,22 @@ namespace BobbyFischer
         {
             //sets images on board for new game
 
-            mForm.pictureBox1.Image = Resources.bRook;
-            mForm.pictureBox2.Image = Resources.bKnight;
-            mForm.pictureBox3.Image = Resources.bBishop;
-            mForm.pictureBox4.Image = Resources.bQueen;
-            mForm.pictureBox5.Image = Resources.bKing;
-            mForm.pictureBox6.Image = Resources.bBishop;
-            mForm.pictureBox7.Image = Resources.bKnight;
-            mForm.pictureBox8.Image = Resources.bRook;
-            mForm.pictureBox9.Image = Resources.bPawn;
-            mForm.pictureBox10.Image = Resources.bPawn;
-            mForm.pictureBox11.Image = Resources.bPawn;
-            mForm.pictureBox12.Image = Resources.bPawn;
-            mForm.pictureBox13.Image = Resources.bPawn;
-            mForm.pictureBox14.Image = Resources.bPawn;
-            mForm.pictureBox15.Image = Resources.bPawn;
-            mForm.pictureBox16.Image = Resources.bPawn;
+            mForm.pictureBox1.Image = Resources.oRook;
+            mForm.pictureBox2.Image = Resources.oKnight;
+            mForm.pictureBox3.Image = Resources.oBishop;
+            mForm.pictureBox4.Image = Resources.oQueen;
+            mForm.pictureBox5.Image = Resources.oKing;
+            mForm.pictureBox6.Image = Resources.oBishop;
+            mForm.pictureBox7.Image = Resources.oKnight;
+            mForm.pictureBox8.Image = Resources.oRook;
+            mForm.pictureBox9.Image = Resources.oPawn;
+            mForm.pictureBox10.Image = Resources.oPawn;
+            mForm.pictureBox11.Image = Resources.oPawn;
+            mForm.pictureBox12.Image = Resources.oPawn;
+            mForm.pictureBox13.Image = Resources.oPawn;
+            mForm.pictureBox14.Image = Resources.oPawn;
+            mForm.pictureBox15.Image = Resources.oPawn;
+            mForm.pictureBox16.Image = Resources.oPawn;
             mForm.pictureBox17.Image = null;
             mForm.pictureBox18.Image = null;
             mForm.pictureBox19.Image = null;
