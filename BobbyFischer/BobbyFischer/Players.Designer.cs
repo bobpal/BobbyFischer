@@ -59,7 +59,11 @@
             this.ClientSize = new System.Drawing.Size(189, 131);
             this.Controls.Add(this.human);
             this.Controls.Add(this.computer);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Players";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Players";
             this.ResumeLayout(false);

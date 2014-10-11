@@ -30,9 +30,9 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.hard = new System.Windows.Forms.Button();
             this.easy = new System.Windows.Forms.Button();
             this.medium = new System.Windows.Forms.Button();
-            this.hard = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,6 +65,16 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(285, 225);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
+            // hard
+            // 
+            this.hard.Location = new System.Drawing.Point(3, 171);
+            this.hard.Name = "hard";
+            this.hard.Size = new System.Drawing.Size(279, 50);
+            this.hard.TabIndex = 4;
+            this.hard.Text = "Hard";
+            this.hard.UseVisualStyleBackColor = true;
+            this.hard.Click += new System.EventHandler(this.hard_Click);
+            // 
             // easy
             // 
             this.easy.Location = new System.Drawing.Point(3, 59);
@@ -85,23 +95,16 @@
             this.medium.UseVisualStyleBackColor = true;
             this.medium.Click += new System.EventHandler(this.medium_Click);
             // 
-            // hard
-            // 
-            this.hard.Location = new System.Drawing.Point(3, 171);
-            this.hard.Name = "hard";
-            this.hard.Size = new System.Drawing.Size(279, 50);
-            this.hard.TabIndex = 4;
-            this.hard.Text = "Hard";
-            this.hard.UseVisualStyleBackColor = true;
-            this.hard.Click += new System.EventHandler(this.hard_Click);
-            // 
             // Difficulty
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 226);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Difficulty";
+            this.ShowIcon = false;
             this.Text = "Difficulty";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
