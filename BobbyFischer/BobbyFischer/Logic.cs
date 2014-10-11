@@ -29,6 +29,7 @@ namespace BobbyFischer
         public string offensiveTeam;                                //which side is on the offense
         public bool medMode;                                        //difficulty level
         public bool hardMode;                                       //difficulty level
+        public bool firstGame;                                      //has newGame() been called yet?
         public Chess.coordinate currSelected;                       //where the cursor clicked
         public Chess.coordinate prevSelected;                       //where the cursor clicked previously
         public bool movablePieceSelected = false;                   //if true, the next click will move the selected piece if possible
@@ -447,54 +448,57 @@ namespace BobbyFischer
         public void clicker(Chess.coordinate currentCell)
         {
             //human player's turn, gets called when player clicks on spot
-
             bool movableSpot;
-            Chess.piece currentPiece = board[currentCell.x, currentCell.y];
 
-            if (currentPiece.color == offensiveTeam)//if selected own piece
+            if (firstGame == true)
             {
-                movablePieceSelected = true;
-                clearBackgroundImages();
-                coordinateToPictureBox(currentCell).BackgroundImage = Resources.selected;
-                prevSelected = currentCell;
-                possible.Clear();
-                possible.AddRange(getCheckRestrictedMoves(currentCell));
+                Chess.piece currentPiece = board[currentCell.x, currentCell.y];
 
-                foreach (Chess.move m in possible)
+                if (currentPiece.color == offensiveTeam)//if selected own piece
                 {
-                    coordinateToPictureBox(m.moveSpot).BackgroundImage = Resources.possible;
-                }
-            }
-
-            else if (movablePieceSelected == true)//if previously selected own piece
-            {
-                movableSpot = false;
-
-                foreach (Chess.move m in possible)
-                {
-                    if (currentCell.Equals(m.moveSpot))//if selected spot is in possible move list
-                    {
-                        movableSpot = true;
-                    }
-                }
-
-                if (movableSpot == true)
-                {
-                    if (board[prevSelected.x, prevSelected.y].job == "King")
-                    {
-                        castling(currentCell, prevSelected);//check if move is a castling
-                    }
-
-                    movePiece(currentCell, board[prevSelected.x, prevSelected.y], prevSelected);
+                    movablePieceSelected = true;
                     clearBackgroundImages();
+                    coordinateToPictureBox(currentCell).BackgroundImage = Resources.selected;
+                    prevSelected = currentCell;
+                    possible.Clear();
+                    possible.AddRange(getCheckRestrictedMoves(currentCell));
 
-                    if (board[currentCell.x, currentCell.y].job == "Pawn" && currentCell.y == 7)//if pawn makes it to last row
+                    foreach (Chess.move m in possible)
                     {
-                        PawnTransformation transform = new PawnTransformation(currentCell, this);
-                        transform.ShowDialog();
+                        coordinateToPictureBox(m.moveSpot).BackgroundImage = Resources.possible;
                     }
-                    
-                    betweenTurns();
+                }
+
+                else if (movablePieceSelected == true)//if previously selected own piece
+                {
+                    movableSpot = false;
+
+                    foreach (Chess.move m in possible)
+                    {
+                        if (currentCell.Equals(m.moveSpot))//if selected spot is in possible move list
+                        {
+                            movableSpot = true;
+                        }
+                    }
+
+                    if (movableSpot == true)
+                    {
+                        if (board[prevSelected.x, prevSelected.y].job == "King")
+                        {
+                            castling(currentCell, prevSelected);//check if move is a castling
+                        }
+
+                        movePiece(currentCell, board[prevSelected.x, prevSelected.y], prevSelected);
+                        clearBackgroundImages();
+
+                        if (board[currentCell.x, currentCell.y].job == "Pawn" && currentCell.y == 7)//if pawn makes it to last row
+                        {
+                            PawnTransformation transform = new PawnTransformation(currentCell, this);
+                            transform.ShowDialog();
+                        }
+
+                        betweenTurns();
+                    }
                 }
             }
         }
@@ -939,6 +943,7 @@ namespace BobbyFischer
             clearBackgroundImages();
             movablePieceSelected = false;
             offensiveTeam = "marble";
+            firstGame = true;
 
             if (onePlayer == true)
             {

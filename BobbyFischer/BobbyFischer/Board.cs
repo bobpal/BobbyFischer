@@ -22,12 +22,11 @@ namespace BobbyFischer
             InitializeComponent();
             this.CenterToScreen();
             game = new Chess(this);
-            game.newGame();
         }
 
         public void Form1_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         public void tableLayoutPanel1_Paint_1(object sender, PaintEventArgs e)
