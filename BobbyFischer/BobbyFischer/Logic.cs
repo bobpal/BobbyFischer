@@ -26,7 +26,7 @@ namespace BobbyFischer
         public piece[,] board;                                      //8x8 array of pieces
         public Board mForm;                                         //main form
         public bool medMode;                                        //difficulty level
-        public bool hardMode;
+        public bool hardMode;                                       //difficulty level
         public Chess.coordinate currSelected;                       //where the cursor clicked
         public Chess.coordinate prevSelected;                       //where the cursor clicked previously
         public bool movablePieceSelected = false;                   //if true, the next click will move the selected piece if possible
@@ -135,21 +135,21 @@ namespace BobbyFischer
             switch(board[spot.x, spot.y].job)
             {
                 case "Rook":
-                return Chess.Moves.rookMoves(board, spot);
+                    return rookMoves(spot);
                 case "Knight":
-                return Chess.Moves.knightMoves(board, spot);
+                    return knightMoves(spot);
                 case "Bishop":
-                return Chess.Moves.bishopMoves(board, spot);
+                    return bishopMoves(spot);
                 case "Queen":
-                temp.AddRange(Chess.Moves.bishopMoves(board, spot));
-                temp.AddRange(Chess.Moves.rookMoves(board, spot));
-                return temp;
+                    temp.AddRange(bishopMoves(spot));
+                    temp.AddRange(rookMoves(spot));
+                    return temp;
                 case "King":
-                return Chess.Moves.kingMoves(board, spot);
+                    return kingMoves(spot);
                 case "Pawn":
-                return Chess.Moves.pawnMoves(board, spot);
+                    return pawnMoves(spot);
                 default:
-                return temp;    //temp should be empty
+                    return temp;    //temp should be empty
             }
         }
 
@@ -963,454 +963,672 @@ namespace BobbyFischer
             }
         }
 
-        public static class Moves
+        //the next few functions define the rules for what piece can move where in any situation except check restrictions
+        //takes coordinate and returns list of possible moves for that piece
+
+        public List<move> rookMoves(coordinate current)
         {
-            //defines the rules for what piece can move where in any situation except check restrictions
-            //takes coordinate and returns list of possible moves for that piece
+            string oppositeColor;
+            move availableMove;
+            int availableX = current.x;              //put coordinate in temp variable to manipulate while preserving original
+            int availableY = current.y;
+            List<move> availableList = new List<move>();
+            coordinate moveCoor = new coordinate(); //when found possible move, put in this variable to add to list
+            availableMove.pieceSpot = current;
+            string pieceColor = board[current.x, current.y].color;
 
-            public static List<move> rookMoves(piece[,] grid, coordinate current)
+            if (pieceColor == "marble")
             {
-                string oppositeColor;
-                move availableMove;
-                int availableX = current.x;              //put coordinate in temp variable to manipulate while preserving original
-                int availableY = current.y;
-                List<move> availableList = new List<move>();
-                coordinate moveCoor = new coordinate(); //when found possible move, put in this variable to add to list
-                availableMove.pieceSpot = current;
-                string pieceColor = grid[current.x, current.y].color;
+                oppositeColor = "onyx";
+            }
 
-                if (pieceColor == "marble")
+            else
+            {
+                oppositeColor = "marble";
+            }
+
+            //search up
+            availableY++;
+            while(availableY < 8)
+            {
+                if (board[availableX, availableY].color == pieceColor)     //if same team
                 {
-                    oppositeColor = "onyx";
+                    break;                                              //can't go past
+                }
+
+                else if (board[availableX, availableY].color == oppositeColor)   //if enemy
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);                             //add to list
+                    break;                                              //can't go past
+                }
+
+                else                                                    //if unoccupied
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);                             //add to list
+                    availableY++;                                        //try next spot
+                }
+            }
+
+            //search left
+            availableX = current.x;
+            availableY = current.y;
+            availableX--;
+            while (availableX >= 0)
+            {
+                if (board[availableX, availableY].color == pieceColor)
+                {
+                    break;
+                }
+
+                else if (board[availableX, availableY].color == oppositeColor)
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                    break;
                 }
 
                 else
                 {
-                    oppositeColor = "marble";
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                    availableX--;
                 }
+            }
+
+            //search down
+            availableX = current.x;
+            availableY = current.y;
+            availableY--;
+            while (availableY >= 0)
+            {
+                if (board[availableX, availableY].color == pieceColor)
+                {
+                    break;
+                }
+
+                else if (board[availableX, availableY].color == oppositeColor)
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                    break;
+                }
+
+                else
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                    availableY--;
+                }
+            }
+
+            //search right
+            availableX = current.x;
+            availableY = current.y;
+            availableX++;
+            while (availableX < 8)
+            {
+                if (board[availableX, availableY].color == pieceColor)
+                {
+                    break;
+                }
+
+                else if (board[availableX, availableY].color == oppositeColor)
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                    break;
+                }
+
+                else
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                    availableX++;
+                }
+            }
+            return availableList;
+        }
+
+        public List<move> knightMoves(coordinate current)
+        {
+            move availableMove;
+            int availableX = current.x;
+            int availableY = current.y;
+            List<move> availableList = new List<move>();
+            coordinate moveCoor = new coordinate();
+            string pieceColor = board[current.x, current.y].color;
+            availableMove.pieceSpot = current;
+                    
+            //search up.right
+            availableY += 2;
+            availableX++;
+            if (availableY < 8 && availableX < 8)
+            {
+                if (board[availableX, availableY].color != pieceColor)
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                }
+            }
+
+            //search up.left
+            availableX = current.x;
+            availableY = current.y;
+            availableY += 2;
+            availableX--;
+            if (availableY < 8 && availableX >= 0)
+            {
+                if (board[availableX, availableY].color != pieceColor)
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                }
+            }
+
+            //search left.up
+            availableX = current.x;
+            availableY = current.y;
+            availableY++;
+            availableX -= 2;
+            if (availableY < 8 && availableX >= 0)
+            {
+                if (board[availableX, availableY].color != pieceColor)
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                }
+            }
+
+            //search left.down
+            availableX = current.x;
+            availableY = current.y;
+            availableY--;
+            availableX -= 2;
+            if (availableY >= 0 && availableX >= 0)
+            {
+                if (board[availableX, availableY].color != pieceColor)
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                }
+            }
+
+            //search down.left
+            availableX = current.x;
+            availableY = current.y;
+            availableY -= 2;
+            availableX--;
+            if (availableY >= 0 && availableX >= 0)
+            {
+                if (board[availableX, availableY].color != pieceColor)
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                }
+            }
+
+            //search down.right
+            availableX = current.x;
+            availableY = current.y;
+            availableY -= 2;
+            availableX++;
+            if (availableY >= 0 && availableX < 8)
+            {
+                if (board[availableX, availableY].color != pieceColor)
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                }
+            }
+
+            //search right.down
+            availableX = current.x;
+            availableY = current.y;
+            availableY--;
+            availableX += 2;
+            if (availableY >= 0 && availableX < 8)
+            {
+                if (board[availableX, availableY].color != pieceColor)
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                }
+            }
+
+            //search right.up
+            availableX = current.x;
+            availableY = current.y;
+            availableY++;
+            availableX += 2;
+            if (availableY < 8 && availableX < 8)
+            {
+                if (board[availableX, availableY].color != pieceColor)
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                }
+            }
+            return availableList;
+        }
+
+        public List<move> bishopMoves(coordinate current)
+        {
+            string oppositeColor;
+            move availableMove;
+            int availableX = current.x;
+            int availableY = current.y;
+            List<move> availableList = new List<move>();
+            coordinate moveCoor = new coordinate();
+            string pieceColor = board[current.x, current.y].color;
+            availableMove.pieceSpot = current;
+
+            if (pieceColor == "marble")
+            {
+                oppositeColor = "onyx";
+            }
+
+            else
+            {
+                oppositeColor = "marble";
+            }
+
+            //search upper right
+            availableX++;
+            availableY++;
+            while(availableX < 8 && availableY < 8)
+            {
+                if (board[availableX, availableY].color == pieceColor)
+                {
+                    break;
+                }
+
+                else if (board[availableX, availableY].color == oppositeColor)
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                    break;
+                }
+
+                else
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                    availableX++;
+                    availableY++;
+                }
+            }
+
+            //search upper left
+            availableX = current.x;
+            availableY = current.y;
+            availableX--;
+            availableY++;
+            while (availableX >= 0 && availableY < 8)
+            {
+                if (board[availableX, availableY].color == pieceColor)
+                {
+                    break;
+                }
+
+                else if (board[availableX, availableY].color == oppositeColor)
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                    break;
+                }
+
+                else
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                    availableX--;
+                    availableY++;
+                }
+            }
+
+            //search lower left
+            availableX = current.x;
+            availableY = current.y;
+            availableX--;
+            availableY--;
+            while (availableX >= 0 && availableY >= 0)
+            {
+                if (board[availableX, availableY].color == pieceColor)
+                {
+                    break;
+                }
+
+                else if (board[availableX, availableY].color == oppositeColor)
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                    break;
+                }
+
+                else
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                    availableX--;
+                    availableY--;
+                }
+            }
+
+            //search lower right
+            availableX = current.x;
+            availableY = current.y;
+            availableX++;
+            availableY--;
+            while (availableX < 8 && availableY >= 0)
+            {
+                if (board[availableX, availableY].color == pieceColor)
+                {
+                    break;
+                }
+
+                else if (board[availableX, availableY].color == oppositeColor)
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                    break;
+                }
+
+                else
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                    availableX++;
+                    availableY--;
+                }
+            }
+            return availableList;
+        }
+
+        public List<move> kingMoves(coordinate current)
+        {
+            move availableMove;
+            int availableX = current.x;
+            int availableY = current.y;
+            List<move> availableList = new List<move>();
+            coordinate moveCoor = new coordinate();
+            availableMove.pieceSpot = current;
+            string pieceColor = board[current.x, current.y].color;
+
+            //search up
+            availableY++;
+            if(availableY < 8)
+            {
+                if (board[availableX, availableY].color != pieceColor)
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                }
+            }
+
+            //search upper left
+            availableX = current.x;
+            availableY = current.y;
+            availableY++;
+            availableX--;
+            if (availableY < 8 && availableX >= 0)
+            {
+                if (board[availableX, availableY].color != pieceColor)
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                }
+            }
+
+            //search left
+            availableX = current.x;
+            availableY = current.y;
+            availableX--;
+            if (availableX >= 0)
+            {
+                if (board[availableX, availableY].color != pieceColor)
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                }
+            }
+
+            //search lower left
+            availableX = current.x;
+            availableY = current.y;
+            availableY--;
+            availableX--;
+            if (availableY >= 0 && availableX >= 0)
+            {
+                if (board[availableX, availableY].color != pieceColor)
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                }
+            }
+
+            //search down
+            availableX = current.x;
+            availableY = current.y;
+            availableY--;
+            if (availableY >= 0)
+            {
+                if (board[availableX, availableY].color != pieceColor)
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                }
+            }
+
+            //search lower right
+            availableX = current.x;
+            availableY = current.y;
+            availableY--;
+            availableX++;
+            if (availableY >= 0 && availableX < 8)
+            {
+                if (board[availableX, availableY].color != pieceColor)
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                }
+            }
+
+            //search right
+            availableX = current.x;
+            availableY = current.y;
+            availableX++;
+            if (availableX < 8)
+            {
+                if (board[availableX, availableY].color != pieceColor)
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                }
+            }
+
+            //search upper right
+            availableX = current.x;
+            availableY = current.y;
+            availableY++;
+            availableX++;
+            if (availableY < 8 && availableX < 8)
+            {
+                if (board[availableX, availableY].color != pieceColor)
+                {
+                    moveCoor.x = availableX;
+                    moveCoor.y = availableY;
+                    availableMove.moveSpot = moveCoor;
+                    availableList.Add(availableMove);
+                }
+            }
+
+            //search for castleing opportunity
+            if (board[current.x, current.y].firstMove == true)//if king's first move
+            {
+                if (pieceColor == "marble")
+                {
+                    if (board[0, 0].firstMove == true)//if left rook's first move
+                    {
+                        if (board[1, 0].job == null && board[2, 0].job == null && board[3, 0].job == null)
+                        {
+                            moveCoor.x = 2;
+                            moveCoor.y = 0;
+                            availableMove.moveSpot = moveCoor;
+                            availableList.Add(availableMove);
+                        }
+                    }
+
+                    if (board[7, 0].firstMove == true)//if right rook's first move
+                    {
+                        if (board[6, 0].job == null && board[5, 0].job == null)
+                        {
+                            moveCoor.x = 6;
+                            moveCoor.y = 0;
+                            availableMove.moveSpot = moveCoor;
+                            availableList.Add(availableMove);
+                        }
+                    }
+                }
+
+                else if(pieceColor == "onyx")
+                {
+                    if (board[0, 7].firstMove == true)//if left rook's first move
+                    {
+                        if (board[1, 7].job == null && board[2, 7].job == null && board[3, 7].job == null)//if clear path from rook to king
+                        {
+                            moveCoor.x = 2;
+                            moveCoor.y = 7;
+                            availableMove.moveSpot = moveCoor;
+                            availableList.Add(availableMove);
+                        }
+                    }
+
+                    if (board[7, 7].firstMove == true)//if right rook's first move
+                    {
+                        if (board[6, 7].job == null && board[5, 7].job == null)
+                        {
+                            moveCoor.x = 6;
+                            moveCoor.y = 7;
+                            availableMove.moveSpot = moveCoor;
+                            availableList.Add(availableMove);
+                        }
+                    }
+                }
+            }
+            return availableList;
+        }
+
+        public List<move> pawnMoves(coordinate current)
+        {
+            string oppositeColor;
+            move availableMove;
+            int availableX = current.x;
+            int availableY = current.y;
+            List<move> availableList = new List<move>();
+            coordinate moveCoor = new coordinate();
+            string pieceColor = board[current.x, current.y].color;
+            availableMove.pieceSpot = current;
+
+            if (pieceColor == "marble")
+            {
+                oppositeColor = "onyx";
 
                 //search up
                 availableY++;
-                while(availableY < 8)
+                if (availableY < 8)
                 {
-                    if (grid[availableX, availableY].color == pieceColor)     //if same team
-                    {
-                        break;                                              //can't go past
-                    }
-
-                    else if (grid[availableX, availableY].color == oppositeColor)   //if enemy
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);                             //add to list
-                        break;                                              //can't go past
-                    }
-
-                    else                                                    //if unoccupied
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);                             //add to list
-                        availableY++;                                        //try next spot
-                    }
-                }
-
-                //search left
-                availableX = current.x;
-                availableY = current.y;
-                availableX--;
-                while (availableX >= 0)
-                {
-                    if (grid[availableX, availableY].color == pieceColor)
-                    {
-                        break;
-                    }
-
-                    else if (grid[availableX, availableY].color == oppositeColor)
+                    if (board[availableX, availableY].color == null)
                     {
                         moveCoor.x = availableX;
                         moveCoor.y = availableY;
                         availableMove.moveSpot = moveCoor;
                         availableList.Add(availableMove);
-                        break;
-                    }
 
-                    else
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
-                        availableX--;
-                    }
-                }
-
-                //search down
-                availableX = current.x;
-                availableY = current.y;
-                availableY--;
-                while (availableY >= 0)
-                {
-                    if (grid[availableX, availableY].color == pieceColor)
-                    {
-                        break;
-                    }
-
-                    else if (grid[availableX, availableY].color == oppositeColor)
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
-                        break;
-                    }
-
-                    else
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
+                        //search first move
+                        availableY++;
+                        if (availableY < 8 && board[current.x, current.y].firstMove == true)
+                        {
+                            if (board[availableX, availableY].color == null)
+                            {
+                                moveCoor.x = availableX;
+                                moveCoor.y = availableY;
+                                availableMove.moveSpot = moveCoor;
+                                availableList.Add(availableMove);
+                            }
+                        }
                         availableY--;
                     }
-                }
-
-                //search right
-                availableX = current.x;
-                availableY = current.y;
-                availableX++;
-                while (availableX < 8)
-                {
-                    if (grid[availableX, availableY].color == pieceColor)
-                    {
-                        break;
-                    }
-
-                    else if (grid[availableX, availableY].color == oppositeColor)
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
-                        break;
-                    }
-
-                    else
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
-                        availableX++;
-                    }
-                }
-                return availableList;
-            }
-
-            public static List<move> knightMoves(piece[,] grid, coordinate current)
-            {
-                move availableMove;
-                int availableX = current.x;
-                int availableY = current.y;
-                List<move> availableList = new List<move>();
-                coordinate moveCoor = new coordinate();
-                string pieceColor = grid[current.x, current.y].color;
-                availableMove.pieceSpot = current;
-                    
-                //search up.right
-                availableY += 2;
-                availableX++;
-                if (availableY < 8 && availableX < 8)
-                {
-                    if (grid[availableX, availableY].color != pieceColor)
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
-                    }
-                }
-
-                //search up.left
-                availableX = current.x;
-                availableY = current.y;
-                availableY += 2;
-                availableX--;
-                if (availableY < 8 && availableX >= 0)
-                {
-                    if (grid[availableX, availableY].color != pieceColor)
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
-                    }
-                }
-
-                //search left.up
-                availableX = current.x;
-                availableY = current.y;
-                availableY++;
-                availableX -= 2;
-                if (availableY < 8 && availableX >= 0)
-                {
-                    if (grid[availableX, availableY].color != pieceColor)
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
-                    }
-                }
-
-                //search left.down
-                availableX = current.x;
-                availableY = current.y;
-                availableY--;
-                availableX -= 2;
-                if (availableY >= 0 && availableX >= 0)
-                {
-                    if (grid[availableX, availableY].color != pieceColor)
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
-                    }
-                }
-
-                //search down.left
-                availableX = current.x;
-                availableY = current.y;
-                availableY -= 2;
-                availableX--;
-                if (availableY >= 0 && availableX >= 0)
-                {
-                    if (grid[availableX, availableY].color != pieceColor)
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
-                    }
-                }
-
-                //search down.right
-                availableX = current.x;
-                availableY = current.y;
-                availableY -= 2;
-                availableX++;
-                if (availableY >= 0 && availableX < 8)
-                {
-                    if (grid[availableX, availableY].color != pieceColor)
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
-                    }
-                }
-
-                //search right.down
-                availableX = current.x;
-                availableY = current.y;
-                availableY--;
-                availableX += 2;
-                if (availableY >= 0 && availableX < 8)
-                {
-                    if (grid[availableX, availableY].color != pieceColor)
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
-                    }
-                }
-
-                //search right.up
-                availableX = current.x;
-                availableY = current.y;
-                availableY++;
-                availableX += 2;
-                if (availableY < 8 && availableX < 8)
-                {
-                    if (grid[availableX, availableY].color != pieceColor)
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
-                    }
-                }
-                return availableList;
-            }
-
-            public static List<move> bishopMoves(piece[,] grid, coordinate current)
-            {
-                string oppositeColor;
-                move availableMove;
-                int availableX = current.x;
-                int availableY = current.y;
-                List<move> availableList = new List<move>();
-                coordinate moveCoor = new coordinate();
-                string pieceColor = grid[current.x, current.y].color;
-                availableMove.pieceSpot = current;
-
-                if (pieceColor == "marble")
-                {
-                    oppositeColor = "onyx";
-                }
-
-                else
-                {
-                    oppositeColor = "marble";
                 }
 
                 //search upper right
                 availableX++;
-                availableY++;
-                while(availableX < 8 && availableY < 8)
+                if (availableY < 8 && availableX < 8)
                 {
-                    if (grid[availableX, availableY].color == pieceColor)
-                    {
-                        break;
-                    }
-
-                    else if (grid[availableX, availableY].color == oppositeColor)
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
-                        break;
-                    }
-
-                    else
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
-                        availableX++;
-                        availableY++;
-                    }
-                }
-
-                //search upper left
-                availableX = current.x;
-                availableY = current.y;
-                availableX--;
-                availableY++;
-                while (availableX >= 0 && availableY < 8)
-                {
-                    if (grid[availableX, availableY].color == pieceColor)
-                    {
-                        break;
-                    }
-
-                    else if (grid[availableX, availableY].color == oppositeColor)
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
-                        break;
-                    }
-
-                    else
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
-                        availableX--;
-                        availableY++;
-                    }
-                }
-
-                //search lower left
-                availableX = current.x;
-                availableY = current.y;
-                availableX--;
-                availableY--;
-                while (availableX >= 0 && availableY >= 0)
-                {
-                    if (grid[availableX, availableY].color == pieceColor)
-                    {
-                        break;
-                    }
-
-                    else if (grid[availableX, availableY].color == oppositeColor)
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
-                        break;
-                    }
-
-                    else
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
-                        availableX--;
-                        availableY--;
-                    }
-                }
-
-                //search lower right
-                availableX = current.x;
-                availableY = current.y;
-                availableX++;
-                availableY--;
-                while (availableX < 8 && availableY >= 0)
-                {
-                    if (grid[availableX, availableY].color == pieceColor)
-                    {
-                        break;
-                    }
-
-                    else if (grid[availableX, availableY].color == oppositeColor)
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
-                        break;
-                    }
-
-                    else
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
-                        availableX++;
-                        availableY--;
-                    }
-                }
-                return availableList;
-            }
-
-            public static List<move> kingMoves(piece[,] grid, coordinate current)
-            {
-                move availableMove;
-                int availableX = current.x;
-                int availableY = current.y;
-                List<move> availableList = new List<move>();
-                coordinate moveCoor = new coordinate();
-                availableMove.pieceSpot = current;
-                string pieceColor = grid[current.x, current.y].color;
-
-                //search up
-                availableY++;
-                if(availableY < 8)
-                {
-                    if (grid[availableX, availableY].color != pieceColor)
+                    if (board[availableX, availableY].color == oppositeColor)
                     {
                         moveCoor.x = availableX;
                         moveCoor.y = availableY;
@@ -1420,13 +1638,10 @@ namespace BobbyFischer
                 }
 
                 //search upper left
-                availableX = current.x;
-                availableY = current.y;
-                availableY++;
-                availableX--;
+                availableX -= 2;
                 if (availableY < 8 && availableX >= 0)
                 {
-                    if (grid[availableX, availableY].color != pieceColor)
+                    if (board[availableX, availableY].color == oppositeColor)
                     {
                         moveCoor.x = availableX;
                         moveCoor.y = availableY;
@@ -1434,61 +1649,44 @@ namespace BobbyFischer
                         availableList.Add(availableMove);
                     }
                 }
+            }
 
-                //search left
-                availableX = current.x;
-                availableY = current.y;
-                availableX--;
-                if (availableX >= 0)
-                {
-                    if (grid[availableX, availableY].color != pieceColor)
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
-                    }
-                }
-
-                //search lower left
-                availableX = current.x;
-                availableY = current.y;
-                availableY--;
-                availableX--;
-                if (availableY >= 0 && availableX >= 0)
-                {
-                    if (grid[availableX, availableY].color != pieceColor)
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
-                    }
-                }
+            else
+            {
+                oppositeColor = "marble";
 
                 //search down
-                availableX = current.x;
-                availableY = current.y;
                 availableY--;
                 if (availableY >= 0)
                 {
-                    if (grid[availableX, availableY].color != pieceColor)
+                    if (board[availableX, availableY].color == null)
                     {
                         moveCoor.x = availableX;
                         moveCoor.y = availableY;
                         availableMove.moveSpot = moveCoor;
                         availableList.Add(availableMove);
+
+                        //search first move
+                        availableY--;
+                        if (availableY >= 0 && board[current.x, current.y].firstMove == true)
+                        {
+                            if (board[availableX, availableY].color == null)
+                            {
+                                moveCoor.x = availableX;
+                                moveCoor.y = availableY;
+                                availableMove.moveSpot = moveCoor;
+                                availableList.Add(availableMove);
+                            }
+                        }
+                        availableY++;
                     }
                 }
 
                 //search lower right
-                availableX = current.x;
-                availableY = current.y;
-                availableY--;
                 availableX++;
                 if (availableY >= 0 && availableX < 8)
                 {
-                    if (grid[availableX, availableY].color != pieceColor)
+                    if (board[availableX, availableY].color == oppositeColor)
                     {
                         moveCoor.x = availableX;
                         moveCoor.y = availableY;
@@ -1497,13 +1695,11 @@ namespace BobbyFischer
                     }
                 }
 
-                //search right
-                availableX = current.x;
-                availableY = current.y;
-                availableX++;
-                if (availableX < 8)
+                //search lower left
+                availableX -= 2;
+                if (availableY >= 0 && availableX >= 0)
                 {
-                    if (grid[availableX, availableY].color != pieceColor)
+                    if (board[availableX, availableY].color == oppositeColor)
                     {
                         moveCoor.x = availableX;
                         moveCoor.y = availableY;
@@ -1511,207 +1707,8 @@ namespace BobbyFischer
                         availableList.Add(availableMove);
                     }
                 }
-
-                //search upper right
-                availableX = current.x;
-                availableY = current.y;
-                availableY++;
-                availableX++;
-                if (availableY < 8 && availableX < 8)
-                {
-                    if (grid[availableX, availableY].color != pieceColor)
-                    {
-                        moveCoor.x = availableX;
-                        moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
-                        availableList.Add(availableMove);
-                    }
-                }
-
-                //search for castleing opportunity
-                if(grid[current.x, current.y].firstMove == true)//if king's first move
-                {
-                    if (pieceColor == "marble")
-                    {
-                        if(grid[0,0].firstMove == true)//if left rook's first move
-                        {
-                            if (grid[1,0].job == null && grid[2,0].job == null && grid[3,0].job == null)
-                            {
-                                moveCoor.x = 2;
-                                moveCoor.y = 0;
-                                availableMove.moveSpot = moveCoor;
-                                availableList.Add(availableMove);
-                            }
-                        }
-
-                        if(grid[7,0].firstMove == true)//if right rook's first move
-                        {
-                            if (grid[6, 0].job == null && grid[5, 0].job == null)
-                            {
-                                moveCoor.x = 6;
-                                moveCoor.y = 0;
-                                availableMove.moveSpot = moveCoor;
-                                availableList.Add(availableMove);
-                            }
-                        }
-                    }
-
-                    else if(pieceColor == "onyx")
-                    {
-                        if (grid[0, 7].firstMove == true)//if left rook's first move
-                        {
-                            if (grid[1, 7].job == null && grid[2, 7].job == null && grid[3, 7].job == null)//if clear path from rook to king
-                            {
-                                moveCoor.x = 2;
-                                moveCoor.y = 7;
-                                availableMove.moveSpot = moveCoor;
-                                availableList.Add(availableMove);
-                            }
-                        }
-
-                        if (grid[7, 7].firstMove == true)//if right rook's first move
-                        {
-                            if (grid[6, 7].job == null && grid[5, 7].job == null)
-                            {
-                                moveCoor.x = 6;
-                                moveCoor.y = 7;
-                                availableMove.moveSpot = moveCoor;
-                                availableList.Add(availableMove);
-                            }
-                        }
-                    }
-                }
-                return availableList;
             }
-
-            public static List<move> pawnMoves(piece[,] grid, coordinate current)
-            {
-                string oppositeColor;
-                move availableMove;
-                int availableX = current.x;
-                int availableY = current.y;
-                List<move> availableList = new List<move>();
-                coordinate moveCoor = new coordinate();
-                string pieceColor = grid[current.x, current.y].color;
-                availableMove.pieceSpot = current;
-
-                if (pieceColor == "marble")
-                {
-                    oppositeColor = "onyx";
-
-                    //search up
-                    availableY++;
-                    if (availableY < 8)
-                    {
-                        if (grid[availableX, availableY].color == null)
-                        {
-                            moveCoor.x = availableX;
-                            moveCoor.y = availableY;
-                            availableMove.moveSpot = moveCoor;
-                            availableList.Add(availableMove);
-
-                            //search first move
-                            availableY++;
-                            if (availableY < 8 && grid[current.x, current.y].firstMove == true)
-                            {
-                                if (grid[availableX, availableY].color == null)
-                                {
-                                    moveCoor.x = availableX;
-                                    moveCoor.y = availableY;
-                                    availableMove.moveSpot = moveCoor;
-                                    availableList.Add(availableMove);
-                                }
-                            }
-                            availableY--;
-                        }
-                    }
-
-                    //search upper right
-                    availableX++;
-                    if (availableY < 8 && availableX < 8)
-                    {
-                        if (grid[availableX, availableY].color == oppositeColor)
-                        {
-                            moveCoor.x = availableX;
-                            moveCoor.y = availableY;
-                            availableMove.moveSpot = moveCoor;
-                            availableList.Add(availableMove);
-                        }
-                    }
-
-                    //search upper left
-                    availableX -= 2;
-                    if (availableY < 8 && availableX >= 0)
-                    {
-                        if (grid[availableX, availableY].color == oppositeColor)
-                        {
-                            moveCoor.x = availableX;
-                            moveCoor.y = availableY;
-                            availableMove.moveSpot = moveCoor;
-                            availableList.Add(availableMove);
-                        }
-                    }
-                }
-
-                else
-                {
-                    oppositeColor = "marble";
-
-                    //search down
-                    availableY--;
-                    if (availableY >= 0)
-                    {
-                        if (grid[availableX, availableY].color == null)
-                        {
-                            moveCoor.x = availableX;
-                            moveCoor.y = availableY;
-                            availableMove.moveSpot = moveCoor;
-                            availableList.Add(availableMove);
-
-                            //search first move
-                            availableY--;
-                            if (availableY >= 0 && grid[current.x, current.y].firstMove == true)
-                            {
-                                if (grid[availableX, availableY].color == null)
-                                {
-                                    moveCoor.x = availableX;
-                                    moveCoor.y = availableY;
-                                    availableMove.moveSpot = moveCoor;
-                                    availableList.Add(availableMove);
-                                }
-                            }
-                            availableY++;
-                        }
-                    }
-
-                    //search lower right
-                    availableX++;
-                    if (availableY >= 0 && availableX < 8)
-                    {
-                        if (grid[availableX, availableY].color == oppositeColor)
-                        {
-                            moveCoor.x = availableX;
-                            moveCoor.y = availableY;
-                            availableMove.moveSpot = moveCoor;
-                            availableList.Add(availableMove);
-                        }
-                    }
-
-                    //search lower left
-                    availableX -= 2;
-                    if (availableY >= 0 && availableX >= 0)
-                    {
-                        if (grid[availableX, availableY].color == oppositeColor)
-                        {
-                            moveCoor.x = availableX;
-                            moveCoor.y = availableY;
-                            availableMove.moveSpot = moveCoor;
-                            availableList.Add(availableMove);
-                        }
-                    }
-                }
-                return availableList;
-            }
+            return availableList;
         }
     }
 }
