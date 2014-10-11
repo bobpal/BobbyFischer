@@ -306,7 +306,6 @@ namespace BobbyFischer
                 //if opposing team's move can capture your king, you're in check
                 if(board[m.moveSpot.x, m.moveSpot.y].job == "King" && board[m.moveSpot.x, m.moveSpot.y].color == teamInQuestion)
                 {
-                    coordinateToPictureBox(m.moveSpot).BackgroundImage = Resources.check;
                     return true;
                 }
             }
@@ -527,7 +526,7 @@ namespace BobbyFischer
 
                 compTurn(possibleWithoutCheck);
                 isInCheckmate("marble", getMarblePieces()); //did computer turn put player in checkmate?
-                clearBackgroundImages();
+                offensiveTeam = "marble";
             }
         }
 

@@ -994,7 +994,7 @@
             this.pictureBox1.WaitOnLoad = true;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
-            // Form1
+            // Board
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1002,7 +1002,8 @@
             this.ClientSize = new System.Drawing.Size(724, 702);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
-            this.Name = "Form1";
+            this.Name = "Board";
+            this.ShowIcon = false;
             this.Text = "Gone Fischin\'";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);

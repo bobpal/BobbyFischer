@@ -151,9 +151,6 @@
     <None Include="Resources\oRook.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\check.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\mBishop.png" />
   </ItemGroup>
   <ItemGroup>

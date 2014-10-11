@@ -63,16 +63,6 @@ namespace BobbyFischer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap check {
-            get {
-                object obj = ResourceManager.GetObject("check", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap mBishop {
             get {
                 object obj = ResourceManager.GetObject("mBishop", resourceCulture);
