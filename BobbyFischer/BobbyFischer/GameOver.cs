@@ -22,7 +22,6 @@ namespace BobbyFischer
             InitializeComponent();
             this.game = chess;
             this.losingTeam = team;
-            this.CenterToParent();
             this.ControlBox = false;
 
             if (losingTeam == "onyx")

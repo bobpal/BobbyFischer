@@ -24,39 +24,70 @@ namespace BobbyFischer
             InitializeComponent();
             this.spot = point;
             this.game = chess;
-            this.CenterToParent();
             this.ControlBox = false;
         }
 
         public void queen_Click(object sender, EventArgs e)
         {
+            if(game.offensiveTeam == "marble")
+            {
+                game.board[spot.x, spot.y].picture = Resources.mQueen;
+                game.coordinateToPictureBox(spot).Image = Resources.mQueen;
+            }
+            else
+            {
+                game.board[spot.x, spot.y].picture = Resources.oQueen;
+                game.coordinateToPictureBox(spot).Image = Resources.oQueen;
+            }
             game.board[spot.x, spot.y].job = "Queen";
-            game.board[spot.x, spot.y].picture = Resources.mQueen;
-            game.coordinateToPictureBox(spot).Image = Resources.mQueen;
             this.Close();
         }
 
         public void rook_Click(object sender, EventArgs e)
         {
+            if (game.offensiveTeam == "marble")
+            {
+                game.board[spot.x, spot.y].picture = Resources.mRook;
+                game.coordinateToPictureBox(spot).Image = Resources.mRook;
+            }
+            else
+            {
+                game.board[spot.x, spot.y].picture = Resources.oRook;
+                game.coordinateToPictureBox(spot).Image = Resources.oRook;
+            }
             game.board[spot.x, spot.y].job = "Rook";
-            game.board[spot.x, spot.y].picture = Resources.mRook;
-            game.coordinateToPictureBox(spot).Image = Resources.mRook;
             this.Close();
         }
 
         public void bishop_Click(object sender, EventArgs e)
         {
+            if (game.offensiveTeam == "marble")
+            {
+                game.board[spot.x, spot.y].picture = Resources.mBishop;
+                game.coordinateToPictureBox(spot).Image = Resources.mBishop;
+            }
+            else
+            {
+                game.board[spot.x, spot.y].picture = Resources.oBishop;
+                game.coordinateToPictureBox(spot).Image = Resources.oBishop;
+            }
             game.board[spot.x, spot.y].job = "Bishop";
-            game.board[spot.x, spot.y].picture = Resources.mBishop;
-            game.coordinateToPictureBox(spot).Image = Resources.mBishop;
             this.Close();
         }
 
         public void knight_Click(object sender, EventArgs e)
         {
+            if (game.offensiveTeam == "marble")
+            {
+                game.board[spot.x, spot.y].picture = Resources.mKnight;
+                game.coordinateToPictureBox(spot).Image = Resources.mKnight;
+            }
+            else
+            {
+                game.board[spot.x, spot.y].picture = Resources.oKnight;
+                game.coordinateToPictureBox(spot).Image = Resources.oKnight;
+            }
             game.board[spot.x, spot.y].job = "Knight";
-            game.board[spot.x, spot.y].picture = Resources.mKnight;
-            game.coordinateToPictureBox(spot).Image = Resources.mKnight;
             this.Close();
         }
     }

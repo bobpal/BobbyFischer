@@ -90,6 +90,7 @@
             this.ClientSize = new System.Drawing.Size(284, 175);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "GameOver";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Game Over";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

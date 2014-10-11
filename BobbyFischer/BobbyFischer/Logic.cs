@@ -25,6 +25,8 @@ namespace BobbyFischer
 
         public piece[,] board;                                      //8x8 array of pieces
         public Board mForm;                                         //main form
+        public bool onePlayer;                                      //versus computer or human
+        public string offensiveTeam;                                //which side is on the offense
         public bool medMode;                                        //difficulty level
         public bool hardMode;                                       //difficulty level
         public Chess.coordinate currSelected;                       //where the cursor clicked
@@ -311,7 +313,7 @@ namespace BobbyFischer
             return false;
         }
 
-        public List<Chess.move> getCheckRestrictedMoves(string offensiveTeam, Chess.coordinate aPiece)
+        public List<Chess.move> getCheckRestrictedMoves(Chess.coordinate aPiece)
         {
             //takes single piece and returns list of moves that don't put player in check
 
@@ -403,21 +405,20 @@ namespace BobbyFischer
 
             if(possibleWithoutCheck.Count == 0)//if no moves available that don't go into check
             {
-                GameOver gameEnd;//game is over
-                gameEnd = new GameOver(this, teamInQuestion);
+                GameOver gameEnd = new GameOver(this, teamInQuestion);
                 gameEnd.ShowDialog();
                 return true;
             }
             return false;
         }
 
-        public void castling(Chess.coordinate toSpot, Chess.coordinate fromSpot, string offense)
+        public void castling(Chess.coordinate toSpot, Chess.coordinate fromSpot)
         {
             //if selected move is a castling move, move Rook in this function
 
             int yCoor;  //which row the move is being conducted in
 
-            if(offense == "marble")
+            if(offensiveTeam == "marble")
             {
                 yCoor = 0;
             }
@@ -432,14 +433,14 @@ namespace BobbyFischer
                 {
                     Chess.coordinate newCastleCoor = new Chess.coordinate(3, yCoor);
                     Chess.coordinate oldCastleCoor = new Chess.coordinate(0, yCoor);
-                    movePiece(newCastleCoor, board[oldCastleCoor.x, oldCastleCoor.y], oldCastleCoor, offense);
+                    movePiece(newCastleCoor, board[oldCastleCoor.x, oldCastleCoor.y], oldCastleCoor);
                 }
 
                 else if(toSpot.x == 6 && toSpot.y == yCoor) //if moving two spaces to the right
                 {
                     Chess.coordinate newCastleCoor = new Chess.coordinate(5, yCoor);
                     Chess.coordinate oldCastleCoor = new Chess.coordinate(7, yCoor);
-                    movePiece(newCastleCoor, board[oldCastleCoor.x, oldCastleCoor.y], oldCastleCoor, offense);
+                    movePiece(newCastleCoor, board[oldCastleCoor.x, oldCastleCoor.y], oldCastleCoor);
                 }
             }
         }
@@ -451,14 +452,14 @@ namespace BobbyFischer
             bool movableSpot;
             Chess.piece currentPiece = board[currentCell.x, currentCell.y];
 
-            if (currentPiece.color == "marble")//if selected own piece
+            if (currentPiece.color == offensiveTeam)//if selected own piece
             {
                 movablePieceSelected = true;
                 clearBackgroundImages();
                 coordinateToPictureBox(currentCell).BackgroundImage = Resources.selected;
                 prevSelected = currentCell;
                 possible.Clear();
-                possible.AddRange(getCheckRestrictedMoves("marble", currentCell));
+                possible.AddRange(getCheckRestrictedMoves(currentCell));
 
                 foreach (Chess.move m in possible)
                 {
@@ -482,10 +483,10 @@ namespace BobbyFischer
                 {
                     if (board[prevSelected.x, prevSelected.y].job == "King")
                     {
-                        castling(currentCell, prevSelected, "marble");//check if move is a castling
+                        castling(currentCell, prevSelected);//check if move is a castling
                     }
 
-                    movePiece(currentCell, board[prevSelected.x, prevSelected.y], prevSelected, "marble");
+                    movePiece(currentCell, board[prevSelected.x, prevSelected.y], prevSelected);
                     clearBackgroundImages();
 
                     if (board[currentCell.x, currentCell.y].job == "Pawn" && currentCell.y == 7)//if pawn makes it to last row
@@ -493,35 +494,46 @@ namespace BobbyFischer
                         PawnTransformation transform = new PawnTransformation(currentCell, this);
                         transform.ShowDialog();
                     }
-                    onyxTurn();
+                    
+                    betweenTurns();
                 }
             }
         }
 
-        public void onyxTurn()
+        public void betweenTurns()
         {
-            //computer's turn
-
+            //In between marble and onyx's turns
             List<Chess.move> possibleWithoutCheck = new List<Chess.move>();
+            bool endOfGame;
 
-            bool endOfGame = isInCheckmate("onyx", getOnyxPieces());  //is onyx in checkmate
+            //change teams
+            if (offensiveTeam == "marble")
+            {
+                offensiveTeam = "onyx";
+                endOfGame = isInCheckmate(offensiveTeam, getOnyxPieces());  //did previous turn put other team in checkmate?
+            }
+            else
+            {
+                offensiveTeam = "marble";
+                endOfGame = isInCheckmate(offensiveTeam, getMarblePieces());
+            }
 
-            if (endOfGame == false)
+            if (endOfGame == false && onePlayer == true)
             {
                 foreach (Chess.coordinate cell in getOnyxPieces()) //for all onyx pieces
                 {
-                    possibleWithoutCheck.AddRange(getCheckRestrictedMoves("onyx", cell));  //get all moves possible without going into check
+                    possibleWithoutCheck.AddRange(getCheckRestrictedMoves(cell));  //get all moves possible without going into check
                 }
 
-                onyxLogic(possibleWithoutCheck);
-                isInCheckmate("marble", getMarblePieces()); //is marble in checkmate
+                compTurn(possibleWithoutCheck);
+                isInCheckmate("marble", getMarblePieces()); //did computer turn put player in checkmate?
                 clearBackgroundImages();
             }
         }
 
-        public void onyxLogic(List<Chess.move> poss)
+        public void compTurn(List<Chess.move> poss)
         {
-            //gets called from onyxTurn()
+            //computer's turn
 
             if (medMode == true || hardMode == true)
             {
@@ -534,10 +546,10 @@ namespace BobbyFischer
 
             if (board[oldSpot.x, oldSpot.y].job == "King")
             {
-                castling(newSpot, oldSpot, "onyx");//check if move is a castling
+                castling(newSpot, oldSpot);//check if move is a castling
             }
 
-            movePiece(newSpot, board[oldSpot.x, oldSpot.y], oldSpot, "onyx");
+            movePiece(newSpot, board[oldSpot.x, oldSpot.y], oldSpot);
 
             if (board[newSpot.x, newSpot.y].job == "Pawn" && newSpot.y == 0)//if pawn makes it to last row
             {
@@ -570,7 +582,7 @@ namespace BobbyFischer
             }
         }
 
-        public void movePiece(Chess.coordinate newCell, Chess.piece pPiece, Chess.coordinate oldCell, string offensiveTeam)
+        public void movePiece(Chess.coordinate newCell, Chess.piece pPiece, Chess.coordinate oldCell)
         {
             //overwrite current cell
             board[newCell.x, newCell.y].color = offensiveTeam;
@@ -923,10 +935,17 @@ namespace BobbyFischer
 
             createGrid();
             setImages();
-            Difficulty easyOrHard = new Difficulty(this);
-            easyOrHard.ShowDialog();
+            Players compOrHuman = new Players(this);
+            compOrHuman.ShowDialog();
             clearBackgroundImages();
             movablePieceSelected = false;
+            offensiveTeam = "marble";
+
+            if (onePlayer == true)
+            {
+                Difficulty easyOrHard = new Difficulty(this);
+                easyOrHard.ShowDialog();
+            }
         }
 
         public struct piece
@@ -991,7 +1010,7 @@ namespace BobbyFischer
             availableY++;
             while(availableY < 8)
             {
-                if (board[availableX, availableY].color == pieceColor)     //if same team
+                if (board[availableX, availableY].color == pieceColor)  //if same team
                 {
                     break;                                              //can't go past
                 }
@@ -1001,17 +1020,17 @@ namespace BobbyFischer
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
                     availableMove.moveSpot = moveCoor;
-                    availableList.Add(availableMove);                             //add to list
-                    break;                                              //can't go past
+                    availableList.Add(availableMove);       //add to list
+                    break;                                  //can't go past
                 }
 
-                else                                                    //if unoccupied
+                else                                        //if unoccupied
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
                     availableMove.moveSpot = moveCoor;
-                    availableList.Add(availableMove);                             //add to list
-                    availableY++;                                        //try next spot
+                    availableList.Add(availableMove);       //add to list
+                    availableY++;                           //try next spot
                 }
             }
 
