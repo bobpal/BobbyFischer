@@ -994,6 +994,22 @@ namespace BobbyFischer
             dPawn = Resources.ffDpawn;
         }
 
+        public void setSOMTheme()
+        {
+            lKing = Resources.somLking;
+            lQueen = Resources.somLqueen;
+            lBishop = Resources.somLbishop;
+            lKnight = Resources.somLknight;
+            lRook = Resources.somLrook;
+            lPawn = Resources.somLpawn;
+            dKing = Resources.somDking;
+            dQueen = Resources.somDqueen;
+            dBishop = Resources.somDbishop;
+            dKnight = Resources.somDknight;
+            dRook = Resources.somDrook;
+            dPawn = Resources.somDpawn;
+        }
+
         public void changeTheme()
         {
             List<Chess.coordinate> temp = new List<coordinate>();

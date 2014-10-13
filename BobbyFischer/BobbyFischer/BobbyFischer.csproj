@@ -204,6 +204,18 @@
     <Content Include="Resources\ffLpawn.png" />
     <Content Include="Resources\ffLqueen.png" />
     <Content Include="Resources\ffLrook.png" />
+    <Content Include="Resources\somDbishop.png" />
+    <Content Include="Resources\somDking.png" />
+    <Content Include="Resources\somDknight.png" />
+    <Content Include="Resources\somDpawn.png" />
+    <Content Include="Resources\somDqueen.png" />
+    <Content Include="Resources\somDrook.png" />
+    <Content Include="Resources\somLbishop.png" />
+    <Content Include="Resources\somLking.png" />
+    <Content Include="Resources\somLknight.png" />
+    <Content Include="Resources\somLpawn.png" />
+    <Content Include="Resources\somLqueen.png" />
+    <Content Include="Resources\somLrook.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

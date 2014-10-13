@@ -376,5 +376,11 @@ namespace BobbyFischer
             game.setFFTheme();
             game.changeTheme();
         }
+
+        private void soMToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            game.setSOMTheme();
+            game.changeTheme();
+        }
     }
 }

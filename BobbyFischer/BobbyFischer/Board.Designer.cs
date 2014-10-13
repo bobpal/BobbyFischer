@@ -102,6 +102,7 @@
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.soMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -217,7 +218,8 @@
             // 
             this.chooseThemeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lettersToolStripMenuItem,
-            this.fFToolStripMenuItem});
+            this.fFToolStripMenuItem,
+            this.soMToolStripMenuItem});
             this.chooseThemeToolStripMenuItem.Name = "chooseThemeToolStripMenuItem";
             this.chooseThemeToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.chooseThemeToolStripMenuItem.Text = "Choose Theme";
@@ -225,14 +227,14 @@
             // lettersToolStripMenuItem
             // 
             this.lettersToolStripMenuItem.Name = "lettersToolStripMenuItem";
-            this.lettersToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+            this.lettersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.lettersToolStripMenuItem.Text = "Letters";
             this.lettersToolStripMenuItem.Click += new System.EventHandler(this.lettersToolStripMenuItem_Click);
             // 
             // fFToolStripMenuItem
             // 
             this.fFToolStripMenuItem.Name = "fFToolStripMenuItem";
-            this.fFToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+            this.fFToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.fFToolStripMenuItem.Text = "FF";
             this.fFToolStripMenuItem.Click += new System.EventHandler(this.fFToolStripMenuItem_Click);
             // 
@@ -1032,6 +1034,13 @@
             this.pictureBox1.WaitOnLoad = true;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
+            // soMToolStripMenuItem
+            // 
+            this.soMToolStripMenuItem.Name = "soMToolStripMenuItem";
+            this.soMToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.soMToolStripMenuItem.Text = "SoM";
+            this.soMToolStripMenuItem.Click += new System.EventHandler(this.soMToolStripMenuItem_Click);
+            // 
             // Board
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1191,6 +1200,7 @@
         private System.Windows.Forms.ToolStripMenuItem chooseThemeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lettersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fFToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem soMToolStripMenuItem;
     }
 }
 

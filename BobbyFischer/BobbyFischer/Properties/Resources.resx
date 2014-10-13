@@ -196,4 +196,40 @@
   <data name="selected" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\selected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="somDbishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\somDbishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="somDking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\somDking.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="somDknight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\somDknight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="somDpawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\somDpawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="somDqueen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\somDqueen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="somDrook" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\somDrook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="somLbishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\somLbishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="somLking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\somLking.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="somLknight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\somLknight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="somLpawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\somLpawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="somLqueen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\somLqueen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="somLrook" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\somLrook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
