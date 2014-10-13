@@ -133,40 +133,40 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\oBishop.png" />
+    <None Include="Resources\letDbishop.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\oKing.png" />
+    <None Include="Resources\letDking.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\oKnight.png" />
+    <None Include="Resources\letDknight.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\oPawn.png" />
+    <None Include="Resources\letDpawn.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\oQueen.png" />
+    <None Include="Resources\letDqueen.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\oRook.png" />
+    <None Include="Resources\letDrook.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\mBishop.png" />
+    <None Include="Resources\letLbishop.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\mKing.png" />
+    <None Include="Resources\letLking.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\mKnight.png" />
+    <None Include="Resources\letLknight.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\mPawn.png" />
+    <None Include="Resources\letLpawn.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\mQueen.png" />
+    <None Include="Resources\letLqueen.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\mRook.png" />
+    <None Include="Resources\letLrook.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\possible.png" />

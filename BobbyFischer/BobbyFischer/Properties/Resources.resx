@@ -118,41 +118,41 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="mBishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\mBishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="letDbishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\letDbishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="mKing" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\mKing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="letDking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\letDking.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="mKnight" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\mKnight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="letDknight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\letDknight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="mPawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\mPawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="letDpawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\letDpawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="mQueen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\mQueen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="letDqueen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\letDqueen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="mRook" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\mRook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="letDrook" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\letDrook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="oBishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\oBishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="letLbishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\letLbishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="oKing" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\oKing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="letLking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\letLking.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="oKnight" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\oKnight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="letLknight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\letLknight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="oPawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\oPawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="letLpawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\letLpawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="oQueen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\oQueen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="letLqueen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\letLqueen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="oRook" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\oRook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="letLrook" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\letLrook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="possible" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\possible.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

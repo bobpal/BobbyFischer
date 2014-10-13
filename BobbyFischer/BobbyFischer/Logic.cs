@@ -32,6 +32,18 @@ namespace BobbyFischer
         public bool firstGame;                                      //has newGame() been called yet?
         public Chess.coordinate currSelected;                       //where the cursor clicked
         public Chess.coordinate prevSelected;                       //where the cursor clicked previously
+        public Image lKing;
+        public Image lQueen;
+        public Image lBishop;
+        public Image lKnight;
+        public Image lRook;
+        public Image lPawn;
+        public Image dKing;
+        public Image dQueen;
+        public Image dBishop;
+        public Image dKnight;
+        public Image dRook;
+        public Image dPawn;
         public bool movablePieceSelected = false;                   //if true, the next click will move the selected piece if possible
         public List<Chess.move> possible = new List<Chess.move>();  //list of all possible moves
         public static Random rnd = new Random();
@@ -53,35 +65,32 @@ namespace BobbyFischer
                 {
                     if (y == 0)
                     {
-                        board[x, 0].color = "marble";
+                        board[x, 0].color = "light";
                     }
 
                     else if (y == 1)
                     {
-                        board[x, 1].color = "marble";
+                        board[x, 1].color = "light";
                         board[x, 1].job = "Pawn";
                         board[x, 1].firstMove = true;
-                        board[x, 1].picture = Resources.mPawn;
                     }
 
                     else if (y == 6)
                     {
-                        board[x, 6].color = "onyx";
+                        board[x, 6].color = "dark";
                         board[x, 6].job = "Pawn";
                         board[x, 6].firstMove = true;
-                        board[x, 6].picture = Resources.oPawn;
                     }
 
                     else if(y == 7)
                     {
-                        board[x, 7].color = "onyx";
+                        board[x, 7].color = "dark";
                     }
 
                     else
                     {
                         board[x, y].color = null;
                         board[x, y].job = null;
-                        board[x, y].picture = null;
                     }
                 }
             }
@@ -109,23 +118,6 @@ namespace BobbyFischer
             board[0,7].firstMove = true;
             board[4,7].firstMove = true;
             board[7,7].firstMove = true;
-
-            board[0, 0].picture = Resources.mRook;
-            board[1, 0].picture = Resources.mKnight;
-            board[2, 0].picture = Resources.mBishop;
-            board[3, 0].picture = Resources.mQueen;
-            board[4, 0].picture = Resources.mKing;
-            board[5, 0].picture = Resources.mBishop;
-            board[6, 0].picture = Resources.mKnight;
-            board[7, 0].picture = Resources.mRook;
-            board[0, 7].picture = Resources.oRook;
-            board[1, 7].picture = Resources.oKnight;
-            board[2, 7].picture = Resources.oBishop;
-            board[3, 7].picture = Resources.oQueen;
-            board[4, 7].picture = Resources.oKing;
-            board[5, 7].picture = Resources.oBishop;
-            board[6, 7].picture = Resources.oKnight;
-            board[7, 7].picture = Resources.oRook;
         }
 
         public List<Chess.move> getMoves(Chess.coordinate spot)
@@ -164,7 +156,7 @@ namespace BobbyFischer
 
             foreach(Chess.move p in pos)//only look at moves that can capture a piece
             {
-                if(board[p.moveSpot.x, p.moveSpot.y].color == "marble")
+                if(board[p.moveSpot.x, p.moveSpot.y].color == "light")
                 {
                     capturableMoves.Add(p);
                 }
@@ -233,9 +225,9 @@ namespace BobbyFischer
             return pos;//if no capturable moves, return list given, same as easy mode
         }
 
-        public List<Chess.coordinate> getOnyxPieces()
+        public List<Chess.coordinate> getDarkPieces()
         {
-            //searches through board and returns list of coordinates where all onyx pieces are located
+            //searches through board and returns list of coordinates where all dark pieces are located
 
             Chess.coordinate temp;
             List<Chess.coordinate> possiblePieces = new List<Chess.coordinate>();
@@ -244,7 +236,7 @@ namespace BobbyFischer
             {
                 for(int x = 0; x < 8; x++)
                 {
-                    if(board[x, y].color == "onyx")
+                    if(board[x, y].color == "dark")
                     {
                         temp.x = x;
                         temp.y = y;
@@ -255,9 +247,9 @@ namespace BobbyFischer
             return possiblePieces;
         }
 
-        public List<Chess.coordinate> getMarblePieces()
+        public List<Chess.coordinate> getLightPieces()
         {
-            //searches through board and returns list of coordinates where all marble pieces are located
+            //searches through board and returns list of coordinates where all light pieces are located
 
             Chess.coordinate temp;
             List<Chess.coordinate> possiblePieces = new List<Chess.coordinate>();
@@ -266,7 +258,7 @@ namespace BobbyFischer
             {
                 for(int x = 0; x < 8; x++)
                 {
-                    if(board[x, y].color == "marble")
+                    if(board[x, y].color == "light")
                     {
                         temp.x = x;
                         temp.y = y;
@@ -284,14 +276,14 @@ namespace BobbyFischer
             List<Chess.coordinate> spots;
             List<Chess.move> poss = new List<Chess.move>();
 
-            if(teamInQuestion == "onyx")
+            if(teamInQuestion == "dark")
             {
-                spots = getMarblePieces();//get all opposing team's pieces
+                spots = getLightPieces();//get all opposing team's pieces
             }
 
             else
             {
-                spots = getOnyxPieces();//get all opposing team's pieces
+                spots = getDarkPieces();//get all opposing team's pieces
             }
 
             foreach(Chess.coordinate c in spots)
@@ -418,7 +410,7 @@ namespace BobbyFischer
 
             int yCoor;  //which row the move is being conducted in
 
-            if(offensiveTeam == "marble")
+            if(offensiveTeam == "light")
             {
                 yCoor = 0;
             }
@@ -450,7 +442,7 @@ namespace BobbyFischer
             //human player's turn, gets called when player clicks on spot
             bool movableSpot;
 
-            if (firstGame == true)
+            if (firstGame == true)  //blocks functionality if game hasn't started yet
             {
                 Chess.piece currentPiece = board[currentCell.x, currentCell.y];
 
@@ -505,32 +497,32 @@ namespace BobbyFischer
 
         public void betweenTurns()
         {
-            //In between marble and onyx's turns
+            //In between light and dark's turns
             List<Chess.move> possibleWithoutCheck = new List<Chess.move>();
             bool endOfGame;
 
             //change teams
-            if (offensiveTeam == "marble")
+            if (offensiveTeam == "light")
             {
-                offensiveTeam = "onyx";
-                endOfGame = isInCheckmate(offensiveTeam, getOnyxPieces());  //did previous turn put other team in checkmate?
+                offensiveTeam = "dark";
+                endOfGame = isInCheckmate(offensiveTeam, getDarkPieces());  //did previous turn put other team in checkmate?
             }
             else
             {
-                offensiveTeam = "marble";
-                endOfGame = isInCheckmate(offensiveTeam, getMarblePieces());
+                offensiveTeam = "light";
+                endOfGame = isInCheckmate(offensiveTeam, getLightPieces());
             }
 
             if (endOfGame == false && onePlayer == true)
             {
-                foreach (Chess.coordinate cell in getOnyxPieces()) //for all onyx pieces
+                foreach (Chess.coordinate cell in getDarkPieces()) //for all dark pieces
                 {
                     possibleWithoutCheck.AddRange(getCheckRestrictedMoves(cell));  //get all moves possible without going into check
                 }
 
                 compTurn(possibleWithoutCheck);
-                isInCheckmate("marble", getMarblePieces()); //did computer turn put player in checkmate?
-                offensiveTeam = "marble";
+                isInCheckmate("light", getLightPieces()); //did computer turn put player in checkmate?
+                offensiveTeam = "light";
             }
         }
 
@@ -561,23 +553,19 @@ namespace BobbyFischer
                 {
                     case 0:
                         board[newSpot.x, newSpot.y].job = "Queen";
-                        board[newSpot.x, newSpot.y].picture = Resources.oQueen;
-                        coordinateToPictureBox(newSpot).Image = Resources.oQueen;
+                        coordinateToPictureBox(newSpot).Image = dQueen;
                         break;
                     case 1:
                         board[newSpot.x, newSpot.y].job = "Rook";
-                        board[newSpot.x, newSpot.y].picture = Resources.oRook;
-                        coordinateToPictureBox(newSpot).Image = Resources.oRook;
+                        coordinateToPictureBox(newSpot).Image = dRook;
                         break;
                     case 2:
                         board[newSpot.x, newSpot.y].job = "Bishop";
-                        board[newSpot.x, newSpot.y].picture = Resources.oBishop;
-                        coordinateToPictureBox(newSpot).Image = Resources.oBishop;
+                        coordinateToPictureBox(newSpot).Image = dBishop;
                         break;
                     case 3:
                         board[newSpot.x, newSpot.y].job = "Knight";
-                        board[newSpot.x, newSpot.y].picture = Resources.oKnight;
-                        coordinateToPictureBox(newSpot).Image = Resources.oKnight;
+                        coordinateToPictureBox(newSpot).Image = dKnight;
                         break;
                     default:
                         break;
@@ -596,15 +584,57 @@ namespace BobbyFischer
             board[oldCell.x, oldCell.y].job = null;
 
             //overwrite current image
-            board[newCell.x, newCell.y].picture = pPiece.picture;
-            coordinateToPictureBox(newCell).Image = pPiece.picture;  //take previous piece picture and put it in current cell picture box
+            coordinateToPictureBox(newCell).Image = matchPicture(pPiece);  //take previous piece picture and put it in current cell picture box
 
             //delete prev image
-            board[oldCell.x, oldCell.y].picture = null;
             coordinateToPictureBox(oldCell).Image = null;
 
             movablePieceSelected = false;
             board[newCell.x, newCell.y].firstMove = false;
+        }
+
+        public Image matchPicture(piece figure)
+        {
+            if(figure.color == "dark")
+            {
+                switch(figure.job)
+                {
+                    case "King":
+                        return dKing;
+                    case "Queen":
+                        return dQueen;
+                    case "Bishop":
+                        return dBishop;
+                    case "Knight":
+                        return dKnight;
+                    case "Rook":
+                        return dRook;
+                    case "Pawn":
+                        return dPawn;
+                    default:
+                        return null;
+                }
+            }
+            else
+            {
+                switch (figure.job)
+                {
+                    case "King":
+                        return lKing;
+                    case "Queen":
+                        return lQueen;
+                    case "Bishop":
+                        return lBishop;
+                    case "Knight":
+                        return lKnight;
+                    case "Rook":
+                        return lRook;
+                    case "Pawn":
+                        return lPawn;
+                    default:
+                        return null;
+                }
+            }
         }
 
         public PictureBox coordinateToPictureBox(Chess.coordinate spot)
@@ -866,22 +896,22 @@ namespace BobbyFischer
         {
             //sets images on board for new game
 
-            mForm.pictureBox1.Image = Resources.oRook;
-            mForm.pictureBox2.Image = Resources.oKnight;
-            mForm.pictureBox3.Image = Resources.oBishop;
-            mForm.pictureBox4.Image = Resources.oQueen;
-            mForm.pictureBox5.Image = Resources.oKing;
-            mForm.pictureBox6.Image = Resources.oBishop;
-            mForm.pictureBox7.Image = Resources.oKnight;
-            mForm.pictureBox8.Image = Resources.oRook;
-            mForm.pictureBox9.Image = Resources.oPawn;
-            mForm.pictureBox10.Image = Resources.oPawn;
-            mForm.pictureBox11.Image = Resources.oPawn;
-            mForm.pictureBox12.Image = Resources.oPawn;
-            mForm.pictureBox13.Image = Resources.oPawn;
-            mForm.pictureBox14.Image = Resources.oPawn;
-            mForm.pictureBox15.Image = Resources.oPawn;
-            mForm.pictureBox16.Image = Resources.oPawn;
+            mForm.pictureBox1.Image = dRook;
+            mForm.pictureBox2.Image = dKnight;
+            mForm.pictureBox3.Image = dBishop;
+            mForm.pictureBox4.Image = dQueen;
+            mForm.pictureBox5.Image = dKing;
+            mForm.pictureBox6.Image = dBishop;
+            mForm.pictureBox7.Image = dKnight;
+            mForm.pictureBox8.Image = dRook;
+            mForm.pictureBox9.Image = dPawn;
+            mForm.pictureBox10.Image = dPawn;
+            mForm.pictureBox11.Image = dPawn;
+            mForm.pictureBox12.Image = dPawn;
+            mForm.pictureBox13.Image = dPawn;
+            mForm.pictureBox14.Image = dPawn;
+            mForm.pictureBox15.Image = dPawn;
+            mForm.pictureBox16.Image = dPawn;
             mForm.pictureBox17.Image = null;
             mForm.pictureBox18.Image = null;
             mForm.pictureBox19.Image = null;
@@ -914,22 +944,38 @@ namespace BobbyFischer
             mForm.pictureBox46.Image = null;
             mForm.pictureBox47.Image = null;
             mForm.pictureBox48.Image = null;
-            mForm.pictureBox49.Image = Resources.mPawn;
-            mForm.pictureBox50.Image = Resources.mPawn;
-            mForm.pictureBox51.Image = Resources.mPawn;
-            mForm.pictureBox52.Image = Resources.mPawn;
-            mForm.pictureBox53.Image = Resources.mPawn;
-            mForm.pictureBox54.Image = Resources.mPawn;
-            mForm.pictureBox55.Image = Resources.mPawn;
-            mForm.pictureBox56.Image = Resources.mPawn;
-            mForm.pictureBox57.Image = Resources.mRook;
-            mForm.pictureBox58.Image = Resources.mKnight;
-            mForm.pictureBox59.Image = Resources.mBishop;
-            mForm.pictureBox60.Image = Resources.mQueen;
-            mForm.pictureBox61.Image = Resources.mKing;
-            mForm.pictureBox62.Image = Resources.mBishop;
-            mForm.pictureBox63.Image = Resources.mKnight;
-            mForm.pictureBox64.Image = Resources.mRook;
+            mForm.pictureBox49.Image = lPawn;
+            mForm.pictureBox50.Image = lPawn;
+            mForm.pictureBox51.Image = lPawn;
+            mForm.pictureBox52.Image = lPawn;
+            mForm.pictureBox53.Image = lPawn;
+            mForm.pictureBox54.Image = lPawn;
+            mForm.pictureBox55.Image = lPawn;
+            mForm.pictureBox56.Image = lPawn;
+            mForm.pictureBox57.Image = lRook;
+            mForm.pictureBox58.Image = lKnight;
+            mForm.pictureBox59.Image = lBishop;
+            mForm.pictureBox60.Image = lQueen;
+            mForm.pictureBox61.Image = lKing;
+            mForm.pictureBox62.Image = lBishop;
+            mForm.pictureBox63.Image = lKnight;
+            mForm.pictureBox64.Image = lRook;
+        }
+
+        public void setLetterTheme()
+        {
+            lKing = Resources.letLking;
+            lQueen = Resources.letLqueen;
+            lBishop = Resources.letLbishop;
+            lKnight = Resources.letLknight;
+            lRook = Resources.letLrook;
+            lPawn = Resources.letLpawn;
+            dKing = Resources.letDking;
+            dQueen = Resources.letDqueen;
+            dBishop = Resources.letDbishop;
+            dKnight = Resources.letDknight;
+            dRook = Resources.letDrook;
+            dPawn = Resources.letDpawn;
         }
 
         public void newGame()
@@ -937,12 +983,13 @@ namespace BobbyFischer
             //sets everything needed for new game
 
             createGrid();
+            setLetterTheme();
             setImages();
             Players compOrHuman = new Players(this);
             compOrHuman.ShowDialog();
             clearBackgroundImages();
             movablePieceSelected = false;
-            offensiveTeam = "marble";
+            offensiveTeam = "light";
             firstGame = true;
 
             if (onePlayer == true)
@@ -956,7 +1003,6 @@ namespace BobbyFischer
         {
             public string color { get; set; }
             public string job { get; set; }
-            public Image picture { get; set; }
             public bool firstMove { get; set; }
         }
 
@@ -1000,14 +1046,14 @@ namespace BobbyFischer
             availableMove.pieceSpot = current;
             string pieceColor = board[current.x, current.y].color;
 
-            if (pieceColor == "marble")
+            if (pieceColor == "light")
             {
-                oppositeColor = "onyx";
+                oppositeColor = "dark";
             }
 
             else
             {
-                oppositeColor = "marble";
+                oppositeColor = "light";
             }
 
             //search up
@@ -1279,14 +1325,14 @@ namespace BobbyFischer
             string pieceColor = board[current.x, current.y].color;
             availableMove.pieceSpot = current;
 
-            if (pieceColor == "marble")
+            if (pieceColor == "light")
             {
-                oppositeColor = "onyx";
+                oppositeColor = "dark";
             }
 
             else
             {
-                oppositeColor = "marble";
+                oppositeColor = "light";
             }
 
             //search upper right
@@ -1552,7 +1598,7 @@ namespace BobbyFischer
             //search for castleing opportunity
             if (board[current.x, current.y].firstMove == true)//if king's first move
             {
-                if (pieceColor == "marble")
+                if (pieceColor == "light")
                 {
                     if (board[0, 0].firstMove == true)//if left rook's first move
                     {
@@ -1577,7 +1623,7 @@ namespace BobbyFischer
                     }
                 }
 
-                else if(pieceColor == "onyx")
+                else if(pieceColor == "dark")
                 {
                     if (board[0, 7].firstMove == true)//if left rook's first move
                     {
@@ -1616,9 +1662,9 @@ namespace BobbyFischer
             string pieceColor = board[current.x, current.y].color;
             availableMove.pieceSpot = current;
 
-            if (pieceColor == "marble")
+            if (pieceColor == "light")
             {
-                oppositeColor = "onyx";
+                oppositeColor = "dark";
 
                 //search up
                 availableY++;
@@ -1676,7 +1722,7 @@ namespace BobbyFischer
 
             else
             {
-                oppositeColor = "marble";
+                oppositeColor = "light";
 
                 //search down
                 availableY--;

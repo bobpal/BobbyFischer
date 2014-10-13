@@ -29,15 +29,13 @@ namespace BobbyFischer
 
         public void queen_Click(object sender, EventArgs e)
         {
-            if(game.offensiveTeam == "marble")
+            if(game.offensiveTeam == "light")
             {
-                game.board[spot.x, spot.y].picture = Resources.mQueen;
-                game.coordinateToPictureBox(spot).Image = Resources.mQueen;
+                game.coordinateToPictureBox(spot).Image = game.lQueen;
             }
             else
             {
-                game.board[spot.x, spot.y].picture = Resources.oQueen;
-                game.coordinateToPictureBox(spot).Image = Resources.oQueen;
+                game.coordinateToPictureBox(spot).Image = game.dQueen;
             }
             game.board[spot.x, spot.y].job = "Queen";
             this.Close();
@@ -45,15 +43,13 @@ namespace BobbyFischer
 
         public void rook_Click(object sender, EventArgs e)
         {
-            if (game.offensiveTeam == "marble")
+            if (game.offensiveTeam == "light")
             {
-                game.board[spot.x, spot.y].picture = Resources.mRook;
-                game.coordinateToPictureBox(spot).Image = Resources.mRook;
+                game.coordinateToPictureBox(spot).Image = game.lRook;
             }
             else
             {
-                game.board[spot.x, spot.y].picture = Resources.oRook;
-                game.coordinateToPictureBox(spot).Image = Resources.oRook;
+                game.coordinateToPictureBox(spot).Image = game.dRook;
             }
             game.board[spot.x, spot.y].job = "Rook";
             this.Close();
@@ -61,15 +57,13 @@ namespace BobbyFischer
 
         public void bishop_Click(object sender, EventArgs e)
         {
-            if (game.offensiveTeam == "marble")
+            if (game.offensiveTeam == "light")
             {
-                game.board[spot.x, spot.y].picture = Resources.mBishop;
-                game.coordinateToPictureBox(spot).Image = Resources.mBishop;
+                game.coordinateToPictureBox(spot).Image = game.lBishop;
             }
             else
             {
-                game.board[spot.x, spot.y].picture = Resources.oBishop;
-                game.coordinateToPictureBox(spot).Image = Resources.oBishop;
+                game.coordinateToPictureBox(spot).Image = game.dBishop;
             }
             game.board[spot.x, spot.y].job = "Bishop";
             this.Close();
@@ -77,15 +71,13 @@ namespace BobbyFischer
 
         public void knight_Click(object sender, EventArgs e)
         {
-            if (game.offensiveTeam == "marble")
+            if (game.offensiveTeam == "light")
             {
-                game.board[spot.x, spot.y].picture = Resources.mKnight;
-                game.coordinateToPictureBox(spot).Image = Resources.mKnight;
+                game.coordinateToPictureBox(spot).Image = game.lKnight;
             }
             else
             {
-                game.board[spot.x, spot.y].picture = Resources.oKnight;
-                game.coordinateToPictureBox(spot).Image = Resources.oKnight;
+                game.coordinateToPictureBox(spot).Image = game.dKnight;
             }
             game.board[spot.x, spot.y].job = "Knight";
             this.Close();

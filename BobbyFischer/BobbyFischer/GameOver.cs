@@ -24,14 +24,14 @@ namespace BobbyFischer
             this.losingTeam = team;
             this.ControlBox = false;
 
-            if (losingTeam == "onyx")
+            if (losingTeam == "dark")
             {
                 label1.Text = "Congratulations!\n\nYou have slain the evil king\n and saved the princess!";
             }
 
             else
             {
-                label1.Text = "Sorry\n\nYou gave a valiant effort,\nbut you have been bested in battle by the onyx army\n";
+                label1.Text = "Sorry\n\nYou gave a valiant effort,\nbut you have been bested in battle by the enemy army\n";
             }
         }
 

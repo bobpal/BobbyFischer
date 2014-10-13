@@ -63,9 +63,9 @@ namespace BobbyFischer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap mBishop {
+        internal static System.Drawing.Bitmap letDbishop {
             get {
-                object obj = ResourceManager.GetObject("mBishop", resourceCulture);
+                object obj = ResourceManager.GetObject("letDbishop", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace BobbyFischer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap mKing {
+        internal static System.Drawing.Bitmap letDking {
             get {
-                object obj = ResourceManager.GetObject("mKing", resourceCulture);
+                object obj = ResourceManager.GetObject("letDking", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace BobbyFischer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap mKnight {
+        internal static System.Drawing.Bitmap letDknight {
             get {
-                object obj = ResourceManager.GetObject("mKnight", resourceCulture);
+                object obj = ResourceManager.GetObject("letDknight", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace BobbyFischer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap mPawn {
+        internal static System.Drawing.Bitmap letDpawn {
             get {
-                object obj = ResourceManager.GetObject("mPawn", resourceCulture);
+                object obj = ResourceManager.GetObject("letDpawn", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace BobbyFischer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap mQueen {
+        internal static System.Drawing.Bitmap letDqueen {
             get {
-                object obj = ResourceManager.GetObject("mQueen", resourceCulture);
+                object obj = ResourceManager.GetObject("letDqueen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +113,9 @@ namespace BobbyFischer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap mRook {
+        internal static System.Drawing.Bitmap letDrook {
             get {
-                object obj = ResourceManager.GetObject("mRook", resourceCulture);
+                object obj = ResourceManager.GetObject("letDrook", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +123,9 @@ namespace BobbyFischer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap oBishop {
+        internal static System.Drawing.Bitmap letLbishop {
             get {
-                object obj = ResourceManager.GetObject("oBishop", resourceCulture);
+                object obj = ResourceManager.GetObject("letLbishop", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +133,9 @@ namespace BobbyFischer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap oKing {
+        internal static System.Drawing.Bitmap letLking {
             get {
-                object obj = ResourceManager.GetObject("oKing", resourceCulture);
+                object obj = ResourceManager.GetObject("letLking", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -143,9 +143,9 @@ namespace BobbyFischer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap oKnight {
+        internal static System.Drawing.Bitmap letLknight {
             get {
-                object obj = ResourceManager.GetObject("oKnight", resourceCulture);
+                object obj = ResourceManager.GetObject("letLknight", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,9 +153,9 @@ namespace BobbyFischer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap oPawn {
+        internal static System.Drawing.Bitmap letLpawn {
             get {
-                object obj = ResourceManager.GetObject("oPawn", resourceCulture);
+                object obj = ResourceManager.GetObject("letLpawn", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,9 +163,9 @@ namespace BobbyFischer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap oQueen {
+        internal static System.Drawing.Bitmap letLqueen {
             get {
-                object obj = ResourceManager.GetObject("oQueen", resourceCulture);
+                object obj = ResourceManager.GetObject("letLqueen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,9 +173,9 @@ namespace BobbyFischer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap oRook {
+        internal static System.Drawing.Bitmap letLrook {
             get {
-                object obj = ResourceManager.GetObject("oRook", resourceCulture);
+                object obj = ResourceManager.GetObject("letLrook", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
