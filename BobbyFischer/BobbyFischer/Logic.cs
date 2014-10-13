@@ -962,6 +962,22 @@ namespace BobbyFischer
             mForm.pictureBox64.Image = lRook;
         }
 
+        public void setFigureTheme()
+        {
+            lKing = Resources.figLking;
+            lQueen = Resources.figLqueen;
+            lBishop = Resources.figLbishop;
+            lKnight = Resources.figLknight;
+            lRook = Resources.figLrook;
+            lPawn = Resources.figLpawn;
+            dKing = Resources.figDking;
+            dQueen = Resources.figDqueen;
+            dBishop = Resources.figDbishop;
+            dKnight = Resources.figDknight;
+            dRook = Resources.figDrook;
+            dPawn = Resources.figDpawn;
+        }
+
         public void setLetterTheme()
         {
             lKing = Resources.letLking;

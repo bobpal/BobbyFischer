@@ -154,6 +154,42 @@
   <data name="ffLrook" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ffLrook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="figDbishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\figDbishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="figDking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\figDking.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="figDknight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\figDknight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="figDpawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\figDpawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="figDqueen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\figDqueen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="figDrook" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\figDrook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="figLbishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\figLbishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="figLking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\figLking.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="figLknight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\figLknight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="figLpawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\figLpawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="figLqueen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\figLqueen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="figLrook" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\figLrook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="letDbishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\letDbishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

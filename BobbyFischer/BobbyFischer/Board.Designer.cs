@@ -38,6 +38,7 @@
             this.lettersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.soMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lttPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
@@ -103,7 +104,7 @@
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.lttPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.figureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -221,7 +222,8 @@
             this.lettersToolStripMenuItem,
             this.fFToolStripMenuItem,
             this.soMToolStripMenuItem,
-            this.lttPToolStripMenuItem});
+            this.lttPToolStripMenuItem,
+            this.figureToolStripMenuItem});
             this.chooseThemeToolStripMenuItem.Name = "chooseThemeToolStripMenuItem";
             this.chooseThemeToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.chooseThemeToolStripMenuItem.Text = "Choose Theme";
@@ -246,6 +248,13 @@
             this.soMToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.soMToolStripMenuItem.Text = "SoM";
             this.soMToolStripMenuItem.Click += new System.EventHandler(this.soMToolStripMenuItem_Click);
+            // 
+            // lttPToolStripMenuItem
+            // 
+            this.lttPToolStripMenuItem.Name = "lttPToolStripMenuItem";
+            this.lttPToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.lttPToolStripMenuItem.Text = "LttP";
+            this.lttPToolStripMenuItem.Click += new System.EventHandler(this.lttPToolStripMenuItem_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -1043,12 +1052,12 @@
             this.pictureBox1.WaitOnLoad = true;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
-            // lttPToolStripMenuItem
+            // figureToolStripMenuItem
             // 
-            this.lttPToolStripMenuItem.Name = "lttPToolStripMenuItem";
-            this.lttPToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.lttPToolStripMenuItem.Text = "LttP";
-            this.lttPToolStripMenuItem.Click += new System.EventHandler(this.lttPToolStripMenuItem_Click);
+            this.figureToolStripMenuItem.Name = "figureToolStripMenuItem";
+            this.figureToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.figureToolStripMenuItem.Text = "Figure";
+            this.figureToolStripMenuItem.Click += new System.EventHandler(this.figureToolStripMenuItem_Click);
             // 
             // Board
             // 
@@ -1211,6 +1220,7 @@
         private System.Windows.Forms.ToolStripMenuItem fFToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem soMToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lttPToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem figureToolStripMenuItem;
     }
 }
 

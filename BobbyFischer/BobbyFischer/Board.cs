@@ -22,7 +22,7 @@ namespace BobbyFischer
             InitializeComponent();
             this.CenterToScreen();
             game = new Chess(this);
-            game.setLetterTheme();
+            game.setFigureTheme();
         }
 
         public void Form1_Load(object sender, EventArgs e)
@@ -33,6 +33,16 @@ namespace BobbyFischer
         public void tableLayoutPanel1_Paint_1(object sender, PaintEventArgs e)
         {
             
+        }
+
+        private void figureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            game.setFigureTheme();
+
+            if (game.board != null)
+            {
+                game.changeTheme();
+            }
         }
 
         private void lettersToolStripMenuItem_Click(object sender, EventArgs e)
