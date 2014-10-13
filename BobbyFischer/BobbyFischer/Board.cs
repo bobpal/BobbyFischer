@@ -35,6 +35,36 @@ namespace BobbyFischer
             
         }
 
+        private void lettersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            game.setLetterTheme();
+
+            if(game.board != null)
+            {
+                game.changeTheme();
+            }
+        }
+
+        private void fFToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            game.setFFTheme();
+
+            if (game.board != null)
+            {
+                game.changeTheme();
+            }
+        }
+
+        private void soMToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            game.setSOMTheme();
+
+            if (game.board != null)
+            {
+                game.changeTheme();
+            }
+        }
+
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             game.newGame();
@@ -363,24 +393,6 @@ namespace BobbyFischer
         private void pictureBox8_Click(object sender, EventArgs e)
         {
             game.clicker(new Chess.coordinate(7, 7));
-        }
-
-        private void lettersToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            game.setLetterTheme();
-            game.changeTheme();
-        }
-
-        private void fFToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            game.setFFTheme();
-            game.changeTheme();
-        }
-
-        private void soMToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            game.setSOMTheme();
-            game.changeTheme();
         }
     }
 }
