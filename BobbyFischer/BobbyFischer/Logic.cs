@@ -1012,7 +1012,6 @@ namespace BobbyFischer
             //sets everything needed for new game
 
             createGrid();
-            setLetterTheme();
             setImages();
             Players compOrHuman = new Players(this);
             compOrHuman.ShowDialog();

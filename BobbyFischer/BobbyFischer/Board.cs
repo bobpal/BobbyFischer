@@ -22,6 +22,7 @@ namespace BobbyFischer
             InitializeComponent();
             this.CenterToScreen();
             game = new Chess(this);
+            game.setLetterTheme();
         }
 
         public void Form1_Load(object sender, EventArgs e)
