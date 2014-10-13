@@ -65,6 +65,16 @@ namespace BobbyFischer
             }
         }
 
+        private void lttPToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            game.setLttPTheme();
+
+            if (game.board != null)
+            {
+                game.changeTheme();
+            }
+        }
+
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             game.newGame();

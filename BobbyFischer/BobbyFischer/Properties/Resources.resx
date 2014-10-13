@@ -190,6 +190,42 @@
   <data name="letLrook" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\letLrook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="lttpDbishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lttpDbishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lttpDking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lttpDking.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lttpDknight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lttpDknight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lttpDpawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lttpDpawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lttpDqueen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lttpDqueen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lttpDrook" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lttpDrook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lttpLbishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lttpLbishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lttpLking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lttpLking.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lttpLknight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lttpLknight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lttpLpawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lttpLpawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lttpLqueen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lttpLqueen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lttpLrook" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lttpLrook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="possible" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\possible.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

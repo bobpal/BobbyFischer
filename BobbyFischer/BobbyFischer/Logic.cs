@@ -1010,6 +1010,22 @@ namespace BobbyFischer
             dPawn = Resources.somDpawn;
         }
 
+        public void setLttPTheme()
+        {
+            lKing = Resources.lttpLking;
+            lQueen = Resources.lttpLqueen;
+            lBishop = Resources.lttpLbishop;
+            lKnight = Resources.lttpLknight;
+            lRook = Resources.lttpLrook;
+            lPawn = Resources.lttpLpawn;
+            dKing = Resources.lttpDking;
+            dQueen = Resources.lttpDqueen;
+            dBishop = Resources.lttpDbishop;
+            dKnight = Resources.lttpDknight;
+            dRook = Resources.lttpDrook;
+            dPawn = Resources.lttpDpawn;
+        }
+
         public void changeTheme()
         {
             List<Chess.coordinate> temp = new List<coordinate>();
