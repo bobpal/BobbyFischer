@@ -363,5 +363,17 @@ namespace BobbyFischer
         {
             game.clicker(new Chess.coordinate(7, 7));
         }
+
+        private void lettersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            game.setLetterTheme();
+            game.changeTheme();
+        }
+
+        private void fFToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            game.setFFTheme();
+            game.changeTheme();
+        }
     }
 }

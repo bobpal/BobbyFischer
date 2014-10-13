@@ -118,6 +118,42 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ffDbishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ffDbishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ffDking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ffDking.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ffDknight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ffDknight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ffDpawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ffDpawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ffDqueen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ffDqueen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ffDrook" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ffDrook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ffLbishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ffLbishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ffLking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ffLking.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ffLknight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ffLknight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ffLpawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ffLpawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ffLqueen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ffLqueen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ffLrook" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ffLrook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="letDbishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\letDbishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

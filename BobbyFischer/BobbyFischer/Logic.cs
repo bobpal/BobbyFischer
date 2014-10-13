@@ -978,6 +978,35 @@ namespace BobbyFischer
             dPawn = Resources.letDpawn;
         }
 
+        public void setFFTheme()
+        {
+            lKing = Resources.ffLking;
+            lQueen = Resources.ffLqueen;
+            lBishop = Resources.ffLbishop;
+            lKnight = Resources.ffLknight;
+            lRook = Resources.ffLrook;
+            lPawn = Resources.ffLpawn;
+            dKing = Resources.ffDking;
+            dQueen = Resources.ffDqueen;
+            dBishop = Resources.ffDbishop;
+            dKnight = Resources.ffDknight;
+            dRook = Resources.ffDrook;
+            dPawn = Resources.ffDpawn;
+        }
+
+        public void changeTheme()
+        {
+            List<Chess.coordinate> temp = new List<coordinate>();
+
+            temp = getDarkPieces();
+            temp.AddRange(getLightPieces());
+
+            foreach(Chess.coordinate spot in temp)
+            {
+                coordinateToPictureBox(spot).Image = matchPicture(board[spot.x, spot.y]);
+            }
+        }
+
         public void newGame()
         {
             //sets everything needed for new game

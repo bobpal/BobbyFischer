@@ -191,6 +191,20 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\ffDbishop.png" />
+    <Content Include="Resources\ffDking.png" />
+    <Content Include="Resources\ffDknight.png" />
+    <Content Include="Resources\ffDpawn.png" />
+    <Content Include="Resources\ffDqueen.png" />
+    <Content Include="Resources\ffDrook.png" />
+    <Content Include="Resources\ffLbishop.png" />
+    <Content Include="Resources\ffLking.png" />
+    <Content Include="Resources\ffLknight.png" />
+    <Content Include="Resources\ffLpawn.png" />
+    <Content Include="Resources\ffLqueen.png" />
+    <Content Include="Resources\ffLrook.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
