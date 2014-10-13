@@ -28,10 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Board));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chooseThemeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lettersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
@@ -97,10 +102,6 @@
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.chooseThemeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lettersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -203,6 +204,37 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.chooseThemeToolStripMenuItem});
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Text = "Options";
+            // 
+            // chooseThemeToolStripMenuItem
+            // 
+            this.chooseThemeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lettersToolStripMenuItem,
+            this.fFToolStripMenuItem});
+            this.chooseThemeToolStripMenuItem.Name = "chooseThemeToolStripMenuItem";
+            this.chooseThemeToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.chooseThemeToolStripMenuItem.Text = "Choose Theme";
+            // 
+            // lettersToolStripMenuItem
+            // 
+            this.lettersToolStripMenuItem.Name = "lettersToolStripMenuItem";
+            this.lettersToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+            this.lettersToolStripMenuItem.Text = "Letters";
+            this.lettersToolStripMenuItem.Click += new System.EventHandler(this.lettersToolStripMenuItem_Click);
+            // 
+            // fFToolStripMenuItem
+            // 
+            this.fFToolStripMenuItem.Name = "fFToolStripMenuItem";
+            this.fFToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+            this.fFToolStripMenuItem.Text = "FF";
+            this.fFToolStripMenuItem.Click += new System.EventHandler(this.fFToolStripMenuItem_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -1000,37 +1032,6 @@
             this.pictureBox1.WaitOnLoad = true;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
-            // optionsToolStripMenuItem
-            // 
-            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.chooseThemeToolStripMenuItem});
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.optionsToolStripMenuItem.Text = "Options";
-            // 
-            // chooseThemeToolStripMenuItem
-            // 
-            this.chooseThemeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lettersToolStripMenuItem,
-            this.fFToolStripMenuItem});
-            this.chooseThemeToolStripMenuItem.Name = "chooseThemeToolStripMenuItem";
-            this.chooseThemeToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-            this.chooseThemeToolStripMenuItem.Text = "Choose Theme";
-            // 
-            // lettersToolStripMenuItem
-            // 
-            this.lettersToolStripMenuItem.Name = "lettersToolStripMenuItem";
-            this.lettersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.lettersToolStripMenuItem.Text = "Letters";
-            this.lettersToolStripMenuItem.Click += new System.EventHandler(this.lettersToolStripMenuItem_Click);
-            // 
-            // fFToolStripMenuItem
-            // 
-            this.fFToolStripMenuItem.Name = "fFToolStripMenuItem";
-            this.fFToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.fFToolStripMenuItem.Text = "FF";
-            this.fFToolStripMenuItem.Click += new System.EventHandler(this.fFToolStripMenuItem_Click);
-            // 
             // Board
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1039,8 +1040,8 @@
             this.ClientSize = new System.Drawing.Size(724, 702);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Board";
-            this.ShowIcon = false;
             this.Text = "Gone Fischin\'";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
