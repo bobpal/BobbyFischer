@@ -46,6 +46,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>palagano.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -192,6 +195,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="palagano.ico" />
     <Content Include="Resources\ff4Dbishop.png" />
     <Content Include="Resources\ff4Dking.png" />
     <Content Include="Resources\ff4Dknight.png" />
@@ -264,6 +268,7 @@
     <Content Include="Resources\mmLpawn.png" />
     <Content Include="Resources\mmLqueen.png" />
     <Content Include="Resources\mmLrook.png" />
+    <Content Include="Resources\palagano.ico" />
     <Content Include="Resources\somDbishop.png" />
     <Content Include="Resources\somDking.png" />
     <Content Include="Resources\somDknight.png" />
