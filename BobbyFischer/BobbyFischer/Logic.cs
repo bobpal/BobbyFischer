@@ -1026,6 +1026,54 @@ namespace BobbyFischer
             dPawn = Resources.somDpawn;
         }
 
+        public void setMarioTheme()
+        {
+            lKing = Resources.marioLking;
+            lQueen = Resources.marioLqueen;
+            lBishop = Resources.marioLbishop;
+            lKnight = Resources.marioLknight;
+            lRook = Resources.marioLrook;
+            lPawn = Resources.marioLpawn;
+            dKing = Resources.marioDking;
+            dQueen = Resources.marioDqueen;
+            dBishop = Resources.marioDbishop;
+            dKnight = Resources.marioDknight;
+            dRook = Resources.marioDrook;
+            dPawn = Resources.marioDpawn;
+        }
+
+        public void setMMTheme()
+        {
+            lKing = Resources.mmLking;
+            lQueen = Resources.mmLqueen;
+            lBishop = Resources.mmLbishop;
+            lKnight = Resources.mmLknight;
+            lRook = Resources.mmLrook;
+            lPawn = Resources.mmLpawn;
+            dKing = Resources.mmDking;
+            dQueen = Resources.mmDqueen;
+            dBishop = Resources.mmDbishop;
+            dKnight = Resources.mmDknight;
+            dRook = Resources.mmDrook;
+            dPawn = Resources.mmDpawn;
+        }
+
+        public void setFF4Theme()
+        {
+            lKing = Resources.ff4Lking;
+            lQueen = Resources.ff4Lqueen;
+            lBishop = Resources.ff4Lbishop;
+            lKnight = Resources.ff4Lknight;
+            lRook = Resources.ff4Lrook;
+            lPawn = Resources.ff4Lpawn;
+            dKing = Resources.ff4Dking;
+            dQueen = Resources.ff4Dqueen;
+            dBishop = Resources.ff4Dbishop;
+            dKnight = Resources.ff4Dknight;
+            dRook = Resources.ff4Drook;
+            dPawn = Resources.ff4Dpawn;
+        }
+
         public void setLttPTheme()
         {
             lKing = Resources.lttpLking;

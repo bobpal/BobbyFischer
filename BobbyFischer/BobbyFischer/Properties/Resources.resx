@@ -118,6 +118,42 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ff4Dbishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ff4Dbishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ff4Dking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ff4Dking.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ff4Dknight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ff4Dknight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ff4Dpawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ff4Dpawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ff4Dqueen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ff4Dqueen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ff4Drook" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ff4Drook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ff4Lbishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ff4Lbishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ff4Lking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ff4Lking.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ff4Lknight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ff4Lknight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ff4Lpawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ff4Lpawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ff4Lqueen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ff4Lqueen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ff4Lrook" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ff4Lrook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ffDbishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ffDbishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -261,6 +297,78 @@
   </data>
   <data name="lttpLrook" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\lttpLrook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marioDbishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\marioDbishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marioDking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\marioDking.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marioDknight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\marioDknight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marioDpawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\marioDpawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marioDqueen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\marioDqueen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marioDrook" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\marioDrook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marioLbishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\marioLbishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marioLking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\marioLking.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marioLknight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\marioLknight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marioLpawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\marioLpawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marioLqueen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\marioLqueen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marioLrook" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\marioLrook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mmDbishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mmDbishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mmDking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mmDking.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mmDknight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mmDknight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mmDpawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mmDpawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mmDqueen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mmDqueen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mmDrook" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mmDrook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mmLbishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mmLbishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mmLking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mmLking.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mmLknight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mmLknight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mmLpawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mmLpawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mmLqueen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mmLqueen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mmLrook" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mmLrook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="possible" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\possible.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

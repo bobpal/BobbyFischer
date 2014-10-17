@@ -192,6 +192,18 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\ff4Dbishop.png" />
+    <Content Include="Resources\ff4Dking.png" />
+    <Content Include="Resources\ff4Dknight.png" />
+    <Content Include="Resources\ff4Dpawn.png" />
+    <Content Include="Resources\ff4Dqueen.png" />
+    <Content Include="Resources\ff4Drook.png" />
+    <Content Include="Resources\ff4Lbishop.png" />
+    <Content Include="Resources\ff4Lking.png" />
+    <Content Include="Resources\ff4Lknight.png" />
+    <Content Include="Resources\ff4Lpawn.png" />
+    <Content Include="Resources\ff4Lqueen.png" />
+    <Content Include="Resources\ff4Lrook.png" />
     <Content Include="Resources\ffDbishop.png" />
     <Content Include="Resources\ffDking.png" />
     <Content Include="Resources\ffDknight.png" />
@@ -228,6 +240,30 @@
     <Content Include="Resources\lttpLpawn.png" />
     <Content Include="Resources\lttpLqueen.png" />
     <Content Include="Resources\lttpLrook.png" />
+    <Content Include="Resources\marioDbishop.png" />
+    <Content Include="Resources\marioDking.png" />
+    <Content Include="Resources\marioDknight.png" />
+    <Content Include="Resources\marioDpawn.png" />
+    <Content Include="Resources\marioDqueen.png" />
+    <Content Include="Resources\marioDrook.png" />
+    <Content Include="Resources\marioLbishop.png" />
+    <Content Include="Resources\marioLking.png" />
+    <Content Include="Resources\marioLknight.png" />
+    <Content Include="Resources\marioLpawn.png" />
+    <Content Include="Resources\marioLqueen.png" />
+    <Content Include="Resources\marioLrook.png" />
+    <Content Include="Resources\mmDbishop.png" />
+    <Content Include="Resources\mmDking.png" />
+    <Content Include="Resources\mmDknight.png" />
+    <Content Include="Resources\mmDpawn.png" />
+    <Content Include="Resources\mmDqueen.png" />
+    <Content Include="Resources\mmDrook.png" />
+    <Content Include="Resources\mmLbishop.png" />
+    <Content Include="Resources\mmLking.png" />
+    <Content Include="Resources\mmLknight.png" />
+    <Content Include="Resources\mmLpawn.png" />
+    <Content Include="Resources\mmLqueen.png" />
+    <Content Include="Resources\mmLrook.png" />
     <Content Include="Resources\somDbishop.png" />
     <Content Include="Resources\somDking.png" />
     <Content Include="Resources\somDknight.png" />

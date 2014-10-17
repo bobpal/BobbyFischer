@@ -35,6 +35,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chooseThemeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.figureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lettersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.soMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -104,7 +105,9 @@
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.figureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.marioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fF4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.megamanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -219,14 +222,24 @@
             // chooseThemeToolStripMenuItem
             // 
             this.chooseThemeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.figureToolStripMenuItem,
             this.lettersToolStripMenuItem,
             this.fFToolStripMenuItem,
             this.soMToolStripMenuItem,
             this.lttPToolStripMenuItem,
-            this.figureToolStripMenuItem});
+            this.marioToolStripMenuItem,
+            this.fF4ToolStripMenuItem,
+            this.megamanToolStripMenuItem});
             this.chooseThemeToolStripMenuItem.Name = "chooseThemeToolStripMenuItem";
             this.chooseThemeToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.chooseThemeToolStripMenuItem.Text = "Choose Theme";
+            // 
+            // figureToolStripMenuItem
+            // 
+            this.figureToolStripMenuItem.Name = "figureToolStripMenuItem";
+            this.figureToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.figureToolStripMenuItem.Text = "Figure";
+            this.figureToolStripMenuItem.Click += new System.EventHandler(this.figureToolStripMenuItem_Click);
             // 
             // lettersToolStripMenuItem
             // 
@@ -239,7 +252,7 @@
             // 
             this.fFToolStripMenuItem.Name = "fFToolStripMenuItem";
             this.fFToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.fFToolStripMenuItem.Text = "FF";
+            this.fFToolStripMenuItem.Text = "‌Final Fantasy";
             this.fFToolStripMenuItem.Click += new System.EventHandler(this.fFToolStripMenuItem_Click);
             // 
             // soMToolStripMenuItem
@@ -1052,12 +1065,26 @@
             this.pictureBox1.WaitOnLoad = true;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
-            // figureToolStripMenuItem
+            // marioToolStripMenuItem
             // 
-            this.figureToolStripMenuItem.Name = "figureToolStripMenuItem";
-            this.figureToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.figureToolStripMenuItem.Text = "Figure";
-            this.figureToolStripMenuItem.Click += new System.EventHandler(this.figureToolStripMenuItem_Click);
+            this.marioToolStripMenuItem.Name = "marioToolStripMenuItem";
+            this.marioToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.marioToolStripMenuItem.Text = "Mario";
+            this.marioToolStripMenuItem.Click += new System.EventHandler(this.marioToolStripMenuItem_Click);
+            // 
+            // fF4ToolStripMenuItem
+            // 
+            this.fF4ToolStripMenuItem.Name = "fF4ToolStripMenuItem";
+            this.fF4ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.fF4ToolStripMenuItem.Text = "FF4";
+            this.fF4ToolStripMenuItem.Click += new System.EventHandler(this.fF4ToolStripMenuItem_Click);
+            // 
+            // megamanToolStripMenuItem
+            // 
+            this.megamanToolStripMenuItem.Name = "megamanToolStripMenuItem";
+            this.megamanToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.megamanToolStripMenuItem.Text = "Megaman";
+            this.megamanToolStripMenuItem.Click += new System.EventHandler(this.megamanToolStripMenuItem_Click);
             // 
             // Board
             // 
@@ -1221,6 +1248,9 @@
         private System.Windows.Forms.ToolStripMenuItem soMToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lttPToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem figureToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem marioToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fF4ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem megamanToolStripMenuItem;
     }
 }
 
