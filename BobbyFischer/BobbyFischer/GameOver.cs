@@ -22,7 +22,6 @@ namespace BobbyFischer
             InitializeComponent();
             this.game = chess;
             this.losingTeam = team;
-            this.ControlBox = false;
 
             if (losingTeam == "dark")
             {

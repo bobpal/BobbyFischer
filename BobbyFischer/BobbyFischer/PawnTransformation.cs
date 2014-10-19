@@ -24,7 +24,6 @@ namespace BobbyFischer
             InitializeComponent();
             this.spot = point;
             this.game = chess;
-            this.ControlBox = false;
         }
 
         public void queen_Click(object sender, EventArgs e)

@@ -20,8 +20,6 @@ namespace BobbyFischer
         {
             InitializeComponent();
             this.game = chess;
-            this.CenterToScreen();
-            this.ControlBox = false;
         }
 
         private void easy_Click(object sender, EventArgs e)

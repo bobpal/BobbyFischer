@@ -40,6 +40,9 @@
             this.fFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.soMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lttPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.marioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fF4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.megamanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
@@ -105,9 +108,6 @@
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.marioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fF4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.megamanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -237,37 +237,58 @@
             // figureToolStripMenuItem
             // 
             this.figureToolStripMenuItem.Name = "figureToolStripMenuItem";
-            this.figureToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.figureToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.figureToolStripMenuItem.Text = "Figure";
             this.figureToolStripMenuItem.Click += new System.EventHandler(this.figureToolStripMenuItem_Click);
             // 
             // lettersToolStripMenuItem
             // 
             this.lettersToolStripMenuItem.Name = "lettersToolStripMenuItem";
-            this.lettersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.lettersToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.lettersToolStripMenuItem.Text = "Letters";
             this.lettersToolStripMenuItem.Click += new System.EventHandler(this.lettersToolStripMenuItem_Click);
             // 
             // fFToolStripMenuItem
             // 
             this.fFToolStripMenuItem.Name = "fFToolStripMenuItem";
-            this.fFToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.fFToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.fFToolStripMenuItem.Text = "‌Final Fantasy";
             this.fFToolStripMenuItem.Click += new System.EventHandler(this.fFToolStripMenuItem_Click);
             // 
             // soMToolStripMenuItem
             // 
             this.soMToolStripMenuItem.Name = "soMToolStripMenuItem";
-            this.soMToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.soMToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.soMToolStripMenuItem.Text = "SoM";
             this.soMToolStripMenuItem.Click += new System.EventHandler(this.soMToolStripMenuItem_Click);
             // 
             // lttPToolStripMenuItem
             // 
             this.lttPToolStripMenuItem.Name = "lttPToolStripMenuItem";
-            this.lttPToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.lttPToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.lttPToolStripMenuItem.Text = "LttP";
             this.lttPToolStripMenuItem.Click += new System.EventHandler(this.lttPToolStripMenuItem_Click);
+            // 
+            // marioToolStripMenuItem
+            // 
+            this.marioToolStripMenuItem.Name = "marioToolStripMenuItem";
+            this.marioToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.marioToolStripMenuItem.Text = "Mario";
+            this.marioToolStripMenuItem.Click += new System.EventHandler(this.marioToolStripMenuItem_Click);
+            // 
+            // fF4ToolStripMenuItem
+            // 
+            this.fF4ToolStripMenuItem.Name = "fF4ToolStripMenuItem";
+            this.fF4ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.fF4ToolStripMenuItem.Text = "FF4";
+            this.fF4ToolStripMenuItem.Click += new System.EventHandler(this.fF4ToolStripMenuItem_Click);
+            // 
+            // megamanToolStripMenuItem
+            // 
+            this.megamanToolStripMenuItem.Name = "megamanToolStripMenuItem";
+            this.megamanToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.megamanToolStripMenuItem.Text = "Megaman";
+            this.megamanToolStripMenuItem.Click += new System.EventHandler(this.megamanToolStripMenuItem_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -1065,27 +1086,6 @@
             this.pictureBox1.WaitOnLoad = true;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
-            // marioToolStripMenuItem
-            // 
-            this.marioToolStripMenuItem.Name = "marioToolStripMenuItem";
-            this.marioToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.marioToolStripMenuItem.Text = "Mario";
-            this.marioToolStripMenuItem.Click += new System.EventHandler(this.marioToolStripMenuItem_Click);
-            // 
-            // fF4ToolStripMenuItem
-            // 
-            this.fF4ToolStripMenuItem.Name = "fF4ToolStripMenuItem";
-            this.fF4ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.fF4ToolStripMenuItem.Text = "FF4";
-            this.fF4ToolStripMenuItem.Click += new System.EventHandler(this.fF4ToolStripMenuItem_Click);
-            // 
-            // megamanToolStripMenuItem
-            // 
-            this.megamanToolStripMenuItem.Name = "megamanToolStripMenuItem";
-            this.megamanToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.megamanToolStripMenuItem.Text = "Megaman";
-            this.megamanToolStripMenuItem.Click += new System.EventHandler(this.megamanToolStripMenuItem_Click);
-            // 
             // Board
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1096,6 +1096,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Board";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Gone Fischin\'";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);

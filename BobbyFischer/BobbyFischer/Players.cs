@@ -18,7 +18,6 @@ namespace BobbyFischer
         {
             InitializeComponent();
             this.game = chess;
-            this.ControlBox = false;
         }
 
         private void computer_Click(object sender, EventArgs e)

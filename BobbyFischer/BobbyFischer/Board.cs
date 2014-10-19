@@ -20,9 +20,10 @@ namespace BobbyFischer
         public Board()
         {
             InitializeComponent();
-            this.CenterToScreen();
             game = new Chess(this);
             game.setFigureTheme();
+            this.Show();
+            game.newGame();
         }
 
         public void Form1_Load(object sender, EventArgs e)
