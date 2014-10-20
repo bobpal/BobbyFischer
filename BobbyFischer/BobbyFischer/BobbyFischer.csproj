@@ -62,17 +62,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Difficulty.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Difficulty.Designer.cs">
-      <DependentUpon>Difficulty.cs</DependentUpon>
-    </Compile>
     <Compile Include="Board.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Board.Designer.cs">
       <DependentUpon>Board.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewGame.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewGame.Designer.cs">
+      <DependentUpon>NewGame.cs</DependentUpon>
     </Compile>
     <Compile Include="PawnTransformation.cs">
       <SubType>Form</SubType>
@@ -81,12 +81,6 @@
       <DependentUpon>PawnTransformation.cs</DependentUpon>
     </Compile>
     <Compile Include="Logic.cs" />
-    <Compile Include="Players.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Players.Designer.cs">
-      <DependentUpon>Players.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameOver.cs">
       <SubType>Form</SubType>
@@ -94,20 +88,16 @@
     <Compile Include="GameOver.Designer.cs">
       <DependentUpon>GameOver.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Difficulty.resx">
-      <DependentUpon>Difficulty.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Board.resx">
       <DependentUpon>Board.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="NewGame.resx">
+      <DependentUpon>NewGame.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PawnTransformation.resx">
       <DependentUpon>PawnTransformation.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Players.resx">
-      <DependentUpon>Players.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

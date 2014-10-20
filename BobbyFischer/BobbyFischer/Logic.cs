@@ -483,12 +483,20 @@ namespace BobbyFischer
                         movePiece(currentCell, board[prevSelected.x, prevSelected.y], prevSelected);
                         clearBackgroundImages();
 
-                        if (board[currentCell.x, currentCell.y].job == "Pawn" && currentCell.y == 7)//if pawn makes it to last row
+                        if (board[currentCell.x, currentCell.y].job == "Pawn")//if pawn makes it to last row
                         {
-                            PawnTransformation transform = new PawnTransformation(currentCell, this);
-                            transform.ShowDialog();
-                        }
+                            if (board[currentCell.x, currentCell.y].color == "light" && currentCell.y == 7)
+                            {
+                                PawnTransformation transform = new PawnTransformation(currentCell, this);
+                                transform.ShowDialog();
+                            }
 
+                            if (board[currentCell.x, currentCell.y].color == "dark" && currentCell.y == 0)
+                            {
+                                PawnTransformation transform = new PawnTransformation(currentCell, this);
+                                transform.ShowDialog();
+                            }
+                        }
                         betweenTurns();
                     }
                 }
@@ -1105,22 +1113,8 @@ namespace BobbyFischer
 
         public void newGame()
         {
-            //sets everything needed for new game
-
-            createGrid();
-            setImages();
-            Players compOrHuman = new Players(this);
-            compOrHuman.ShowDialog();
-            clearBackgroundImages();
-            movablePieceSelected = false;
-            offensiveTeam = "light";
-            firstGame = true;
-
-            if (onePlayer == true)
-            {
-                Difficulty easyOrHard = new Difficulty(this);
-                easyOrHard.ShowDialog();
-            }
+            NewGame play = new NewGame(this);
+            play.ShowDialog();
         }
 
         public struct piece
