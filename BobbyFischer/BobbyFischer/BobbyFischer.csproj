@@ -222,6 +222,7 @@
     <Content Include="Resources\figLpawn.png" />
     <Content Include="Resources\figLqueen.png" />
     <Content Include="Resources\figLrook.png" />
+    <Content Include="Resources\from.png" />
     <Content Include="Resources\lttpDbishop.png" />
     <Content Include="Resources\lttpDking.png" />
     <Content Include="Resources\lttpDknight.png" />
@@ -271,6 +272,7 @@
     <Content Include="Resources\somLpawn.png" />
     <Content Include="Resources\somLqueen.png" />
     <Content Include="Resources\somLrook.png" />
+    <Content Include="Resources\to.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

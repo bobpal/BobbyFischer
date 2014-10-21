@@ -423,6 +423,16 @@ namespace BobbyFischer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap from {
+            get {
+                object obj = ResourceManager.GetObject("from", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap letDbishop {
             get {
                 object obj = ResourceManager.GetObject("letDbishop", resourceCulture);
@@ -1046,6 +1056,16 @@ namespace BobbyFischer.Properties {
         internal static System.Drawing.Bitmap somLrook {
             get {
                 object obj = ResourceManager.GetObject("somLrook", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap to {
+            get {
+                object obj = ResourceManager.GetObject("to", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

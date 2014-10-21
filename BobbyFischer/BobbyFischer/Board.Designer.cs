@@ -193,21 +193,21 @@
             this.newGameToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+            this.fileToolStripMenuItem.Text = "Game";
             // 
             // newGameToolStripMenuItem
             // 
             this.newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
             this.newGameToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.newGameToolStripMenuItem.Text = "New Game";
             this.newGameToolStripMenuItem.Click += new System.EventHandler(this.newGameToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -237,56 +237,56 @@
             // figureToolStripMenuItem
             // 
             this.figureToolStripMenuItem.Name = "figureToolStripMenuItem";
-            this.figureToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.figureToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.figureToolStripMenuItem.Text = "Figure";
             this.figureToolStripMenuItem.Click += new System.EventHandler(this.figureToolStripMenuItem_Click);
             // 
             // lettersToolStripMenuItem
             // 
             this.lettersToolStripMenuItem.Name = "lettersToolStripMenuItem";
-            this.lettersToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.lettersToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.lettersToolStripMenuItem.Text = "Letters";
             this.lettersToolStripMenuItem.Click += new System.EventHandler(this.lettersToolStripMenuItem_Click);
             // 
             // fFToolStripMenuItem
             // 
             this.fFToolStripMenuItem.Name = "fFToolStripMenuItem";
-            this.fFToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.fFToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.fFToolStripMenuItem.Text = "‌Final Fantasy";
             this.fFToolStripMenuItem.Click += new System.EventHandler(this.fFToolStripMenuItem_Click);
             // 
             // soMToolStripMenuItem
             // 
             this.soMToolStripMenuItem.Name = "soMToolStripMenuItem";
-            this.soMToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
-            this.soMToolStripMenuItem.Text = "SoM";
+            this.soMToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.soMToolStripMenuItem.Text = "Secret of Mana";
             this.soMToolStripMenuItem.Click += new System.EventHandler(this.soMToolStripMenuItem_Click);
             // 
             // lttPToolStripMenuItem
             // 
             this.lttPToolStripMenuItem.Name = "lttPToolStripMenuItem";
-            this.lttPToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
-            this.lttPToolStripMenuItem.Text = "LttP";
+            this.lttPToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.lttPToolStripMenuItem.Text = "Zelda";
             this.lttPToolStripMenuItem.Click += new System.EventHandler(this.lttPToolStripMenuItem_Click);
             // 
             // marioToolStripMenuItem
             // 
             this.marioToolStripMenuItem.Name = "marioToolStripMenuItem";
-            this.marioToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.marioToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.marioToolStripMenuItem.Text = "Mario";
             this.marioToolStripMenuItem.Click += new System.EventHandler(this.marioToolStripMenuItem_Click);
             // 
             // fF4ToolStripMenuItem
             // 
             this.fF4ToolStripMenuItem.Name = "fF4ToolStripMenuItem";
-            this.fF4ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.fF4ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.fF4ToolStripMenuItem.Text = "FF4";
             this.fF4ToolStripMenuItem.Click += new System.EventHandler(this.fF4ToolStripMenuItem_Click);
             // 
             // megamanToolStripMenuItem
             // 
             this.megamanToolStripMenuItem.Name = "megamanToolStripMenuItem";
-            this.megamanToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.megamanToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.megamanToolStripMenuItem.Text = "Megaman";
             this.megamanToolStripMenuItem.Click += new System.EventHandler(this.megamanToolStripMenuItem_Click);
             // 
