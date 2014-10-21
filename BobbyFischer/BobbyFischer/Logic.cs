@@ -30,23 +30,23 @@ namespace BobbyFischer
         public bool medMode;                                        //difficulty level
         public bool hardMode;                                       //difficulty level
         public bool firstGame;                                      //has newGame() been called yet?
-        public Chess.coordinate currSelected;                       //where the cursor clicked
-        public Chess.coordinate prevSelected;                       //where the cursor clicked previously
-        public Image lKing;
+        private Chess.coordinate currSelected;                      //where the cursor clicked
+        private Chess.coordinate prevSelected;                      //where the cursor clicked previously
+        private Image lKing;
         public Image lQueen;
         public Image lBishop;
         public Image lKnight;
         public Image lRook;
-        public Image lPawn;
-        public Image dKing;
+        private Image lPawn;
+        private Image dKing;
         public Image dQueen;
         public Image dBishop;
         public Image dKnight;
         public Image dRook;
-        public Image dPawn;
+        private Image dPawn;
         public bool movablePieceSelected = false;                   //if true, the next click will move the selected piece if possible
-        public List<Chess.move> possible = new List<Chess.move>();  //list of all possible moves
-        public static Random rnd = new Random();
+        private List<Chess.move> possible = new List<Chess.move>();  //list of all possible moves
+        private static Random rnd = new Random();
 
         public Chess(Board mainForm)
         {
@@ -120,7 +120,7 @@ namespace BobbyFischer
             board[7,7].firstMove = true;
         }
 
-        public List<Chess.move> getMoves(Chess.coordinate spot)
+        private List<Chess.move> getMoves(Chess.coordinate spot)
         {
             //returns all possible moves of spot given in argument disregarding check restrictions
             //determines job of piece and calls apropriate function to get correct move list
@@ -148,7 +148,7 @@ namespace BobbyFischer
             }
         }
 
-        public List<Chess.move> hardLogic(List<Chess.move> pos)
+        private List<Chess.move> hardLogic(List<Chess.move> pos)
         {
             //gets executed if player selects medium or hard mode
 
@@ -225,7 +225,7 @@ namespace BobbyFischer
             return pos;//if no capturable moves, return list given, same as easy mode
         }
 
-        public List<Chess.coordinate> getDarkPieces()
+        private List<Chess.coordinate> getDarkPieces()
         {
             //searches through board and returns list of coordinates where all dark pieces are located
 
@@ -247,7 +247,7 @@ namespace BobbyFischer
             return possiblePieces;
         }
 
-        public List<Chess.coordinate> getLightPieces()
+        private List<Chess.coordinate> getLightPieces()
         {
             //searches through board and returns list of coordinates where all light pieces are located
 
@@ -269,7 +269,7 @@ namespace BobbyFischer
             return possiblePieces;
         }
 
-        public bool isInCheck(string teamInQuestion)
+        private bool isInCheck(string teamInQuestion)
         {
             //returns whether team in question is in check
 
@@ -305,7 +305,7 @@ namespace BobbyFischer
             return false;
         }
 
-        public List<Chess.move> getCheckRestrictedMoves(Chess.coordinate aPiece)
+        private List<Chess.move> getCheckRestrictedMoves(Chess.coordinate aPiece)
         {
             //takes single piece and returns list of moves that don't put player in check
 
@@ -349,7 +349,7 @@ namespace BobbyFischer
             return possibleWithoutCheck;
         }
 
-        public bool isInCheckmate(string teamInQuestion, List<Chess.coordinate> availablePieces)
+        private bool isInCheckmate(string teamInQuestion, List<Chess.coordinate> availablePieces)
         {
             //takes list of pieces and returns whether or not player is in checkmate
 
@@ -404,7 +404,7 @@ namespace BobbyFischer
             return false;
         }
 
-        public void castling(Chess.coordinate toSpot, Chess.coordinate fromSpot)
+        private void castling(Chess.coordinate toSpot, Chess.coordinate fromSpot)
         {
             //if selected move is a castling move, move Rook in this function
 
@@ -503,7 +503,7 @@ namespace BobbyFischer
             }
         }
 
-        public void betweenTurns()
+        private void betweenTurns()
         {
             //In between light and dark's turns
             List<Chess.move> possibleWithoutCheck = new List<Chess.move>();
@@ -534,7 +534,7 @@ namespace BobbyFischer
             }
         }
 
-        public void compTurn(List<Chess.move> poss)
+        private void compTurn(List<Chess.move> poss)
         {
             //computer's turn
 
@@ -581,7 +581,7 @@ namespace BobbyFischer
             }
         }
 
-        public void movePiece(Chess.coordinate newCell, Chess.piece pPiece, Chess.coordinate oldCell)
+        private void movePiece(Chess.coordinate newCell, Chess.piece pPiece, Chess.coordinate oldCell)
         {
             //overwrite current cell
             board[newCell.x, newCell.y].color = offensiveTeam;
@@ -601,7 +601,7 @@ namespace BobbyFischer
             board[newCell.x, newCell.y].firstMove = false;
         }
 
-        public Image matchPicture(piece figure)
+        private Image matchPicture(piece figure)
         {
             if(figure.color == "dark")
             {
@@ -1153,7 +1153,7 @@ namespace BobbyFischer
         //the next few functions define the rules for what piece can move where in any situation except check restrictions
         //takes coordinate and returns list of possible moves for that piece
 
-        public List<move> rookMoves(coordinate current)
+        private List<move> rookMoves(coordinate current)
         {
             string oppositeColor;
             move availableMove;
@@ -1294,7 +1294,7 @@ namespace BobbyFischer
             return availableList;
         }
 
-        public List<move> knightMoves(coordinate current)
+        private List<move> knightMoves(coordinate current)
         {
             move availableMove;
             int availableX = current.x;
@@ -1432,7 +1432,7 @@ namespace BobbyFischer
             return availableList;
         }
 
-        public List<move> bishopMoves(coordinate current)
+        private List<move> bishopMoves(coordinate current)
         {
             string oppositeColor;
             move availableMove;
@@ -1581,7 +1581,7 @@ namespace BobbyFischer
             return availableList;
         }
 
-        public List<move> kingMoves(coordinate current)
+        private List<move> kingMoves(coordinate current)
         {
             move availableMove;
             int availableX = current.x;
@@ -1769,7 +1769,7 @@ namespace BobbyFischer
             return availableList;
         }
 
-        public List<move> pawnMoves(coordinate current)
+        private List<move> pawnMoves(coordinate current)
         {
             string oppositeColor;
             move availableMove;

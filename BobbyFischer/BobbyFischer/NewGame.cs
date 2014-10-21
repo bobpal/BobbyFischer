@@ -12,7 +12,7 @@ namespace BobbyFischer
 {
     public partial class NewGame : Form
     {
-        Chess game;
+        private Chess game;
 
         public NewGame(Chess chess)
         {
@@ -37,6 +37,9 @@ namespace BobbyFischer
 
         private void ok_Click(object sender, EventArgs e)
         {
+            game.medMode = false;
+            game.hardMode = false;
+
             if(onePlayer.Checked == true)
             {
                 game.onePlayer = true;

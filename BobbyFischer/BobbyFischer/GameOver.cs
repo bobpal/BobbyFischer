@@ -15,7 +15,7 @@ namespace BobbyFischer
     public partial class GameOver : Form
     {
         Chess game;
-        string losingTeam;
+        private string losingTeam;
 
         public GameOver(Chess chess, string team)
         {

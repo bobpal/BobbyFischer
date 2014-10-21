@@ -15,7 +15,7 @@ namespace BobbyFischer
 {
     public partial class Board : Form
     {
-        public Chess game;
+        private Chess game;
 
         public Board()
         {
@@ -26,12 +26,12 @@ namespace BobbyFischer
             game.newGame();
         }
 
-        public void Form1_Load(object sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e)
         {
             
         }
 
-        public void tableLayoutPanel1_Paint_1(object sender, PaintEventArgs e)
+        private void tableLayoutPanel1_Paint_1(object sender, PaintEventArgs e)
         {
             
         }
@@ -406,7 +406,7 @@ namespace BobbyFischer
             game.clicker(new Chess.coordinate(7, 6));
         }
 
-        public void pictureBox1_Click(object sender, EventArgs e)
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
             game.clicker(new Chess.coordinate(0, 7));
         }

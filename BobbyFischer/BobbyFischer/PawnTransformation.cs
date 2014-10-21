@@ -26,7 +26,7 @@ namespace BobbyFischer
             this.game = chess;
         }
 
-        public void queen_Click(object sender, EventArgs e)
+        private void queen_Click(object sender, EventArgs e)
         {
             if(game.offensiveTeam == "light")
             {
@@ -40,7 +40,7 @@ namespace BobbyFischer
             this.Close();
         }
 
-        public void rook_Click(object sender, EventArgs e)
+        private void rook_Click(object sender, EventArgs e)
         {
             if (game.offensiveTeam == "light")
             {
@@ -54,7 +54,7 @@ namespace BobbyFischer
             this.Close();
         }
 
-        public void bishop_Click(object sender, EventArgs e)
+        private void bishop_Click(object sender, EventArgs e)
         {
             if (game.offensiveTeam == "light")
             {
@@ -68,7 +68,7 @@ namespace BobbyFischer
             this.Close();
         }
 
-        public void knight_Click(object sender, EventArgs e)
+        private void knight_Click(object sender, EventArgs e)
         {
             if (game.offensiveTeam == "light")
             {
