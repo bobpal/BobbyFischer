@@ -30,7 +30,6 @@ namespace BobbyFischer
         public bool medMode;                                        //difficulty level
         public bool hardMode;                                       //difficulty level
         public bool firstGame;                                      //has newGame() been called yet?
-        private Chess.coordinate currSelected;                      //where the cursor clicked
         private Chess.coordinate prevSelected;                      //where the cursor clicked previously
         private Image lKing;
         public Image lQueen;
@@ -229,7 +228,7 @@ namespace BobbyFischer
         {
             //searches through board and returns list of coordinates where all dark pieces are located
 
-            Chess.coordinate temp;
+            Chess.coordinate temp = new coordinate();
             List<Chess.coordinate> possiblePieces = new List<Chess.coordinate>();
 
             for(int y = 0; y < 8; y++)
@@ -251,7 +250,7 @@ namespace BobbyFischer
         {
             //searches through board and returns list of coordinates where all light pieces are located
 
-            Chess.coordinate temp;
+            Chess.coordinate temp = new coordinate();
             List<Chess.coordinate> possiblePieces = new List<Chess.coordinate>();
 
             for(int y = 0; y < 8; y++)
@@ -1126,10 +1125,10 @@ namespace BobbyFischer
 
         public struct coordinate
         {
-            public int x;
-            public int y;
+            public int x { get; set; }
+            public int y { get; set; }
 
-            public coordinate(int p1, int p2)
+            public coordinate(int p1, int p2) : this()
             {
                 this.x = p1;
                 this.y = p2;
@@ -1139,24 +1138,32 @@ namespace BobbyFischer
         public struct move
         {
             //represents a move that a piece can do, includes starting position and ending position
+            public coordinate pieceSpot { get; set; }    //starting position
+            public coordinate moveSpot { get; set; }     //ending position
+        }
 
-            public coordinate pieceSpot;    //starting position
-            public coordinate moveSpot;     //ending position
+        public struct history
+        {
+            private move step;          //move that happened previously
+            private piece captured;     //piece that move captured, if no capture, use null
+            private bool pawnTransform; //did a pawn transformation happen?
 
-            public move(coordinate p1, coordinate p2)
+            public history(move p1, piece p2, bool p3)
             {
-                this.pieceSpot = p1;
-                this.moveSpot = p2;
+                this.step = p1;
+                this.captured = p2;
+                this.pawnTransform = p3;
             }
         }
 
-        //the next few functions define the rules for what piece can move where in any situation except check restrictions
+        //the next few functions define the rules for what piece can move where in any situation
+        //does not account for check restrictions
         //takes coordinate and returns list of possible moves for that piece
 
         private List<move> rookMoves(coordinate current)
         {
             string oppositeColor;
-            move availableMove;
+            move availableMove = new move();
             int availableX = current.x;              //put coordinate in temp variable to manipulate while preserving original
             int availableY = current.y;
             List<move> availableList = new List<move>();
@@ -1296,7 +1303,7 @@ namespace BobbyFischer
 
         private List<move> knightMoves(coordinate current)
         {
-            move availableMove;
+            move availableMove = new move();
             int availableX = current.x;
             int availableY = current.y;
             List<move> availableList = new List<move>();
@@ -1435,7 +1442,7 @@ namespace BobbyFischer
         private List<move> bishopMoves(coordinate current)
         {
             string oppositeColor;
-            move availableMove;
+            move availableMove = new move();
             int availableX = current.x;
             int availableY = current.y;
             List<move> availableList = new List<move>();
@@ -1583,7 +1590,7 @@ namespace BobbyFischer
 
         private List<move> kingMoves(coordinate current)
         {
-            move availableMove;
+            move availableMove = new move();
             int availableX = current.x;
             int availableY = current.y;
             List<move> availableList = new List<move>();
@@ -1772,7 +1779,7 @@ namespace BobbyFischer
         private List<move> pawnMoves(coordinate current)
         {
             string oppositeColor;
-            move availableMove;
+            move availableMove = new move();
             int availableX = current.x;
             int availableY = current.y;
             List<move> availableList = new List<move>();

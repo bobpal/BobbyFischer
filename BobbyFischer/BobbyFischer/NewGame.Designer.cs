@@ -87,7 +87,6 @@
             // 
             this.difficultyPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.difficultyPanel.BackColor = System.Drawing.SystemColors.Control;
-            this.difficultyPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.difficultyPanel.Controls.Add(this.hard);
             this.difficultyPanel.Controls.Add(this.medium);
             this.difficultyPanel.Controls.Add(this.easy);
