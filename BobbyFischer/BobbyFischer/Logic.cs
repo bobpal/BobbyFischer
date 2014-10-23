@@ -30,7 +30,7 @@ namespace BobbyFischer
         public bool medMode;                                        //difficulty level
         public bool hardMode;                                       //difficulty level
         public bool firstGame;                                      //has newGame() been called yet?
-        private Chess.coordinate prevSelected;                      //where the cursor clicked previously
+        private coordinate prevSelected;                            //where the cursor clicked previously
         private Image lKing;
         public Image lQueen;
         public Image lBishop;
@@ -43,8 +43,9 @@ namespace BobbyFischer
         public Image dKnight;
         public Image dRook;
         private Image dPawn;
-        public bool movablePieceSelected = false;                   //if true, the next click will move the selected piece if possible
-        private List<Chess.move> possible = new List<Chess.move>();  //list of all possible moves
+        public Stack<historyNode> history = new Stack<historyNode>();   //stores all moves on a stack
+        public bool movablePieceSelected = false;                       //if true, the next click will move the selected piece if possible
+        private List<move> possible = new List<move>();                 //list of all possible moves
         private static Random rnd = new Random();
 
         public Chess(Board mainForm)
@@ -119,12 +120,12 @@ namespace BobbyFischer
             board[7,7].firstMove = true;
         }
 
-        private List<Chess.move> getMoves(Chess.coordinate spot)
+        private List<move> getMoves(coordinate spot)
         {
             //returns all possible moves of spot given in argument disregarding check restrictions
             //determines job of piece and calls apropriate function to get correct move list
 
-            List<Chess.move> temp = new List<Chess.move>();
+            List<move> temp = new List<move>();
 
             switch(board[spot.x, spot.y].job)
             {
@@ -147,13 +148,13 @@ namespace BobbyFischer
             }
         }
 
-        private List<Chess.move> hardLogic(List<Chess.move> pos)
+        private List<move> hardLogic(List<move> pos)
         {
             //gets executed if player selects medium or hard mode
 
-            List<Chess.move> capturableMoves = new List<Chess.move>();
+            List<move> capturableMoves = new List<move>();
 
-            foreach(Chess.move p in pos)//only look at moves that can capture a piece
+            foreach(move p in pos)//only look at moves that can capture a piece
             {
                 if(board[p.moveSpot.x, p.moveSpot.y].color == "light")
                 {
@@ -169,13 +170,13 @@ namespace BobbyFischer
                 {
                     //list of moves that can capture piece of said job
 
-                    List<Chess.move> queen = new List<Chess.move>();
-                    List<Chess.move> rook = new List<Chess.move>();
-                    List<Chess.move> bishop = new List<Chess.move>();
-                    List<Chess.move> knight = new List<Chess.move>();
-                    List<Chess.move> pawn = new List<Chess.move>();
+                    List<move> queen = new List<move>();
+                    List<move> rook = new List<move>();
+                    List<move> bishop = new List<move>();
+                    List<move> knight = new List<move>();
+                    List<move> pawn = new List<move>();
 
-                    foreach(Chess.move h in pos)//put moves in apropriate list
+                    foreach(move h in pos)//put moves in apropriate list
                     {
                         switch(board[h.moveSpot.x, h.moveSpot.y].job)
                         {
@@ -224,12 +225,12 @@ namespace BobbyFischer
             return pos;//if no capturable moves, return list given, same as easy mode
         }
 
-        private List<Chess.coordinate> getDarkPieces()
+        private List<coordinate> getDarkPieces()
         {
             //searches through board and returns list of coordinates where all dark pieces are located
 
-            Chess.coordinate temp = new coordinate();
-            List<Chess.coordinate> possiblePieces = new List<Chess.coordinate>();
+            coordinate temp = new coordinate();
+            List<coordinate> possiblePieces = new List<coordinate>();
 
             for(int y = 0; y < 8; y++)
             {
@@ -246,12 +247,12 @@ namespace BobbyFischer
             return possiblePieces;
         }
 
-        private List<Chess.coordinate> getLightPieces()
+        private List<coordinate> getLightPieces()
         {
             //searches through board and returns list of coordinates where all light pieces are located
 
-            Chess.coordinate temp = new coordinate();
-            List<Chess.coordinate> possiblePieces = new List<Chess.coordinate>();
+            coordinate temp = new coordinate();
+            List<coordinate> possiblePieces = new List<coordinate>();
 
             for(int y = 0; y < 8; y++)
             {
@@ -272,8 +273,8 @@ namespace BobbyFischer
         {
             //returns whether team in question is in check
 
-            List<Chess.coordinate> spots;
-            List<Chess.move> poss = new List<Chess.move>();
+            List<coordinate> spots;
+            List<move> poss = new List<move>();
 
             if(teamInQuestion == "dark")
             {
@@ -285,7 +286,7 @@ namespace BobbyFischer
                 spots = getDarkPieces();//get all opposing team's pieces
             }
 
-            foreach(Chess.coordinate c in spots)
+            foreach(coordinate c in spots)
             {
                 //get possible moves of opposing team,
                 //doesn't matter if opposing team move gets them in check,
@@ -293,7 +294,7 @@ namespace BobbyFischer
                 poss.AddRange(getMoves(c));
             }
 
-            foreach(Chess.move m in poss)
+            foreach(move m in poss)
             {
                 //if opposing team's move can capture your king, you're in check
                 if(board[m.moveSpot.x, m.moveSpot.y].job == "King" && board[m.moveSpot.x, m.moveSpot.y].color == teamInQuestion)
@@ -304,21 +305,21 @@ namespace BobbyFischer
             return false;
         }
 
-        private List<Chess.move> getCheckRestrictedMoves(Chess.coordinate aPiece)
+        private List<move> getCheckRestrictedMoves(coordinate aPiece)
         {
             //takes single piece and returns list of moves that don't put player in check
 
-            List<Chess.move> allPossible = new List<Chess.move>();
-            List<Chess.move> possibleWithoutCheck = new List<Chess.move>();
-            Chess.coordinate to;
-            Chess.coordinate from;
+            List<move> allPossible = new List<move>();
+            List<move> possibleWithoutCheck = new List<move>();
+            coordinate to;
+            coordinate from;
             string toColor;
             string toJob;
             bool inCheck;
 
             allPossible = getMoves(aPiece);
 
-            foreach(Chess.move m in allPossible)
+            foreach(move m in allPossible)
             {
                 to = m.moveSpot;
                 toColor = board[to.x, to.y].color;
@@ -348,24 +349,24 @@ namespace BobbyFischer
             return possibleWithoutCheck;
         }
 
-        private bool isInCheckmate(string teamInQuestion, List<Chess.coordinate> availablePieces)
+        private bool isInCheckmate(string teamInQuestion, List<coordinate> availablePieces)
         {
             //takes list of pieces and returns whether or not player is in checkmate
 
-            List<Chess.move> allPossible = new List<Chess.move>();
-            List<Chess.move> possibleWithoutCheck = new List<Chess.move>();
-            Chess.coordinate to;
-            Chess.coordinate from;
+            List<move> allPossible = new List<move>();
+            List<move> possibleWithoutCheck = new List<move>();
+            coordinate to;
+            coordinate from;
             string toColor;
             string toJob;
             bool inCheck;
 
             //find all moves that can be done without going into check
-            foreach(Chess.coordinate aPiece in availablePieces)
+            foreach(coordinate aPiece in availablePieces)
             {
                 allPossible = getMoves(aPiece);
 
-                foreach(Chess.move m in allPossible)
+                foreach(move m in allPossible)
                 {
                     to = m.moveSpot;
                     toColor = board[to.x, to.y].color;
@@ -403,11 +404,14 @@ namespace BobbyFischer
             return false;
         }
 
-        private void castling(Chess.coordinate toSpot, Chess.coordinate fromSpot)
+        private void castling(move shift)
         {
             //if selected move is a castling move, move Rook in this function
 
-            int yCoor;  //which row the move is being conducted in
+            historyNode node;
+            int yCoor;                              //which row the move is being conducted in
+            coordinate toSpot = shift.moveSpot;
+            coordinate fromSpot = shift.pieceSpot;
 
             if(offensiveTeam == "light")
             {
@@ -422,28 +426,32 @@ namespace BobbyFischer
             {
                 if(toSpot.x == 2 && toSpot.y == yCoor)  //if moving two spaces to the left
                 {
-                    Chess.coordinate newCastleCoor = new Chess.coordinate(3, yCoor);
-                    Chess.coordinate oldCastleCoor = new Chess.coordinate(0, yCoor);
+                    coordinate newCastleCoor = new coordinate(3, yCoor);
+                    coordinate oldCastleCoor = new coordinate(0, yCoor);
+                    node = new historyNode(shift, board[newCastleCoor.x, newCastleCoor.y], false);
                     movePiece(newCastleCoor, board[oldCastleCoor.x, oldCastleCoor.y], oldCastleCoor);
                 }
 
                 else if(toSpot.x == 6 && toSpot.y == yCoor) //if moving two spaces to the right
                 {
-                    Chess.coordinate newCastleCoor = new Chess.coordinate(5, yCoor);
-                    Chess.coordinate oldCastleCoor = new Chess.coordinate(7, yCoor);
+                    coordinate newCastleCoor = new coordinate(5, yCoor);
+                    coordinate oldCastleCoor = new coordinate(7, yCoor);
+                    node = new historyNode(shift, board[newCastleCoor.x, newCastleCoor.y], false);
                     movePiece(newCastleCoor, board[oldCastleCoor.x, oldCastleCoor.y], oldCastleCoor);
                 }
             }
         }
 
-        public void clicker(Chess.coordinate currentCell)
+        public void clicker(coordinate currentCell)
         {
             //human player's turn, gets called when player clicks on spot
             bool movableSpot;
+            historyNode node;
+            move curTurn = new move();
 
             if (firstGame == true)  //blocks functionality if game hasn't started yet
             {
-                Chess.piece currentPiece = board[currentCell.x, currentCell.y];
+                piece currentPiece = board[currentCell.x, currentCell.y];
 
                 if (currentPiece.color == offensiveTeam)//if selected own piece
                 {
@@ -454,7 +462,7 @@ namespace BobbyFischer
                     possible.Clear();
                     possible.AddRange(getCheckRestrictedMoves(currentCell));
 
-                    foreach (Chess.move m in possible)
+                    foreach (move m in possible)
                     {
                         coordinateToPictureBox(m.moveSpot).BackgroundImage = Resources.possible;
                     }
@@ -464,11 +472,12 @@ namespace BobbyFischer
                 {
                     movableSpot = false;
 
-                    foreach (Chess.move m in possible)
+                    foreach (move m in possible)
                     {
                         if (currentCell.Equals(m.moveSpot))//if selected spot is in possible move list
                         {
                             movableSpot = true;
+                            curTurn = m;
                         }
                     }
 
@@ -476,9 +485,10 @@ namespace BobbyFischer
                     {
                         if (board[prevSelected.x, prevSelected.y].job == "King")
                         {
-                            castling(currentCell, prevSelected);//check if move is a castling
+                            castling(curTurn);//check if move is a castling
                         }
 
+                        piece captured = board[currentCell.x, currentCell.y];
                         movePiece(currentCell, board[prevSelected.x, prevSelected.y], prevSelected);
                         clearBackgroundImages();
 
@@ -495,6 +505,11 @@ namespace BobbyFischer
                                 PawnTransformation transform = new PawnTransformation(currentCell, this);
                                 transform.ShowDialog();
                             }
+                            node = new historyNode(curTurn, captured, true);
+                        }
+                        else
+                        {
+                            node = new historyNode(curTurn, captured, false);
                         }
                         betweenTurns();
                     }
@@ -505,7 +520,7 @@ namespace BobbyFischer
         private void betweenTurns()
         {
             //In between light and dark's turns
-            List<Chess.move> possibleWithoutCheck = new List<Chess.move>();
+            List<move> possibleWithoutCheck = new List<move>();
             bool endOfGame;
 
             //change teams
@@ -522,7 +537,7 @@ namespace BobbyFischer
 
             if (endOfGame == false && onePlayer == true)
             {
-                foreach (Chess.coordinate cell in getDarkPieces()) //for all dark pieces
+                foreach (coordinate cell in getDarkPieces()) //for all dark pieces
                 {
                     possibleWithoutCheck.AddRange(getCheckRestrictedMoves(cell));  //get all moves possible without going into check
                 }
@@ -533,9 +548,10 @@ namespace BobbyFischer
             }
         }
 
-        private void compTurn(List<Chess.move> poss)
+        private void compTurn(List<move> poss)
         {
             //computer's turn
+            historyNode node;
 
             if (medMode == true || hardMode == true)
             {
@@ -543,14 +559,16 @@ namespace BobbyFischer
             }
 
             int r = rnd.Next(0, poss.Count);//choose random move
-            Chess.coordinate newSpot = new Chess.coordinate(poss[r].moveSpot.x, poss[r].moveSpot.y);
-            Chess.coordinate oldSpot = new Chess.coordinate(poss[r].pieceSpot.x, poss[r].pieceSpot.y);
+            move curTurn = poss[r];
+            coordinate newSpot = new coordinate(curTurn.moveSpot.x, curTurn.moveSpot.y);
+            coordinate oldSpot = new coordinate(curTurn.pieceSpot.x, curTurn.pieceSpot.y);
 
             if (board[oldSpot.x, oldSpot.y].job == "King")
             {
-                castling(newSpot, oldSpot);//check if move is a castling
+                castling(curTurn);//check if move is a castling
             }
 
+            piece captured = board[newSpot.x, newSpot.y];
             movePiece(newSpot, board[oldSpot.x, oldSpot.y], oldSpot);
 
             if (board[newSpot.x, newSpot.y].job == "Pawn" && newSpot.y == 0)//if pawn makes it to last row
@@ -577,10 +595,15 @@ namespace BobbyFischer
                     default:
                         break;
                 }
+                node = new historyNode(curTurn, captured, true);
+            }
+            else
+            {
+                node = new historyNode(curTurn, captured, false);
             }
         }
 
-        private void movePiece(Chess.coordinate newCell, Chess.piece pPiece, Chess.coordinate oldCell)
+        private void movePiece(coordinate newCell, piece pPiece, coordinate oldCell)
         {
             //overwrite current cell
             board[newCell.x, newCell.y].color = offensiveTeam;
@@ -644,7 +667,7 @@ namespace BobbyFischer
             }
         }
 
-        public PictureBox coordinateToPictureBox(Chess.coordinate spot)
+        public PictureBox coordinateToPictureBox(coordinate spot)
         {
             //takes (x, y) and returns associated pictureBox
 
@@ -1099,12 +1122,12 @@ namespace BobbyFischer
 
         public void changeTheme()
         {
-            List<Chess.coordinate> temp = new List<coordinate>();
+            List<coordinate> temp = new List<coordinate>();
 
             temp = getDarkPieces();
             temp.AddRange(getLightPieces());
 
-            foreach(Chess.coordinate spot in temp)
+            foreach(coordinate spot in temp)
             {
                 coordinateToPictureBox(spot).Image = matchPicture(board[spot.x, spot.y]);
             }
@@ -1142,13 +1165,13 @@ namespace BobbyFischer
             public coordinate moveSpot { get; set; }     //ending position
         }
 
-        public struct history
+        public struct historyNode
         {
-            private move step;          //move that happened previously
-            private piece captured;     //piece that move captured, if no capture, use null
-            private bool pawnTransform; //did a pawn transformation happen?
+            public move step;          //move that happened previously
+            public piece captured;     //piece that move captured, if no capture, use null
+            public bool pawnTransform; //did a pawn transformation happen?
 
-            public history(move p1, piece p2, bool p3)
+            public historyNode(move p1, piece p2, bool p3)
             {
                 this.step = p1;
                 this.captured = p2;
@@ -1164,7 +1187,7 @@ namespace BobbyFischer
         {
             string oppositeColor;
             move availableMove = new move();
-            int availableX = current.x;              //put coordinate in temp variable to manipulate while preserving original
+            int availableX = current.x;             //put coordinate in temp variable to manipulate while preserving original
             int availableY = current.y;
             List<move> availableList = new List<move>();
             coordinate moveCoor = new coordinate(); //when found possible move, put in this variable to add to list

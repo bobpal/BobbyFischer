@@ -36,6 +36,11 @@ namespace BobbyFischer
             
         }
 
+        private void showLastMoveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Chess.historyNode node = game.history.Peek();
+        }
+
         private void figureToolStripMenuItem_Click(object sender, EventArgs e)
         {
             game.setFigureTheme();

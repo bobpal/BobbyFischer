@@ -43,6 +43,7 @@
             this.marioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fF4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.megamanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showLastMoveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
@@ -199,22 +200,24 @@
             // newGameToolStripMenuItem
             // 
             this.newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
+            this.newGameToolStripMenuItem.ShortcutKeyDisplayString = "(F2)";
             this.newGameToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.newGameToolStripMenuItem.Text = "New Game";
             this.newGameToolStripMenuItem.Click += new System.EventHandler(this.newGameToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.chooseThemeToolStripMenuItem});
+            this.chooseThemeToolStripMenuItem,
+            this.showLastMoveToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
@@ -231,7 +234,7 @@
             this.fF4ToolStripMenuItem,
             this.megamanToolStripMenuItem});
             this.chooseThemeToolStripMenuItem.Name = "chooseThemeToolStripMenuItem";
-            this.chooseThemeToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.chooseThemeToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.chooseThemeToolStripMenuItem.Text = "Choose Theme";
             // 
             // figureToolStripMenuItem
@@ -289,6 +292,18 @@
             this.megamanToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.megamanToolStripMenuItem.Text = "Megaman";
             this.megamanToolStripMenuItem.Click += new System.EventHandler(this.megamanToolStripMenuItem_Click);
+            // 
+            // showLastMoveToolStripMenuItem
+            // 
+            this.showLastMoveToolStripMenuItem.Checked = true;
+            this.showLastMoveToolStripMenuItem.CheckOnClick = true;
+            this.showLastMoveToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showLastMoveToolStripMenuItem.Name = "showLastMoveToolStripMenuItem";
+            this.showLastMoveToolStripMenuItem.ShortcutKeyDisplayString = "(F3)";
+            this.showLastMoveToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
+            this.showLastMoveToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.showLastMoveToolStripMenuItem.Text = "Show Last Move";
+            this.showLastMoveToolStripMenuItem.Click += new System.EventHandler(this.showLastMoveToolStripMenuItem_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -1252,6 +1267,7 @@
         private System.Windows.Forms.ToolStripMenuItem marioToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fF4ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem megamanToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showLastMoveToolStripMenuItem;
     }
 }
 
