@@ -61,66 +61,6 @@ namespace BobbyFischer
             }
         }
 
-        private void fFToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            game.setFFTheme();
-
-            if (game.board != null)
-            {
-                game.changeTheme();
-            }
-        }
-
-        private void soMToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            game.setSOMTheme();
-
-            if (game.board != null)
-            {
-                game.changeTheme();
-            }
-        }
-
-        private void lttPToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            game.setLttPTheme();
-
-            if (game.board != null)
-            {
-                game.changeTheme();
-            }
-        }
-
-        private void marioToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            game.setMarioTheme();
-
-            if (game.board != null)
-            {
-                game.changeTheme();
-            }
-        }
-
-        private void fF4ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            game.setFF4Theme();
-
-            if (game.board != null)
-            {
-                game.changeTheme();
-            }
-        }
-
-        private void megamanToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            game.setMMTheme();
-
-            if (game.board != null)
-            {
-                game.changeTheme();
-            }
-        }
-
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             game.newGame();

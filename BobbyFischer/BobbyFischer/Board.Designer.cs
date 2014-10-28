@@ -37,12 +37,6 @@
             this.chooseThemeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.figureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lettersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.soMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lttPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.marioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fF4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.megamanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showLastMoveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
@@ -226,13 +220,7 @@
             // 
             this.chooseThemeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.figureToolStripMenuItem,
-            this.lettersToolStripMenuItem,
-            this.fFToolStripMenuItem,
-            this.soMToolStripMenuItem,
-            this.lttPToolStripMenuItem,
-            this.marioToolStripMenuItem,
-            this.fF4ToolStripMenuItem,
-            this.megamanToolStripMenuItem});
+            this.lettersToolStripMenuItem});
             this.chooseThemeToolStripMenuItem.Name = "chooseThemeToolStripMenuItem";
             this.chooseThemeToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.chooseThemeToolStripMenuItem.Text = "Choose Theme";
@@ -240,58 +228,16 @@
             // figureToolStripMenuItem
             // 
             this.figureToolStripMenuItem.Name = "figureToolStripMenuItem";
-            this.figureToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.figureToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.figureToolStripMenuItem.Text = "Figure";
             this.figureToolStripMenuItem.Click += new System.EventHandler(this.figureToolStripMenuItem_Click);
             // 
             // lettersToolStripMenuItem
             // 
             this.lettersToolStripMenuItem.Name = "lettersToolStripMenuItem";
-            this.lettersToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.lettersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.lettersToolStripMenuItem.Text = "Letters";
             this.lettersToolStripMenuItem.Click += new System.EventHandler(this.lettersToolStripMenuItem_Click);
-            // 
-            // fFToolStripMenuItem
-            // 
-            this.fFToolStripMenuItem.Name = "fFToolStripMenuItem";
-            this.fFToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.fFToolStripMenuItem.Text = "‌Final Fantasy";
-            this.fFToolStripMenuItem.Click += new System.EventHandler(this.fFToolStripMenuItem_Click);
-            // 
-            // soMToolStripMenuItem
-            // 
-            this.soMToolStripMenuItem.Name = "soMToolStripMenuItem";
-            this.soMToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.soMToolStripMenuItem.Text = "Secret of Mana";
-            this.soMToolStripMenuItem.Click += new System.EventHandler(this.soMToolStripMenuItem_Click);
-            // 
-            // lttPToolStripMenuItem
-            // 
-            this.lttPToolStripMenuItem.Name = "lttPToolStripMenuItem";
-            this.lttPToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.lttPToolStripMenuItem.Text = "Zelda";
-            this.lttPToolStripMenuItem.Click += new System.EventHandler(this.lttPToolStripMenuItem_Click);
-            // 
-            // marioToolStripMenuItem
-            // 
-            this.marioToolStripMenuItem.Name = "marioToolStripMenuItem";
-            this.marioToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.marioToolStripMenuItem.Text = "Mario";
-            this.marioToolStripMenuItem.Click += new System.EventHandler(this.marioToolStripMenuItem_Click);
-            // 
-            // fF4ToolStripMenuItem
-            // 
-            this.fF4ToolStripMenuItem.Name = "fF4ToolStripMenuItem";
-            this.fF4ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.fF4ToolStripMenuItem.Text = "FF4";
-            this.fF4ToolStripMenuItem.Click += new System.EventHandler(this.fF4ToolStripMenuItem_Click);
-            // 
-            // megamanToolStripMenuItem
-            // 
-            this.megamanToolStripMenuItem.Name = "megamanToolStripMenuItem";
-            this.megamanToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.megamanToolStripMenuItem.Text = "Megaman";
-            this.megamanToolStripMenuItem.Click += new System.EventHandler(this.megamanToolStripMenuItem_Click);
             // 
             // showLastMoveToolStripMenuItem
             // 
@@ -1260,13 +1206,7 @@
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem chooseThemeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lettersToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem fFToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem soMToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem lttPToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem figureToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem marioToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem fF4ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem megamanToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showLastMoveToolStripMenuItem;
     }
 }
