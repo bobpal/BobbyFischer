@@ -259,7 +259,6 @@
     <Content Include="Resources\mmLpawn.png" />
     <Content Include="Resources\mmLqueen.png" />
     <Content Include="Resources\mmLrook.png" />
-    <Content Include="Resources\palagano.ico" />
     <Content Include="Resources\somDbishop.png" />
     <Content Include="Resources\somDking.png" />
     <Content Include="Resources\somDknight.png" />
