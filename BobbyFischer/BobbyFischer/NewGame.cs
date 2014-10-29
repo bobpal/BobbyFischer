@@ -57,7 +57,8 @@ namespace BobbyFischer
             game.createGrid();
             game.setImages();
             game.firstGame = true;
-            game.clearBackgroundImages();
+            game.clearToAndFrom();
+            game.clearSelectedOrPossible();
             game.movablePieceSelected = false;
             game.offensiveTeam = "light";
             this.Close();

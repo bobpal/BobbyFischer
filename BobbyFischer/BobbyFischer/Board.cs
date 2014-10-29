@@ -38,7 +38,10 @@ namespace BobbyFischer
 
         private void showLastMoveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Chess.historyNode node = game.history.Peek();
+            if(showLastMoveToolStripMenuItem.Checked == false)
+            {
+                game.clearToAndFrom();
+            }
         }
 
         private void figureToolStripMenuItem_Click(object sender, EventArgs e)

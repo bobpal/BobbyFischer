@@ -228,14 +228,14 @@
             // figureToolStripMenuItem
             // 
             this.figureToolStripMenuItem.Name = "figureToolStripMenuItem";
-            this.figureToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.figureToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
             this.figureToolStripMenuItem.Text = "Figure";
             this.figureToolStripMenuItem.Click += new System.EventHandler(this.figureToolStripMenuItem_Click);
             // 
             // lettersToolStripMenuItem
             // 
             this.lettersToolStripMenuItem.Name = "lettersToolStripMenuItem";
-            this.lettersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.lettersToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
             this.lettersToolStripMenuItem.Text = "Letters";
             this.lettersToolStripMenuItem.Click += new System.EventHandler(this.lettersToolStripMenuItem_Click);
             // 
@@ -345,6 +345,7 @@
             // pictureBox3
             // 
             this.pictureBox3.BackColor = System.Drawing.Color.White;
+            this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox3.Location = new System.Drawing.Point(160, 0);
             this.pictureBox3.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox3.Name = "pictureBox3";
@@ -356,6 +357,7 @@
             // pictureBox4
             // 
             this.pictureBox4.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox4.Location = new System.Drawing.Point(240, 0);
             this.pictureBox4.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox4.Name = "pictureBox4";
@@ -367,6 +369,7 @@
             // pictureBox5
             // 
             this.pictureBox5.BackColor = System.Drawing.Color.White;
+            this.pictureBox5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox5.Location = new System.Drawing.Point(320, 0);
             this.pictureBox5.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox5.Name = "pictureBox5";
@@ -378,6 +381,7 @@
             // pictureBox6
             // 
             this.pictureBox6.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox6.Location = new System.Drawing.Point(400, 0);
             this.pictureBox6.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox6.Name = "pictureBox6";
@@ -389,6 +393,7 @@
             // pictureBox7
             // 
             this.pictureBox7.BackColor = System.Drawing.Color.White;
+            this.pictureBox7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox7.Location = new System.Drawing.Point(480, 0);
             this.pictureBox7.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox7.Name = "pictureBox7";
@@ -400,6 +405,7 @@
             // pictureBox8
             // 
             this.pictureBox8.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox8.Location = new System.Drawing.Point(560, 0);
             this.pictureBox8.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox8.Name = "pictureBox8";
@@ -411,6 +417,7 @@
             // pictureBox9
             // 
             this.pictureBox9.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox9.Location = new System.Drawing.Point(0, 80);
             this.pictureBox9.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox9.Name = "pictureBox9";
@@ -422,6 +429,7 @@
             // pictureBox11
             // 
             this.pictureBox11.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox11.Location = new System.Drawing.Point(160, 80);
             this.pictureBox11.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox11.Name = "pictureBox11";
@@ -433,6 +441,7 @@
             // pictureBox12
             // 
             this.pictureBox12.BackColor = System.Drawing.Color.White;
+            this.pictureBox12.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox12.Location = new System.Drawing.Point(240, 80);
             this.pictureBox12.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox12.Name = "pictureBox12";
@@ -444,6 +453,7 @@
             // pictureBox13
             // 
             this.pictureBox13.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox13.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox13.Location = new System.Drawing.Point(320, 80);
             this.pictureBox13.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox13.Name = "pictureBox13";
@@ -455,6 +465,7 @@
             // pictureBox14
             // 
             this.pictureBox14.BackColor = System.Drawing.Color.White;
+            this.pictureBox14.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox14.Location = new System.Drawing.Point(400, 80);
             this.pictureBox14.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox14.Name = "pictureBox14";
@@ -466,6 +477,7 @@
             // pictureBox15
             // 
             this.pictureBox15.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox15.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox15.Location = new System.Drawing.Point(480, 80);
             this.pictureBox15.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox15.Name = "pictureBox15";
@@ -477,6 +489,7 @@
             // pictureBox16
             // 
             this.pictureBox16.BackColor = System.Drawing.Color.White;
+            this.pictureBox16.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox16.Location = new System.Drawing.Point(560, 80);
             this.pictureBox16.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox16.Name = "pictureBox16";
@@ -488,6 +501,7 @@
             // pictureBox17
             // 
             this.pictureBox17.BackColor = System.Drawing.Color.White;
+            this.pictureBox17.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox17.Location = new System.Drawing.Point(0, 160);
             this.pictureBox17.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox17.Name = "pictureBox17";
@@ -499,6 +513,7 @@
             // pictureBox18
             // 
             this.pictureBox18.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox18.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox18.Location = new System.Drawing.Point(80, 160);
             this.pictureBox18.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox18.Name = "pictureBox18";
@@ -510,6 +525,7 @@
             // pictureBox19
             // 
             this.pictureBox19.BackColor = System.Drawing.Color.White;
+            this.pictureBox19.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox19.Location = new System.Drawing.Point(160, 160);
             this.pictureBox19.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox19.Name = "pictureBox19";
@@ -521,6 +537,7 @@
             // pictureBox20
             // 
             this.pictureBox20.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox20.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox20.Location = new System.Drawing.Point(240, 160);
             this.pictureBox20.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox20.Name = "pictureBox20";
@@ -532,6 +549,7 @@
             // pictureBox21
             // 
             this.pictureBox21.BackColor = System.Drawing.Color.White;
+            this.pictureBox21.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox21.Location = new System.Drawing.Point(320, 160);
             this.pictureBox21.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox21.Name = "pictureBox21";
@@ -543,6 +561,7 @@
             // pictureBox22
             // 
             this.pictureBox22.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox22.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox22.Location = new System.Drawing.Point(400, 160);
             this.pictureBox22.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox22.Name = "pictureBox22";
@@ -554,6 +573,7 @@
             // pictureBox23
             // 
             this.pictureBox23.BackColor = System.Drawing.Color.White;
+            this.pictureBox23.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox23.Location = new System.Drawing.Point(480, 160);
             this.pictureBox23.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox23.Name = "pictureBox23";
@@ -565,6 +585,7 @@
             // pictureBox24
             // 
             this.pictureBox24.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox24.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox24.Location = new System.Drawing.Point(560, 160);
             this.pictureBox24.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox24.Name = "pictureBox24";
@@ -576,6 +597,7 @@
             // pictureBox25
             // 
             this.pictureBox25.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox25.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox25.Location = new System.Drawing.Point(0, 240);
             this.pictureBox25.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox25.Name = "pictureBox25";
@@ -587,6 +609,7 @@
             // pictureBox26
             // 
             this.pictureBox26.BackColor = System.Drawing.Color.White;
+            this.pictureBox26.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox26.Location = new System.Drawing.Point(80, 240);
             this.pictureBox26.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox26.Name = "pictureBox26";
@@ -598,6 +621,7 @@
             // pictureBox27
             // 
             this.pictureBox27.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox27.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox27.Location = new System.Drawing.Point(160, 240);
             this.pictureBox27.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox27.Name = "pictureBox27";
@@ -609,6 +633,7 @@
             // pictureBox28
             // 
             this.pictureBox28.BackColor = System.Drawing.Color.White;
+            this.pictureBox28.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox28.Location = new System.Drawing.Point(240, 240);
             this.pictureBox28.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox28.Name = "pictureBox28";
@@ -620,6 +645,7 @@
             // pictureBox29
             // 
             this.pictureBox29.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox29.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox29.Location = new System.Drawing.Point(320, 240);
             this.pictureBox29.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox29.Name = "pictureBox29";
@@ -631,6 +657,7 @@
             // pictureBox30
             // 
             this.pictureBox30.BackColor = System.Drawing.Color.White;
+            this.pictureBox30.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox30.Location = new System.Drawing.Point(400, 240);
             this.pictureBox30.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox30.Name = "pictureBox30";
@@ -642,6 +669,7 @@
             // pictureBox31
             // 
             this.pictureBox31.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox31.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox31.Location = new System.Drawing.Point(480, 240);
             this.pictureBox31.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox31.Name = "pictureBox31";
@@ -653,6 +681,7 @@
             // pictureBox32
             // 
             this.pictureBox32.BackColor = System.Drawing.Color.White;
+            this.pictureBox32.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox32.Location = new System.Drawing.Point(560, 240);
             this.pictureBox32.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox32.Name = "pictureBox32";
@@ -664,6 +693,7 @@
             // pictureBox33
             // 
             this.pictureBox33.BackColor = System.Drawing.Color.White;
+            this.pictureBox33.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox33.Location = new System.Drawing.Point(0, 320);
             this.pictureBox33.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox33.Name = "pictureBox33";
@@ -675,6 +705,7 @@
             // pictureBox34
             // 
             this.pictureBox34.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox34.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox34.Location = new System.Drawing.Point(80, 320);
             this.pictureBox34.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox34.Name = "pictureBox34";
@@ -686,6 +717,7 @@
             // pictureBox35
             // 
             this.pictureBox35.BackColor = System.Drawing.Color.White;
+            this.pictureBox35.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox35.Location = new System.Drawing.Point(160, 320);
             this.pictureBox35.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox35.Name = "pictureBox35";
@@ -697,6 +729,7 @@
             // pictureBox36
             // 
             this.pictureBox36.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox36.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox36.Location = new System.Drawing.Point(240, 320);
             this.pictureBox36.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox36.Name = "pictureBox36";
@@ -708,6 +741,7 @@
             // pictureBox37
             // 
             this.pictureBox37.BackColor = System.Drawing.Color.White;
+            this.pictureBox37.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox37.Location = new System.Drawing.Point(320, 320);
             this.pictureBox37.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox37.Name = "pictureBox37";
@@ -719,6 +753,7 @@
             // pictureBox38
             // 
             this.pictureBox38.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox38.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox38.Location = new System.Drawing.Point(400, 320);
             this.pictureBox38.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox38.Name = "pictureBox38";
@@ -730,6 +765,7 @@
             // pictureBox39
             // 
             this.pictureBox39.BackColor = System.Drawing.Color.White;
+            this.pictureBox39.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox39.Location = new System.Drawing.Point(480, 320);
             this.pictureBox39.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox39.Name = "pictureBox39";
@@ -741,6 +777,7 @@
             // pictureBox40
             // 
             this.pictureBox40.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox40.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox40.Location = new System.Drawing.Point(560, 320);
             this.pictureBox40.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox40.Name = "pictureBox40";
@@ -752,6 +789,7 @@
             // pictureBox41
             // 
             this.pictureBox41.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox41.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox41.Location = new System.Drawing.Point(0, 400);
             this.pictureBox41.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox41.Name = "pictureBox41";
@@ -763,6 +801,7 @@
             // pictureBox42
             // 
             this.pictureBox42.BackColor = System.Drawing.Color.White;
+            this.pictureBox42.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox42.Location = new System.Drawing.Point(80, 400);
             this.pictureBox42.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox42.Name = "pictureBox42";
@@ -774,6 +813,7 @@
             // pictureBox43
             // 
             this.pictureBox43.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox43.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox43.Location = new System.Drawing.Point(160, 400);
             this.pictureBox43.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox43.Name = "pictureBox43";
@@ -785,6 +825,7 @@
             // pictureBox44
             // 
             this.pictureBox44.BackColor = System.Drawing.Color.White;
+            this.pictureBox44.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox44.Location = new System.Drawing.Point(240, 400);
             this.pictureBox44.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox44.Name = "pictureBox44";
@@ -796,6 +837,7 @@
             // pictureBox45
             // 
             this.pictureBox45.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox45.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox45.Location = new System.Drawing.Point(320, 400);
             this.pictureBox45.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox45.Name = "pictureBox45";
@@ -807,6 +849,7 @@
             // pictureBox46
             // 
             this.pictureBox46.BackColor = System.Drawing.Color.White;
+            this.pictureBox46.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox46.Location = new System.Drawing.Point(400, 400);
             this.pictureBox46.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox46.Name = "pictureBox46";
@@ -818,6 +861,7 @@
             // pictureBox47
             // 
             this.pictureBox47.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox47.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox47.Location = new System.Drawing.Point(480, 400);
             this.pictureBox47.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox47.Name = "pictureBox47";
@@ -829,6 +873,7 @@
             // pictureBox48
             // 
             this.pictureBox48.BackColor = System.Drawing.Color.White;
+            this.pictureBox48.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox48.Location = new System.Drawing.Point(560, 400);
             this.pictureBox48.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox48.Name = "pictureBox48";
@@ -840,6 +885,7 @@
             // pictureBox49
             // 
             this.pictureBox49.BackColor = System.Drawing.Color.White;
+            this.pictureBox49.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox49.Location = new System.Drawing.Point(0, 480);
             this.pictureBox49.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox49.Name = "pictureBox49";
@@ -851,6 +897,7 @@
             // pictureBox50
             // 
             this.pictureBox50.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox50.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox50.Location = new System.Drawing.Point(80, 480);
             this.pictureBox50.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox50.Name = "pictureBox50";
@@ -862,6 +909,7 @@
             // pictureBox51
             // 
             this.pictureBox51.BackColor = System.Drawing.Color.White;
+            this.pictureBox51.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox51.Location = new System.Drawing.Point(160, 480);
             this.pictureBox51.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox51.Name = "pictureBox51";
@@ -873,6 +921,7 @@
             // pictureBox52
             // 
             this.pictureBox52.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox52.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox52.Location = new System.Drawing.Point(240, 480);
             this.pictureBox52.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox52.Name = "pictureBox52";
@@ -884,6 +933,7 @@
             // pictureBox53
             // 
             this.pictureBox53.BackColor = System.Drawing.Color.White;
+            this.pictureBox53.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox53.Location = new System.Drawing.Point(320, 480);
             this.pictureBox53.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox53.Name = "pictureBox53";
@@ -895,6 +945,7 @@
             // pictureBox54
             // 
             this.pictureBox54.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox54.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox54.Location = new System.Drawing.Point(400, 480);
             this.pictureBox54.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox54.Name = "pictureBox54";
@@ -906,6 +957,7 @@
             // pictureBox55
             // 
             this.pictureBox55.BackColor = System.Drawing.Color.White;
+            this.pictureBox55.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox55.Location = new System.Drawing.Point(480, 480);
             this.pictureBox55.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox55.Name = "pictureBox55";
@@ -917,6 +969,7 @@
             // pictureBox56
             // 
             this.pictureBox56.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox56.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox56.Location = new System.Drawing.Point(560, 480);
             this.pictureBox56.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox56.Name = "pictureBox56";
@@ -928,6 +981,7 @@
             // pictureBox57
             // 
             this.pictureBox57.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox57.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox57.Location = new System.Drawing.Point(0, 560);
             this.pictureBox57.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox57.Name = "pictureBox57";
@@ -939,6 +993,7 @@
             // pictureBox58
             // 
             this.pictureBox58.BackColor = System.Drawing.Color.White;
+            this.pictureBox58.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox58.Location = new System.Drawing.Point(80, 560);
             this.pictureBox58.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox58.Name = "pictureBox58";
@@ -950,6 +1005,7 @@
             // pictureBox59
             // 
             this.pictureBox59.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox59.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox59.Location = new System.Drawing.Point(160, 560);
             this.pictureBox59.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox59.Name = "pictureBox59";
@@ -961,6 +1017,7 @@
             // pictureBox60
             // 
             this.pictureBox60.BackColor = System.Drawing.Color.White;
+            this.pictureBox60.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox60.Location = new System.Drawing.Point(240, 560);
             this.pictureBox60.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox60.Name = "pictureBox60";
@@ -972,6 +1029,7 @@
             // pictureBox61
             // 
             this.pictureBox61.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox61.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox61.Location = new System.Drawing.Point(320, 560);
             this.pictureBox61.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox61.Name = "pictureBox61";
@@ -983,6 +1041,7 @@
             // pictureBox62
             // 
             this.pictureBox62.BackColor = System.Drawing.Color.White;
+            this.pictureBox62.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox62.Location = new System.Drawing.Point(400, 560);
             this.pictureBox62.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox62.Name = "pictureBox62";
@@ -994,6 +1053,7 @@
             // pictureBox63
             // 
             this.pictureBox63.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox63.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox63.Location = new System.Drawing.Point(480, 560);
             this.pictureBox63.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox63.Name = "pictureBox63";
@@ -1005,6 +1065,7 @@
             // pictureBox64
             // 
             this.pictureBox64.BackColor = System.Drawing.Color.White;
+            this.pictureBox64.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox64.Location = new System.Drawing.Point(560, 560);
             this.pictureBox64.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox64.Name = "pictureBox64";
@@ -1016,6 +1077,7 @@
             // pictureBox10
             // 
             this.pictureBox10.BackColor = System.Drawing.Color.White;
+            this.pictureBox10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox10.Location = new System.Drawing.Point(80, 80);
             this.pictureBox10.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox10.Name = "pictureBox10";
@@ -1027,6 +1089,7 @@
             // pictureBox2
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox2.Location = new System.Drawing.Point(80, 0);
             this.pictureBox2.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox2.Name = "pictureBox2";
@@ -1038,6 +1101,7 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.White;
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox1.Name = "pictureBox1";
@@ -1207,7 +1271,7 @@
         private System.Windows.Forms.ToolStripMenuItem chooseThemeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lettersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem figureToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem showLastMoveToolStripMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem showLastMoveToolStripMenuItem;
     }
 }
 

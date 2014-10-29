@@ -43,6 +43,7 @@ namespace BobbyFischer
         public Image dKnight;
         public Image dRook;
         private Image dPawn;
+
         public Stack<historyNode> history = new Stack<historyNode>();   //stores all moves on a stack
         public bool movablePieceSelected = false;                       //if true, the next click will move the selected piece if possible
         private List<move> possible = new List<move>();                 //list of all possible moves
@@ -456,15 +457,15 @@ namespace BobbyFischer
                 if (currentPiece.color == offensiveTeam)//if selected own piece
                 {
                     movablePieceSelected = true;
-                    clearBackgroundImages();
-                    coordinateToPictureBox(currentCell).BackgroundImage = Resources.selected;
+                    clearSelectedOrPossible();
+                    coordinateToPictureBox(currentCell).BackColor = System.Drawing.Color.DeepSkyBlue;
                     prevSelected = currentCell;
                     possible.Clear();
                     possible.AddRange(getCheckRestrictedMoves(currentCell));
 
                     foreach (move m in possible)
                     {
-                        coordinateToPictureBox(m.moveSpot).BackgroundImage = Resources.possible;
+                        coordinateToPictureBox(m.moveSpot).BackColor = System.Drawing.Color.LawnGreen;
                     }
                 }
 
@@ -490,7 +491,7 @@ namespace BobbyFischer
 
                         piece captured = board[currentCell.x, currentCell.y];
                         movePiece(currentCell, board[prevSelected.x, prevSelected.y], prevSelected);
-                        clearBackgroundImages();
+                        clearSelectedOrPossible();
 
                         if (board[currentCell.x, currentCell.y].job == "Pawn")//if pawn makes it to last row
                         {
@@ -506,10 +507,26 @@ namespace BobbyFischer
                                 transform.ShowDialog();
                             }
                             node = new historyNode(curTurn, captured, true);
+                            history.Push(node);
+
+                            if (mForm.showLastMoveToolStripMenuItem.Checked == true)
+                            {
+                                clearToAndFrom();
+                                coordinateToPictureBox(curTurn.pieceSpot).BackgroundImage = Resources.from;
+                                coordinateToPictureBox(curTurn.moveSpot).BackgroundImage = Resources.to;
+                            }
                         }
                         else
                         {
                             node = new historyNode(curTurn, captured, false);
+                            history.Push(node);
+
+                            if (mForm.showLastMoveToolStripMenuItem.Checked == true)
+                            {
+                                clearToAndFrom();
+                                coordinateToPictureBox(curTurn.pieceSpot).BackgroundImage = Resources.from;
+                                coordinateToPictureBox(curTurn.moveSpot).BackgroundImage = Resources.to;
+                            }
                         }
                         betweenTurns();
                     }
@@ -596,10 +613,26 @@ namespace BobbyFischer
                         break;
                 }
                 node = new historyNode(curTurn, captured, true);
+                history.Push(node);
+
+                if(mForm.showLastMoveToolStripMenuItem.Checked == true)
+                {
+                    clearToAndFrom();
+                    coordinateToPictureBox(curTurn.pieceSpot).BackgroundImage = Resources.from;
+                    coordinateToPictureBox(curTurn.moveSpot).BackgroundImage = Resources.to;
+                }
             }
             else
             {
                 node = new historyNode(curTurn, captured, false);
+                history.Push(node);
+
+                if (mForm.showLastMoveToolStripMenuItem.Checked == true)
+                {
+                    clearToAndFrom();
+                    coordinateToPictureBox(curTurn.pieceSpot).BackgroundImage = Resources.from;
+                    coordinateToPictureBox(curTurn.moveSpot).BackgroundImage = Resources.to;
+                }
             }
         }
 
@@ -625,6 +658,8 @@ namespace BobbyFischer
 
         private Image matchPicture(piece figure)
         {
+            //returns image based on what piece it is
+
             if(figure.color == "dark")
             {
                 switch(figure.job)
@@ -854,7 +889,75 @@ namespace BobbyFischer
             }
         }
 
-        public void clearBackgroundImages()
+        public void clearSelectedOrPossible()
+        {
+            mForm.pictureBox1.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox2.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox3.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox4.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox5.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox6.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox7.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox8.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox9.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox10.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox11.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox12.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox13.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox14.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox15.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox16.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox17.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox18.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox19.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox20.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox21.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox22.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox23.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox24.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox25.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox26.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox27.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox28.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox29.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox30.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox31.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox32.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox33.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox34.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox35.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox36.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox37.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox38.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox39.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox40.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox41.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox42.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox43.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox44.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox45.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox46.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox47.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox48.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox49.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox50.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox51.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox52.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox53.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox54.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox55.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox56.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox57.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox58.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox59.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox60.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox61.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox62.BackColor = System.Drawing.Color.White;
+            mForm.pictureBox63.BackColor = System.Drawing.Color.DarkGray;
+            mForm.pictureBox64.BackColor = System.Drawing.Color.White;
+        }
+
+        public void clearToAndFrom()
         {
             mForm.pictureBox1.BackgroundImage = null;
             mForm.pictureBox2.BackgroundImage = null;
@@ -1010,6 +1113,7 @@ namespace BobbyFischer
 
         public void setLetterTheme()
         {
+            //sets variables
             lKing = Resources.letLking;
             lQueen = Resources.letLqueen;
             lBishop = Resources.letLbishop;
@@ -1026,6 +1130,7 @@ namespace BobbyFischer
 
         public void changeTheme()
         {
+            //calls matchPicture() on each piece and puts image in PictureBox
             List<coordinate> temp = new List<coordinate>();
 
             temp = getDarkPieces();
