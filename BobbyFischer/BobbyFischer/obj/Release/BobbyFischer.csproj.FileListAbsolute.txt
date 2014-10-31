@@ -21,3 +21,15 @@ C:\Users\Robert\Documents\GitHub\Chess\BobbyFischer\BobbyFischer\obj\Release\Bob
 C:\Users\Robert\Documents\GitHub\Chess\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.GameOver.resources
 C:\Users\Robert\Documents\GitHub\Chess\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.csproj.GenerateResource.Cache
 C:\Users\Robert\Documents\GitHub\chess\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.NewGame.resources
+C:\Users\Robert\Documents\GitHub\BobbyFischer\BobbyFischer\BobbyFischer\bin\Release\BobbyFischer.exe.config
+C:\Users\Robert\Documents\GitHub\BobbyFischer\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.exe
+C:\Users\Robert\Documents\GitHub\BobbyFischer\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.pdb
+C:\Users\Robert\Documents\GitHub\BobbyFischer\BobbyFischer\BobbyFischer\bin\Release\BobbyFischer.exe
+C:\Users\Robert\Documents\GitHub\BobbyFischer\BobbyFischer\BobbyFischer\bin\Release\BobbyFischer.pdb
+C:\Users\Robert\Documents\GitHub\BobbyFischer\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.csprojResolveAssemblyReference.cache
+C:\Users\Robert\Documents\GitHub\BobbyFischer\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.Board.resources
+C:\Users\Robert\Documents\GitHub\BobbyFischer\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.NewGame.resources
+C:\Users\Robert\Documents\GitHub\BobbyFischer\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.PawnTransformation.resources
+C:\Users\Robert\Documents\GitHub\BobbyFischer\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.Properties.Resources.resources
+C:\Users\Robert\Documents\GitHub\BobbyFischer\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.GameOver.resources
+C:\Users\Robert\Documents\GitHub\BobbyFischer\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.csproj.GenerateResource.Cache

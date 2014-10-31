@@ -54,6 +54,12 @@ namespace BobbyFischer
                     game.hardMode = true;
                 }
             }
+
+            else
+            {
+                game.onePlayer = false;
+            }
+
             game.createGrid();
             game.setImages();
             game.firstGame = true;

@@ -36,6 +36,11 @@ namespace BobbyFischer
             
         }
 
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            game.undo();
+        }
+
         private void showLastMoveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if(showLastMoveToolStripMenuItem.Checked == false)

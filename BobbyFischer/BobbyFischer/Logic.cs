@@ -429,7 +429,8 @@ namespace BobbyFischer
                 {
                     coordinate newCastleCoor = new coordinate(3, yCoor);
                     coordinate oldCastleCoor = new coordinate(0, yCoor);
-                    node = new historyNode(shift, board[newCastleCoor.x, newCastleCoor.y], false);
+                    node = new historyNode(shift, board[newCastleCoor.x, newCastleCoor.y], false, true, true);
+                    history.Push(node);
                     movePiece(newCastleCoor, board[oldCastleCoor.x, oldCastleCoor.y], oldCastleCoor);
                 }
 
@@ -437,7 +438,8 @@ namespace BobbyFischer
                 {
                     coordinate newCastleCoor = new coordinate(5, yCoor);
                     coordinate oldCastleCoor = new coordinate(7, yCoor);
-                    node = new historyNode(shift, board[newCastleCoor.x, newCastleCoor.y], false);
+                    node = new historyNode(shift, board[newCastleCoor.x, newCastleCoor.y], false, true, true);
+                    history.Push(node);
                     movePiece(newCastleCoor, board[oldCastleCoor.x, oldCastleCoor.y], oldCastleCoor);
                 }
             }
@@ -484,14 +486,15 @@ namespace BobbyFischer
 
                     if (movableSpot == true)
                     {
-                        if (board[prevSelected.x, prevSelected.y].job == "King")
+                        piece captured = board[currentCell.x, currentCell.y];
+                        bool virginMove = board[prevSelected.x, prevSelected.y].firstMove;
+                        movePiece(currentCell, board[prevSelected.x, prevSelected.y], prevSelected);
+                        clearSelectedOrPossible();
+
+                        if (board[currentCell.x, currentCell.y].job == "King")
                         {
                             castling(curTurn);//check if move is a castling
                         }
-
-                        piece captured = board[currentCell.x, currentCell.y];
-                        movePiece(currentCell, board[prevSelected.x, prevSelected.y], prevSelected);
-                        clearSelectedOrPossible();
 
                         if (board[currentCell.x, currentCell.y].job == "Pawn")//if pawn makes it to last row
                         {
@@ -506,8 +509,9 @@ namespace BobbyFischer
                                 PawnTransformation transform = new PawnTransformation(currentCell, this);
                                 transform.ShowDialog();
                             }
-                            node = new historyNode(curTurn, captured, true);
+                            node = new historyNode(curTurn, captured, true, false, false);
                             history.Push(node);
+                            mForm.undoToolStripMenuItem.Enabled = true;
 
                             if (mForm.showLastMoveToolStripMenuItem.Checked == true)
                             {
@@ -518,8 +522,9 @@ namespace BobbyFischer
                         }
                         else
                         {
-                            node = new historyNode(curTurn, captured, false);
+                            node = new historyNode(curTurn, captured, false, false, virginMove);
                             history.Push(node);
+                            mForm.undoToolStripMenuItem.Enabled = true;
 
                             if (mForm.showLastMoveToolStripMenuItem.Checked == true)
                             {
@@ -580,13 +585,14 @@ namespace BobbyFischer
             coordinate newSpot = new coordinate(curTurn.moveSpot.x, curTurn.moveSpot.y);
             coordinate oldSpot = new coordinate(curTurn.pieceSpot.x, curTurn.pieceSpot.y);
 
-            if (board[oldSpot.x, oldSpot.y].job == "King")
+            piece captured = board[newSpot.x, newSpot.y];
+            bool virginMove = board[oldSpot.x, oldSpot.y].firstMove;
+            movePiece(newSpot, board[oldSpot.x, oldSpot.y], oldSpot);
+
+            if (board[newSpot.x, newSpot.y].job == "King")
             {
                 castling(curTurn);//check if move is a castling
             }
-
-            piece captured = board[newSpot.x, newSpot.y];
-            movePiece(newSpot, board[oldSpot.x, oldSpot.y], oldSpot);
 
             if (board[newSpot.x, newSpot.y].job == "Pawn" && newSpot.y == 0)//if pawn makes it to last row
             {
@@ -612,7 +618,7 @@ namespace BobbyFischer
                     default:
                         break;
                 }
-                node = new historyNode(curTurn, captured, true);
+                node = new historyNode(curTurn, captured, true, true, false);
                 history.Push(node);
 
                 if(mForm.showLastMoveToolStripMenuItem.Checked == true)
@@ -624,7 +630,7 @@ namespace BobbyFischer
             }
             else
             {
-                node = new historyNode(curTurn, captured, false);
+                node = new historyNode(curTurn, captured, false, true, virginMove);
                 history.Push(node);
 
                 if (mForm.showLastMoveToolStripMenuItem.Checked == true)
@@ -1142,6 +1148,25 @@ namespace BobbyFischer
             }
         }
 
+        public void undo()
+        {
+            //moves pieces backwards
+
+            historyNode node = history.Pop();
+
+            //TODO: move pieces here
+
+            if(node.skip == true)
+            {
+                undo(); //call function again to undo another move
+            }
+
+            else if (history.Count == 0)    //if stack is empty, disable button; skip and empty stack can't both happen
+            {
+                mForm.undoToolStripMenuItem.Enabled = false;
+            }
+        }
+
         public void newGame()
         {
             NewGame play = new NewGame(this);
@@ -1176,15 +1201,19 @@ namespace BobbyFischer
 
         public struct historyNode
         {
-            public move step;          //move that happened previously
-            public piece captured;     //piece that move captured, if no capture, use null
-            public bool pawnTransform; //did a pawn transformation happen?
+            public move step;           //move that happened previously
+            public piece captured;      //piece that move captured, if no capture, use null
+            public bool pawnTransform;  //did a pawn transformation happen?
+            public bool skip;           //undo next move also
+            public bool virgin;         //was this the piece's first move?
 
-            public historyNode(move p1, piece p2, bool p3)
+            public historyNode(move p1, piece p2, bool p3, bool p4, bool p5)
             {
                 this.step = p1;
                 this.captured = p2;
                 this.pawnTransform = p3;
+                this.skip = p4;
+                this.virgin = p5;
             }
         }
 
