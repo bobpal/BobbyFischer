@@ -410,6 +410,7 @@ namespace BobbyFischer
             //if selected move is a castling move, move Rook in this function
 
             historyNode node;
+            move castleMove = new move();
             int yCoor;                              //which row the move is being conducted in
             coordinate toSpot = shift.moveSpot;
             coordinate fromSpot = shift.pieceSpot;
@@ -429,18 +430,22 @@ namespace BobbyFischer
                 {
                     coordinate newCastleCoor = new coordinate(3, yCoor);
                     coordinate oldCastleCoor = new coordinate(0, yCoor);
-                    node = new historyNode(shift, board[newCastleCoor.x, newCastleCoor.y], false, true, true);
+                    castleMove.moveSpot = newCastleCoor;
+                    castleMove.pieceSpot = oldCastleCoor;
+                    node = new historyNode(castleMove, board[3, yCoor], false, true, true);
                     history.Push(node);
-                    movePiece(newCastleCoor, board[oldCastleCoor.x, oldCastleCoor.y], oldCastleCoor);
+                    movePiece(newCastleCoor, board[0, yCoor], oldCastleCoor);
                 }
 
                 else if(toSpot.x == 6 && toSpot.y == yCoor) //if moving two spaces to the right
                 {
                     coordinate newCastleCoor = new coordinate(5, yCoor);
                     coordinate oldCastleCoor = new coordinate(7, yCoor);
-                    node = new historyNode(shift, board[newCastleCoor.x, newCastleCoor.y], false, true, true);
+                    castleMove.moveSpot = newCastleCoor;
+                    castleMove.pieceSpot = oldCastleCoor;
+                    node = new historyNode(castleMove, board[5, yCoor], false, true, true);
                     history.Push(node);
-                    movePiece(newCastleCoor, board[oldCastleCoor.x, oldCastleCoor.y], oldCastleCoor);
+                    movePiece(newCastleCoor, board[7, yCoor], oldCastleCoor);
                 }
             }
         }
@@ -491,47 +496,46 @@ namespace BobbyFischer
                         movePiece(currentCell, board[prevSelected.x, prevSelected.y], prevSelected);
                         clearSelectedOrPossible();
 
-                        if (board[currentCell.x, currentCell.y].job == "King")
-                        {
-                            castling(curTurn);//check if move is a castling
-                        }
-
-                        if (board[currentCell.x, currentCell.y].job == "Pawn")//if pawn makes it to last row
+                        if (board[currentCell.x, currentCell.y].job == "Pawn")
                         {
                             if (board[currentCell.x, currentCell.y].color == "light" && currentCell.y == 7)
                             {
                                 PawnTransformation transform = new PawnTransformation(currentCell, this);
                                 transform.ShowDialog();
+                                node = new historyNode(curTurn, captured, true, false, false);
                             }
 
-                            if (board[currentCell.x, currentCell.y].color == "dark" && currentCell.y == 0)
+                            else if (board[currentCell.x, currentCell.y].color == "dark" && currentCell.y == 0)
                             {
                                 PawnTransformation transform = new PawnTransformation(currentCell, this);
                                 transform.ShowDialog();
+                                node = new historyNode(curTurn, captured, true, false, false);
                             }
-                            node = new historyNode(curTurn, captured, true, false, false);
-                            history.Push(node);
-                            mForm.undoToolStripMenuItem.Enabled = true;
 
-                            if (mForm.showLastMoveToolStripMenuItem.Checked == true)
+                            else    //if pawn, but no transform
                             {
-                                clearToAndFrom();
-                                coordinateToPictureBox(curTurn.pieceSpot).BackgroundImage = Resources.from;
-                                coordinateToPictureBox(curTurn.moveSpot).BackgroundImage = Resources.to;
+                                node = new historyNode(curTurn, captured, false, false, virginMove);
                             }
                         }
-                        else
+
+                        else    //not pawn
                         {
                             node = new historyNode(curTurn, captured, false, false, virginMove);
-                            history.Push(node);
-                            mForm.undoToolStripMenuItem.Enabled = true;
+                        }
 
-                            if (mForm.showLastMoveToolStripMenuItem.Checked == true)
-                            {
-                                clearToAndFrom();
-                                coordinateToPictureBox(curTurn.pieceSpot).BackgroundImage = Resources.from;
-                                coordinateToPictureBox(curTurn.moveSpot).BackgroundImage = Resources.to;
-                            }
+                        history.Push(node);
+                        mForm.undoToolStripMenuItem.Enabled = true;
+
+                        if (mForm.showLastMoveToolStripMenuItem.Checked == true)
+                        {
+                            clearToAndFrom();
+                            coordinateToPictureBox(curTurn.pieceSpot).BackgroundImage = Resources.from;
+                            coordinateToPictureBox(curTurn.moveSpot).BackgroundImage = Resources.to;
+                        }
+
+                        if (board[currentCell.x, currentCell.y].job == "King")
+                        {
+                            castling(curTurn);//check if move is a castling
                         }
                         betweenTurns();
                     }
@@ -589,11 +593,6 @@ namespace BobbyFischer
             bool virginMove = board[oldSpot.x, oldSpot.y].firstMove;
             movePiece(newSpot, board[oldSpot.x, oldSpot.y], oldSpot);
 
-            if (board[newSpot.x, newSpot.y].job == "King")
-            {
-                castling(curTurn);//check if move is a castling
-            }
-
             if (board[newSpot.x, newSpot.y].job == "Pawn" && newSpot.y == 0)//if pawn makes it to last row
             {
                 r = rnd.Next(0, 4); //choose random piece to transform into
@@ -619,26 +618,25 @@ namespace BobbyFischer
                         break;
                 }
                 node = new historyNode(curTurn, captured, true, true, false);
-                history.Push(node);
-
-                if(mForm.showLastMoveToolStripMenuItem.Checked == true)
-                {
-                    clearToAndFrom();
-                    coordinateToPictureBox(curTurn.pieceSpot).BackgroundImage = Resources.from;
-                    coordinateToPictureBox(curTurn.moveSpot).BackgroundImage = Resources.to;
-                }
             }
+
             else
             {
                 node = new historyNode(curTurn, captured, false, true, virginMove);
-                history.Push(node);
+            }
 
-                if (mForm.showLastMoveToolStripMenuItem.Checked == true)
-                {
-                    clearToAndFrom();
-                    coordinateToPictureBox(curTurn.pieceSpot).BackgroundImage = Resources.from;
-                    coordinateToPictureBox(curTurn.moveSpot).BackgroundImage = Resources.to;
-                }
+            history.Push(node);
+
+            if (mForm.showLastMoveToolStripMenuItem.Checked == true)
+            {
+                clearToAndFrom();
+                coordinateToPictureBox(curTurn.pieceSpot).BackgroundImage = Resources.from;
+                coordinateToPictureBox(curTurn.moveSpot).BackgroundImage = Resources.to;
+            }
+
+            if (board[newSpot.x, newSpot.y].job == "King")
+            {
+                castling(curTurn);//check if move is a castling
             }
         }
 
@@ -646,7 +644,7 @@ namespace BobbyFischer
         {
             //overwrite current cell
             board[newCell.x, newCell.y].color = offensiveTeam;
-            board[newCell.x, newCell.y].job = pPiece.job.ToString();
+            board[newCell.x, newCell.y].job = pPiece.job;
 
             //delete prev cell
             board[oldCell.x, oldCell.y].color = null;
@@ -1151,10 +1149,43 @@ namespace BobbyFischer
         public void undo()
         {
             //moves pieces backwards
+            Image pawnPic;
 
             historyNode node = history.Pop();
+            piece to = board[node.step.moveSpot.x, node.step.moveSpot.y];
+            piece from = board[node.step.pieceSpot.x, node.step.pieceSpot.y];
+            offensiveTeam = to.color;
 
-            //TODO: move pieces here
+            if(node.pawnTransform == true)
+            {
+                if(to.color == "light")
+                {
+                    pawnPic = lPawn;
+                }
+
+                else
+                {
+                    pawnPic = dPawn;
+                }
+
+                board[node.step.pieceSpot.x, node.step.pieceSpot.y].job = "Pawn";
+                coordinateToPictureBox(node.step.pieceSpot).Image = pawnPic;
+            }
+
+            else
+            {
+                board[node.step.pieceSpot.x, node.step.pieceSpot.y].job = to.job;
+                coordinateToPictureBox(node.step.pieceSpot).Image = matchPicture(to);
+            }
+
+            board[node.step.pieceSpot.x, node.step.pieceSpot.y].color = to.color;
+            board[node.step.pieceSpot.x, node.step.pieceSpot.y].firstMove = node.virgin;
+
+            //put captured piece back
+            board[node.step.moveSpot.x, node.step.moveSpot.y].job = node.captured.job;
+            board[node.step.moveSpot.x, node.step.moveSpot.y].color = node.captured.color;
+            board[node.step.moveSpot.x, node.step.moveSpot.y].firstMove = node.captured.firstMove;
+            coordinateToPictureBox(node.step.moveSpot).Image = matchPicture(node.captured);
 
             if(node.skip == true)
             {
@@ -1165,6 +1196,8 @@ namespace BobbyFischer
             {
                 mForm.undoToolStripMenuItem.Enabled = false;
             }
+            clearToAndFrom();
+            clearSelectedOrPossible();
         }
 
         public void newGame()
