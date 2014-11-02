@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+//Sets up a new game
+
 namespace BobbyFischer
 {
     public partial class NewGame : Form

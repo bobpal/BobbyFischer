@@ -28,23 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.themeBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.previewBox = new System.Windows.Forms.PictureBox();
             this.ok = new System.Windows.Forms.Button();
             this.cancel = new System.Windows.Forms.Button();
+            this.themeBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.previewBox)).BeginInit();
             this.SuspendLayout();
-            // 
-            // themeBox
-            // 
-            this.themeBox.FormattingEnabled = true;
-            this.themeBox.Location = new System.Drawing.Point(18, 56);
-            this.themeBox.MaxDropDownItems = 10;
-            this.themeBox.Name = "themeBox";
-            this.themeBox.Size = new System.Drawing.Size(121, 21);
-            this.themeBox.TabIndex = 0;
             // 
             // label1
             // 
@@ -85,6 +76,7 @@
             // 
             // cancel
             // 
+            this.cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancel.Location = new System.Drawing.Point(214, 204);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(75, 23);
@@ -92,6 +84,17 @@
             this.cancel.Text = "Cancel";
             this.cancel.UseVisualStyleBackColor = true;
             this.cancel.Click += new System.EventHandler(this.cancel_Click);
+            // 
+            // themeBox
+            // 
+            this.themeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.themeBox.FormattingEnabled = true;
+            this.themeBox.Location = new System.Drawing.Point(18, 56);
+            this.themeBox.MaxDropDownItems = 10;
+            this.themeBox.Name = "themeBox";
+            this.themeBox.Size = new System.Drawing.Size(121, 21);
+            this.themeBox.TabIndex = 0;
+            this.themeBox.SelectionChangeCommitted += new System.EventHandler(this.themeBox_SelectionMade);
             // 
             // ChangeTheme
             // 
@@ -106,6 +109,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.themeBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ChangeTheme";
@@ -120,11 +124,11 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox themeBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox previewBox;
         private System.Windows.Forms.Button ok;
         private System.Windows.Forms.Button cancel;
+        private System.Windows.Forms.ComboBox themeBox;
     }
 }

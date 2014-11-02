@@ -34,7 +34,7 @@ namespace BobbyFischer
         public bool firstGame;                                      //has newGame() been called yet?
         private coordinate prevSelected;                            //where the cursor clicked previously
         public List<Assembly> themeList;
-        public int themeIndex;
+        public int themeIndex = 0;
         public Image lKing;
         public Image lQueen;
         public Image lBishop;
@@ -894,6 +894,31 @@ namespace BobbyFischer
                     }
                 default:
                     return null;
+            }
+        }
+
+        public int reverseRow(int inRow)
+        {
+            switch (inRow)
+            {
+                case 0:
+                    return 7;
+                case 1:
+                    return 6;
+                case 2:
+                    return 5;
+                case 3:
+                    return 4;
+                case 4:
+                    return 3;
+                case 5:
+                    return 2;
+                case 6:
+                    return 1;
+                case 7:
+                    return 0;
+                default:
+                    return 8;
             }
         }
 

@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
 
+//lets users change themes
+
 namespace BobbyFischer
 {
     public partial class ChangeTheme : Form
@@ -21,20 +23,52 @@ namespace BobbyFischer
         {
             InitializeComponent();
             this.game = chess;
+            index = game.themeIndex;
+            populate();
+        }
+
+        private void populate()
+        {
+            string rawString;
+            string edited;
+
             previewBox.Image = game.lKing;
+
+            for (int i = 0; i < game.themeList.Count(); i++)
+            {
+                rawString = game.themeList[i].GetName().ToString();
+                edited = rawString.Substring(0, rawString.IndexOf(","));
+                themeBox.Items.Add(edited);
+
+                if(i == index)
+                {
+                    themeBox.Text = edited;
+                }
+            }
         }
 
         private void ok_Click(object sender, EventArgs e)
         {
             game.themeIndex = index;
             game.setTheme();
-            game.changeTheme();
+
+            if (game.board != null)
+            {
+                game.changeTheme();
+            }
             this.Close();
         }
 
         private void cancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void themeBox_SelectionMade(object sender, EventArgs e)
+        {
+            index = themeBox.SelectedIndex;
+            System.IO.Stream streamFile = game.themeList[index].GetManifestResourceStream(game.themeList[index].GetName().Name + ".lKing.png");
+            previewBox.Image = Image.FromStream(streamFile);
         }
     }
 }

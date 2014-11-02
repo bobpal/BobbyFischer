@@ -16,6 +16,7 @@ namespace BobbyFischer
     {
         Chess game;
         private string losingTeam;
+        private string winningTeam;
 
         public GameOver(Chess chess, string team)
         {
@@ -23,14 +24,32 @@ namespace BobbyFischer
             this.game = chess;
             this.losingTeam = team;
 
-            if (losingTeam == "dark")
+            if (game.onePlayer == false)
             {
-                label1.Text = "Congratulations!\n\nYou have slain the evil king\n and saved the princess!";
+                if (losingTeam == "light")
+                {
+                    winningTeam = "dark";
+                }
+
+                else
+                {
+                    winningTeam = "light";
+                }
+
+                label1.Text = "The " + winningTeam + " army has slain the " + losingTeam + " army's king in battle";
             }
 
             else
             {
-                label1.Text = "Sorry\n\nYou gave a valiant effort,\nbut you have been bested in battle by the enemy army\n";
+                if (losingTeam == "dark")
+                {
+                    label1.Text = "Congratulations!\n\nYou have slain the evil king\n and saved the princess!";
+                }
+
+                else
+                {
+                    label1.Text = "Sorry\n\nYou gave a valiant effort,\nbut you have been bested in battle by the enemy army\n";
+                }
             }
         }
 
