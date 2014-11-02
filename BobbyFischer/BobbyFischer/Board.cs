@@ -21,7 +21,8 @@ namespace BobbyFischer
         {
             InitializeComponent();
             game = new Chess(this);
-            game.setFigureTheme();
+            game.loadDlls();
+            game.setTheme();
             this.Show();
             game.newGame();
         }
@@ -34,6 +35,11 @@ namespace BobbyFischer
         private void tableLayoutPanel1_Paint_1(object sender, PaintEventArgs e)
         {
             
+        }
+
+        private void changeThemeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            game.themeForm();
         }
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -49,25 +55,15 @@ namespace BobbyFischer
             }
         }
 
-        private void figureToolStripMenuItem_Click(object sender, EventArgs e)
+        /*private void figureToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            game.setFigureTheme();
+            game.setTheme();
 
             if (game.board != null)
             {
                 game.changeTheme();
             }
-        }
-
-        private void lettersToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            game.setLetterTheme();
-
-            if(game.board != null)
-            {
-                game.changeTheme();
-            }
-        }
+        }*/
 
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
         {

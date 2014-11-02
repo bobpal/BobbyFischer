@@ -7,6 +7,8 @@ using System.Drawing;
 using System.ComponentModel;
 using System.Data;
 using System.Text;
+using System.IO;
+using System.Reflection;
 using BobbyFischer.Properties;
 
 //the back-end where all the business logic is determined
@@ -31,7 +33,9 @@ namespace BobbyFischer
         public bool hardMode;                                       //difficulty level
         public bool firstGame;                                      //has newGame() been called yet?
         private coordinate prevSelected;                            //where the cursor clicked previously
-        private Image lKing;
+        public List<Assembly> themeList;
+        public int themeIndex;
+        public Image lKing;
         public Image lQueen;
         public Image lBishop;
         public Image lKnight;
@@ -1099,37 +1103,35 @@ namespace BobbyFischer
             mForm.pictureBox64.Image = lRook;
         }
 
-        public void setFigureTheme()
+        public void setTheme()
         {
-            lKing = Resources.figLking;
-            lQueen = Resources.figLqueen;
-            lBishop = Resources.figLbishop;
-            lKnight = Resources.figLknight;
-            lRook = Resources.figLrook;
-            lPawn = Resources.figLpawn;
-            dKing = Resources.figDking;
-            dQueen = Resources.figDqueen;
-            dBishop = Resources.figDbishop;
-            dKnight = Resources.figDknight;
-            dRook = Resources.figDrook;
-            dPawn = Resources.figDpawn;
-        }
+            //sets image variables based on themeIndex
 
-        public void setLetterTheme()
-        {
-            //sets variables
-            lKing = Resources.letLking;
-            lQueen = Resources.letLqueen;
-            lBishop = Resources.letLbishop;
-            lKnight = Resources.letLknight;
-            lRook = Resources.letLrook;
-            lPawn = Resources.letLpawn;
-            dKing = Resources.letDking;
-            dQueen = Resources.letDqueen;
-            dBishop = Resources.letDbishop;
-            dKnight = Resources.letDknight;
-            dRook = Resources.letDrook;
-            dPawn = Resources.letDpawn;
+            System.IO.Stream lKingFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lKing.png");
+            System.IO.Stream lQueenFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lQueen.png");
+            System.IO.Stream lBishopFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lBishop.png");
+            System.IO.Stream lKnightFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lKnight.png");
+            System.IO.Stream lRookFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lRook.png");
+            System.IO.Stream lPawnFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lPawn.png");
+            System.IO.Stream dKingFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dKing.png");
+            System.IO.Stream dQueenFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dQueen.png");
+            System.IO.Stream dBishopFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dBishop.png");
+            System.IO.Stream dKnightFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dKnight.png");
+            System.IO.Stream dRookFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dRook.png");
+            System.IO.Stream dPawnFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dPawn.png");
+
+            lKing = Image.FromStream(lKingFile);
+            lQueen = Image.FromStream(lQueenFile);
+            lBishop = Image.FromStream(lBishopFile);
+            lKnight = Image.FromStream(lKnightFile);
+            lRook = Image.FromStream(lRookFile);
+            lPawn = Image.FromStream(lPawnFile);
+            dKing = Image.FromStream(dKingFile);
+            dQueen = Image.FromStream(dQueenFile);
+            dBishop = Image.FromStream(dBishopFile);
+            dKnight = Image.FromStream(dKnightFile);
+            dRook = Image.FromStream(dRookFile);
+            dPawn = Image.FromStream(dPawnFile);
         }
 
         public void changeTheme()
@@ -1143,6 +1145,23 @@ namespace BobbyFischer
             foreach(coordinate spot in temp)
             {
                 coordinateToPictureBox(spot).Image = matchPicture(board[spot.x, spot.y]);
+            }
+        }
+
+        public void loadDlls()
+        {
+            AssemblyName an;
+            Assembly assembly;
+            themeList = new List<Assembly>();
+            string[] dllFilePathArray = null;
+            string path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            dllFilePathArray = Directory.GetFiles(path, "*.dll");
+
+            foreach (string dllFilePath in dllFilePathArray)
+            {
+                an = AssemblyName.GetAssemblyName(dllFilePath);
+                assembly = Assembly.Load(an);
+                themeList.Add(assembly);
             }
         }
 
@@ -1204,6 +1223,12 @@ namespace BobbyFischer
         {
             NewGame play = new NewGame(this);
             play.ShowDialog();
+        }
+
+        public void themeForm()
+        {
+            ChangeTheme change = new ChangeTheme(this);
+            change.ShowDialog();
         }
 
         public struct piece

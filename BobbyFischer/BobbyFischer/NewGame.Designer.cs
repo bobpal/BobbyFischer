@@ -30,7 +30,6 @@
         {
             this.onePlayer = new System.Windows.Forms.RadioButton();
             this.twoPlayer = new System.Windows.Forms.RadioButton();
-            this.logo = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.difficultyPanel = new System.Windows.Forms.Panel();
             this.hard = new System.Windows.Forms.RadioButton();
@@ -38,8 +37,9 @@
             this.easy = new System.Windows.Forms.RadioButton();
             this.ok = new System.Windows.Forms.Button();
             this.cancel = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.logo)).BeginInit();
+            this.logo = new System.Windows.Forms.PictureBox();
             this.difficultyPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.logo)).BeginInit();
             this.SuspendLayout();
             // 
             // onePlayer
@@ -65,15 +65,6 @@
             this.twoPlayer.Text = "2 Player Duel";
             this.twoPlayer.UseVisualStyleBackColor = true;
             this.twoPlayer.CheckedChanged += new System.EventHandler(this.twoPlayer_CheckedChanged);
-            // 
-            // logo
-            // 
-            this.logo.Image = global::BobbyFischer.Properties.Resources.figLknight;
-            this.logo.Location = new System.Drawing.Point(213, 22);
-            this.logo.Name = "logo";
-            this.logo.Size = new System.Drawing.Size(80, 80);
-            this.logo.TabIndex = 2;
-            this.logo.TabStop = false;
             // 
             // label1
             // 
@@ -148,6 +139,15 @@
             this.cancel.UseVisualStyleBackColor = true;
             this.cancel.Click += new System.EventHandler(this.cancel_Click);
             // 
+            // logo
+            // 
+            this.logo.Image = global::BobbyFischer.Properties.Resources.logo;
+            this.logo.Location = new System.Drawing.Point(213, 22);
+            this.logo.Name = "logo";
+            this.logo.Size = new System.Drawing.Size(78, 78);
+            this.logo.TabIndex = 2;
+            this.logo.TabStop = false;
+            // 
             // NewGame
             // 
             this.AcceptButton = this.ok;
@@ -170,9 +170,9 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "New Game";
-            ((System.ComponentModel.ISupportInitialize)(this.logo)).EndInit();
             this.difficultyPanel.ResumeLayout(false);
             this.difficultyPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.logo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
