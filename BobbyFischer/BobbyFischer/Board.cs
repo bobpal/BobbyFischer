@@ -19,9 +19,27 @@ namespace BobbyFischer
 
         public Board()
         {
+            bool themesFound = false;
+
             InitializeComponent();
             game = new Chess(this);
-            game.loadDlls();
+
+            while(themesFound == false)
+            {
+                game.loadDlls();
+
+                if(game.themeList.Count() < 1)
+                {
+                    NoThemes none = new NoThemes();
+                    none.ShowDialog();
+                }
+
+                else
+                {
+                    themesFound = true;
+                }
+            }
+            
             game.setTheme();
             this.Show();
             game.newGame();

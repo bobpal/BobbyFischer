@@ -34,3 +34,4 @@ C:\Users\Robert\Documents\GitHub\BobbyFischer\BobbyFischer\BobbyFischer\obj\Rele
 C:\Users\Robert\Documents\GitHub\BobbyFischer\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.GameOver.resources
 C:\Users\Robert\Documents\GitHub\BobbyFischer\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.csproj.GenerateResource.Cache
 C:\Users\Robert\Documents\GitHub\BobbyFischer\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.ChangeTheme.resources
+C:\Users\Robert\Documents\GitHub\BobbyFischer\BobbyFischer\BobbyFischer\obj\Release\BobbyFischer.NoThemes.resources

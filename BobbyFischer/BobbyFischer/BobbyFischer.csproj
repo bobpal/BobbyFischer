@@ -80,6 +80,12 @@
     <Compile Include="NewGame.Designer.cs">
       <DependentUpon>NewGame.cs</DependentUpon>
     </Compile>
+    <Compile Include="NoThemes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NoThemes.Designer.cs">
+      <DependentUpon>NoThemes.cs</DependentUpon>
+    </Compile>
     <Compile Include="PawnTransformation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="NewGame.resx">
       <DependentUpon>NewGame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="noThemes.resx">
+      <DependentUpon>NoThemes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PawnTransformation.resx">
       <DependentUpon>PawnTransformation.cs</DependentUpon>
