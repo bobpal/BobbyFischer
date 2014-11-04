@@ -34,7 +34,7 @@ namespace BobbyFischer
         public bool firstGame;                                      //has newGame() been called yet?
         private coordinate prevSelected;                            //where the cursor clicked previously
         public List<Assembly> themeList;
-        public int themeIndex = 0;
+        public int themeIndex = 0;                                  //which theme is currently in use
         public Image lKing;
         public Image lQueen;
         public Image lBishop;
@@ -1175,18 +1175,47 @@ namespace BobbyFischer
 
         public void loadDlls()
         {
+            //searches dlls in working directory and loads themes
             AssemblyName an;
             Assembly assembly;
             themeList = new List<Assembly>();
             string[] dllFilePathArray = null;
             string path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            dllFilePathArray = Directory.GetFiles(path, "*.dll");
+            List<string> ignore = new List<string>();
+            bool themesFound = false;
 
-            foreach (string dllFilePath in dllFilePathArray)
+            while (themesFound == false)
             {
-                an = AssemblyName.GetAssemblyName(dllFilePath);
-                assembly = Assembly.Load(an);
-                themeList.Add(assembly);
+                try
+                {
+                    dllFilePathArray = Directory.GetFiles(path, "*.dll");
+
+                    foreach (string dllFilePath in dllFilePathArray.Except(ignore))
+                    {
+                        an = AssemblyName.GetAssemblyName(dllFilePath);
+                        assembly = Assembly.Load(an);
+                        themeList.Add(assembly);
+                    }
+                }
+                catch (BadImageFormatException ex)
+                {
+                    ignore.Add(path + "\\" + ex.FileName);
+                    themeList.Clear();
+                }
+
+                if (themeList.Count < 1)    //if 0 themes or 1 bad file before added to ignore
+                {
+                    //if 0 bad files <OR> bad files = total dll files
+                    if (ignore.Count < 1 || ignore.Count == dllFilePathArray.Count())
+                    {
+                        NoThemes none = new NoThemes();
+                        none.ShowDialog();
+                    }
+                }
+                else
+                {
+                    themesFound = true;
+                }
             }
         }
 
