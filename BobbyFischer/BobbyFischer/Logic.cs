@@ -125,6 +125,72 @@ namespace BobbyFischer
             board[7,7].firstMove = true;
         }
 
+        private List<coordinate> getDarkPieces()
+        {
+            //searches through board and returns list of coordinates where all dark pieces are located
+
+            coordinate temp = new coordinate();
+            List<coordinate> possiblePieces = new List<coordinate>();
+
+            for (int y = 0; y < 8; y++)
+            {
+                for (int x = 0; x < 8; x++)
+                {
+                    if (board[x, y].color == "dark")
+                    {
+                        temp.x = x;
+                        temp.y = y;
+                        possiblePieces.Add(temp);
+                    }
+                }
+            }
+            return possiblePieces;
+        }
+
+        private List<coordinate> getLightPieces()
+        {
+            //searches through board and returns list of coordinates where all light pieces are located
+
+            coordinate temp = new coordinate();
+            List<coordinate> possiblePieces = new List<coordinate>();
+
+            for (int y = 0; y < 8; y++)
+            {
+                for (int x = 0; x < 8; x++)
+                {
+                    if (board[x, y].color == "light")
+                    {
+                        temp.x = x;
+                        temp.y = y;
+                        possiblePieces.Add(temp);
+                    }
+                }
+            }
+            return possiblePieces;
+        }
+
+        private List<coordinate> getAllPieces()
+        {
+            //searches through board and returns list of coordinates where all pieces are located
+
+            coordinate temp = new coordinate();
+            List<coordinate> possiblePieces = new List<coordinate>();
+
+            for (int y = 0; y < 8; y++)
+            {
+                for (int x = 0; x < 8; x++)
+                {
+                    if (board[x, y].color != null)
+                    {
+                        temp.x = x;
+                        temp.y = y;
+                        possiblePieces.Add(temp);
+                    }
+                }
+            }
+            return possiblePieces;
+        }
+
         private List<move> getMoves(coordinate spot)
         {
             //returns all possible moves of spot given in argument disregarding check restrictions
@@ -132,7 +198,7 @@ namespace BobbyFischer
 
             List<move> temp = new List<move>();
 
-            switch(board[spot.x, spot.y].job)
+            switch (board[spot.x, spot.y].job)
             {
                 case "Rook":
                     return rookMoves(spot);
@@ -228,50 +294,6 @@ namespace BobbyFischer
                 }
             }
             return pos;//if no capturable moves, return list given, same as easy mode
-        }
-
-        private List<coordinate> getDarkPieces()
-        {
-            //searches through board and returns list of coordinates where all dark pieces are located
-
-            coordinate temp = new coordinate();
-            List<coordinate> possiblePieces = new List<coordinate>();
-
-            for(int y = 0; y < 8; y++)
-            {
-                for(int x = 0; x < 8; x++)
-                {
-                    if(board[x, y].color == "dark")
-                    {
-                        temp.x = x;
-                        temp.y = y;
-                        possiblePieces.Add(temp);
-                    }
-                }
-            }
-            return possiblePieces;
-        }
-
-        private List<coordinate> getLightPieces()
-        {
-            //searches through board and returns list of coordinates where all light pieces are located
-
-            coordinate temp = new coordinate();
-            List<coordinate> possiblePieces = new List<coordinate>();
-
-            for(int y = 0; y < 8; y++)
-            {
-                for(int x = 0; x < 8; x++)
-                {
-                    if(board[x, y].color == "light")
-                    {
-                        temp.x = x;
-                        temp.y = y;
-                        possiblePieces.Add(temp);
-                    }
-                }
-            }
-            return possiblePieces;
         }
 
         private bool isInCheck(string teamInQuestion)
@@ -662,6 +684,60 @@ namespace BobbyFischer
 
             movablePieceSelected = false;
             board[newCell.x, newCell.y].firstMove = false;
+        }
+
+        public void undo()
+        {
+            //moves pieces backwards
+            Image pawnPic;
+
+            historyNode node = history.Pop();
+            piece to = board[node.step.moveSpot.x, node.step.moveSpot.y];
+            piece from = board[node.step.pieceSpot.x, node.step.pieceSpot.y];
+            offensiveTeam = to.color;
+
+            if (node.pawnTransform == true)
+            {
+                if (to.color == "light")
+                {
+                    pawnPic = lPawn;
+                }
+
+                else
+                {
+                    pawnPic = dPawn;
+                }
+
+                board[node.step.pieceSpot.x, node.step.pieceSpot.y].job = "Pawn";
+                coordinateToPictureBox(node.step.pieceSpot).Image = pawnPic;
+            }
+
+            else
+            {
+                board[node.step.pieceSpot.x, node.step.pieceSpot.y].job = to.job;
+                coordinateToPictureBox(node.step.pieceSpot).Image = matchPicture(to);
+            }
+
+            board[node.step.pieceSpot.x, node.step.pieceSpot.y].color = to.color;
+            board[node.step.pieceSpot.x, node.step.pieceSpot.y].firstMove = node.virgin;
+
+            //put captured piece back
+            board[node.step.moveSpot.x, node.step.moveSpot.y].job = node.captured.job;
+            board[node.step.moveSpot.x, node.step.moveSpot.y].color = node.captured.color;
+            board[node.step.moveSpot.x, node.step.moveSpot.y].firstMove = node.captured.firstMove;
+            coordinateToPictureBox(node.step.moveSpot).Image = matchPicture(node.captured);
+
+            if (node.skip == true)
+            {
+                undo(); //call function again to undo another move
+            }
+
+            else if (history.Count == 0)    //if stack is empty, disable button; skip and empty stack can't both happen
+            {
+                mForm.undoToolStripMenuItem.Enabled = false;
+            }
+            clearToAndFrom();
+            clearSelectedOrPossible();
         }
 
         private Image matchPicture(piece figure)
@@ -1103,6 +1179,19 @@ namespace BobbyFischer
             mForm.pictureBox64.Image = lRook;
         }
 
+        public void changeTheme()
+        {
+            //calls matchPicture() on each piece and puts image in PictureBox
+            List<coordinate> pieceList = new List<coordinate>();
+
+            pieceList = getAllPieces();
+
+            foreach (coordinate spot in pieceList)
+            {
+                coordinateToPictureBox(spot).Image = matchPicture(board[spot.x, spot.y]);
+            }
+        }
+
         public void setTheme()
         {
             //sets image variables based on themeIndex
@@ -1140,22 +1229,9 @@ namespace BobbyFischer
             }
         }
 
-        public void changeTheme()
-        {
-            //calls matchPicture() on each piece and puts image in PictureBox
-            List<coordinate> temp = new List<coordinate>();
-
-            temp = getDarkPieces();
-            temp.AddRange(getLightPieces());
-
-            foreach(coordinate spot in temp)
-            {
-                coordinateToPictureBox(spot).Image = matchPicture(board[spot.x, spot.y]);
-            }
-        }
-
         public void tryDlls()
         {
+            //calls loadDlls() and setTheme() till found all themes
             bool dllsFound = false;
             int originalSize;
 
@@ -1230,60 +1306,6 @@ namespace BobbyFischer
                     themesFound = true;
                 }
             }
-        }
-
-        public void undo()
-        {
-            //moves pieces backwards
-            Image pawnPic;
-
-            historyNode node = history.Pop();
-            piece to = board[node.step.moveSpot.x, node.step.moveSpot.y];
-            piece from = board[node.step.pieceSpot.x, node.step.pieceSpot.y];
-            offensiveTeam = to.color;
-
-            if(node.pawnTransform == true)
-            {
-                if(to.color == "light")
-                {
-                    pawnPic = lPawn;
-                }
-
-                else
-                {
-                    pawnPic = dPawn;
-                }
-
-                board[node.step.pieceSpot.x, node.step.pieceSpot.y].job = "Pawn";
-                coordinateToPictureBox(node.step.pieceSpot).Image = pawnPic;
-            }
-
-            else
-            {
-                board[node.step.pieceSpot.x, node.step.pieceSpot.y].job = to.job;
-                coordinateToPictureBox(node.step.pieceSpot).Image = matchPicture(to);
-            }
-
-            board[node.step.pieceSpot.x, node.step.pieceSpot.y].color = to.color;
-            board[node.step.pieceSpot.x, node.step.pieceSpot.y].firstMove = node.virgin;
-
-            //put captured piece back
-            board[node.step.moveSpot.x, node.step.moveSpot.y].job = node.captured.job;
-            board[node.step.moveSpot.x, node.step.moveSpot.y].color = node.captured.color;
-            board[node.step.moveSpot.x, node.step.moveSpot.y].firstMove = node.captured.firstMove;
-            coordinateToPictureBox(node.step.moveSpot).Image = matchPicture(node.captured);
-
-            if(node.skip == true)
-            {
-                undo(); //call function again to undo another move
-            }
-
-            else if (history.Count == 0)    //if stack is empty, disable button; skip and empty stack can't both happen
-            {
-                mForm.undoToolStripMenuItem.Enabled = false;
-            }
-            clearToAndFrom();
-            clearSelectedOrPossible();
         }
 
         public void newGame()
