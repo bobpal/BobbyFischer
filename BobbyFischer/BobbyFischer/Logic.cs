@@ -897,31 +897,6 @@ namespace BobbyFischer
             }
         }
 
-        public int reverseRow(int inRow)
-        {
-            switch (inRow)
-            {
-                case 0:
-                    return 7;
-                case 1:
-                    return 6;
-                case 2:
-                    return 5;
-                case 3:
-                    return 4;
-                case 4:
-                    return 3;
-                case 5:
-                    return 2;
-                case 6:
-                    return 1;
-                case 7:
-                    return 0;
-                default:
-                    return 8;
-            }
-        }
-
         public void clearSelectedOrPossible()
         {
             mForm.pictureBox1.BackColor = System.Drawing.Color.White;
@@ -1131,7 +1106,6 @@ namespace BobbyFischer
         public void setTheme()
         {
             //sets image variables based on themeIndex
-
             System.IO.Stream lKingFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lKing.png");
             System.IO.Stream lQueenFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lQueen.png");
             System.IO.Stream lBishopFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lBishop.png");
@@ -1145,18 +1119,25 @@ namespace BobbyFischer
             System.IO.Stream dRookFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dRook.png");
             System.IO.Stream dPawnFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dPawn.png");
 
-            lKing = Image.FromStream(lKingFile);
-            lQueen = Image.FromStream(lQueenFile);
-            lBishop = Image.FromStream(lBishopFile);
-            lKnight = Image.FromStream(lKnightFile);
-            lRook = Image.FromStream(lRookFile);
-            lPawn = Image.FromStream(lPawnFile);
-            dKing = Image.FromStream(dKingFile);
-            dQueen = Image.FromStream(dQueenFile);
-            dBishop = Image.FromStream(dBishopFile);
-            dKnight = Image.FromStream(dKnightFile);
-            dRook = Image.FromStream(dRookFile);
-            dPawn = Image.FromStream(dPawnFile);
+            try
+            {
+                lKing = Image.FromStream(lKingFile);
+                lQueen = Image.FromStream(lQueenFile);
+                lBishop = Image.FromStream(lBishopFile);
+                lKnight = Image.FromStream(lKnightFile);
+                lRook = Image.FromStream(lRookFile);
+                lPawn = Image.FromStream(lPawnFile);
+                dKing = Image.FromStream(dKingFile);
+                dQueen = Image.FromStream(dQueenFile);
+                dBishop = Image.FromStream(dBishopFile);
+                dKnight = Image.FromStream(dKnightFile);
+                dRook = Image.FromStream(dRookFile);
+                dPawn = Image.FromStream(dPawnFile);
+            }
+            catch (ArgumentException)
+            {
+                themeList.RemoveAt(themeIndex);
+            }
         }
 
         public void changeTheme()
@@ -1173,15 +1154,47 @@ namespace BobbyFischer
             }
         }
 
-        public void loadDlls()
+        public void tryDlls()
+        {
+            bool dllsFound = false;
+            int originalSize;
+
+            while (dllsFound == false)
+            {
+                loadDlls();
+
+                originalSize = themeList.Count;
+
+                for (int i = 0; i < originalSize; i++)
+                {
+                    themeIndex = originalSize - i - 1;
+                    setTheme();
+                }
+
+                if (themeList.Count < 1)
+                {
+                    NoThemes none = new NoThemes();
+                    none.ShowDialog();
+                }
+                else
+                {
+                    dllsFound = true;
+                }
+            }
+            themeIndex = 0;
+        }
+
+        private void loadDlls()
         {
             //searches dlls in working directory and loads themes
+            string path;
             AssemblyName an;
             Assembly assembly;
             themeList = new List<Assembly>();
             string[] dllFilePathArray = null;
-            string path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             List<string> ignore = new List<string>();
+            path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            
             bool themesFound = false;
 
             while (themesFound == false)

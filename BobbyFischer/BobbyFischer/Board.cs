@@ -21,8 +21,7 @@ namespace BobbyFischer
         {
             InitializeComponent();
             game = new Chess(this);
-            game.loadDlls();
-            game.setTheme();
+            game.tryDlls();
             this.Show();
             game.newGame();
         }
@@ -70,10 +69,8 @@ namespace BobbyFischer
             if(game.firstGame == true)
             {
                 PictureBox picBox = (sender as PictureBox);
-
-                int revRow = gridPanel.GetRow(picBox);
+                int row = 7 - gridPanel.GetRow(picBox);
                 int col = gridPanel.GetColumn(picBox);
-                int row = game.reverseRow(revRow);
 
                 if (picBox.BackColor == System.Drawing.Color.LawnGreen)
                 {
@@ -95,11 +92,8 @@ namespace BobbyFischer
         private void pictureBox_Click(object sender, EventArgs e)
         {
             PictureBox picBox = (sender as PictureBox);
-
-            int revRow = gridPanel.GetRow(picBox);
+            int row = 7 - gridPanel.GetRow(picBox);
             int col = gridPanel.GetColumn(picBox);
-            int row = game.reverseRow(revRow);
-
             game.clicker(new Chess.coordinate(col, row));
         }
     }
