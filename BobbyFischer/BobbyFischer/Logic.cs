@@ -10,11 +10,13 @@ using System.Text;
 using System.IO;
 using System.Reflection;
 using BobbyFischer.Properties;
+using System.Runtime.Serialization.Formatters.Binary;
 
 //the back-end where all the business logic is determined
 
 namespace BobbyFischer
 {
+    [Serializable]
     public class Chess
     {
         [STAThread]
@@ -1308,6 +1310,19 @@ namespace BobbyFischer
             }
         }
 
+        public void saveState()
+        {
+            if(firstGame == true)
+            {
+                string filePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BobbyFischer";
+                System.IO.Directory.CreateDirectory(filePath);
+                filePath += "\\game.save";
+                BinaryFormatter writer = new BinaryFormatter();
+                using (FileStream saveStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                writer.Serialize(saveStream, board);
+            }
+        }
+
         public void newGame()
         {
             NewGame play = new NewGame(this);
@@ -1320,6 +1335,7 @@ namespace BobbyFischer
             change.ShowDialog();
         }
 
+        [Serializable]
         public struct piece
         {
             public string color { get; set; }
@@ -1327,6 +1343,7 @@ namespace BobbyFischer
             public bool firstMove { get; set; }
         }
 
+        [Serializable]
         public struct coordinate
         {
             public int x { get; set; }
@@ -1339,6 +1356,7 @@ namespace BobbyFischer
             }
         }
 
+        [Serializable]
         public struct move
         {
             //represents a move that a piece can do, includes starting position and ending position
@@ -1346,6 +1364,7 @@ namespace BobbyFischer
             public coordinate moveSpot { get; set; }     //ending position
         }
 
+        [Serializable]
         public struct historyNode
         {
             public move step;           //move that happened previously

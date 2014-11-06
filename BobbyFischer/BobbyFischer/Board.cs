@@ -96,5 +96,10 @@ namespace BobbyFischer
             int col = gridPanel.GetColumn(picBox);
             game.clicker(new Chess.coordinate(col, row));
         }
+
+        private void Close_Game(object sender, FormClosingEventArgs e)
+        {
+            game.saveState();
+        }
     }
 }
