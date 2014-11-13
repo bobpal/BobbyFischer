@@ -36,7 +36,7 @@ namespace BobbyFischer
         public bool firstGame;                                      //has newGame() been called yet?
         private coordinate prevSelected;                            //where the cursor clicked previously
         public List<Assembly> themeList;
-        public int themeIndex = 0;                                  //which theme is currently in use
+        public int themeIndex;                                      //which theme is currently in use
         public Image lKing;
         public Image lQueen;
         public Image lBishop;
@@ -1259,7 +1259,14 @@ namespace BobbyFischer
                     dllsFound = true;
                 }
             }
-            themeIndex = 0;
+            //find default theme
+            themeIndex = themeList.FindIndex(x => x.GetName().ToString() == "Figure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
+
+            if(themeIndex == -1)    //if can't find default
+            {
+                themeIndex = 0;
+            }
+            setTheme();
         }
 
         private void loadDlls()
@@ -1272,7 +1279,6 @@ namespace BobbyFischer
             string[] dllFilePathArray = null;
             List<string> ignore = new List<string>();
             path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            
             bool themesFound = false;
 
             while (themesFound == false)
@@ -1301,6 +1307,7 @@ namespace BobbyFischer
                     {
                         NoThemes none = new NoThemes();
                         none.ShowDialog();
+                        ignore.Clear();
                     }
                 }
                 else
@@ -1318,8 +1325,9 @@ namespace BobbyFischer
                 System.IO.Directory.CreateDirectory(filePath);
                 filePath += "\\game.save";
                 BinaryFormatter writer = new BinaryFormatter();
-                using (FileStream saveStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                FileStream saveStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
                 writer.Serialize(saveStream, board);
+                //writer.Serialize(saveStream, offensiveTeam);
             }
         }
 
