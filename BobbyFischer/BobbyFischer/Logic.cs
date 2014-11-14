@@ -53,6 +53,8 @@ namespace BobbyFischer
         public Stack<historyNode> history = new Stack<historyNode>();   //stores all moves on a stack
         public bool movablePieceSelected = false;                       //if true, the next click will move the selected piece if possible
         private List<move> possible = new List<move>();                 //list of all possible moves
+        public string dirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BobbyFischer";
+        public string filePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BobbyFischer\\save.chess";
         private static Random rnd = new Random();
 
         public Chess(Board mainForm)
@@ -1319,16 +1321,42 @@ namespace BobbyFischer
 
         public void saveState()
         {
-            if(firstGame == true)
+            if (mForm.saveGameOnExitToolStripMenuItem.Checked == true)
             {
-                string filePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BobbyFischer";
-                System.IO.Directory.CreateDirectory(filePath);
-                filePath += "\\game.save";
-                BinaryFormatter writer = new BinaryFormatter();
-                FileStream saveStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
-                writer.Serialize(saveStream, board);
-                //writer.Serialize(saveStream, offensiveTeam);
+                if(firstGame == true)
+                {
+                    System.IO.Directory.CreateDirectory(dirPath);
+                    BinaryFormatter writer = new BinaryFormatter();
+                    FileStream saveStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+                    writer.Serialize(saveStream, board);
+                    saveStream.Close();
+                }
             }
+
+            else if(Directory.Exists(dirPath))
+            {
+                File.Delete(filePath);
+            }
+        }
+
+        public void loadState()
+        {
+            BinaryFormatter reader = new BinaryFormatter();
+            FileStream loadStream = new FileStream(filePath, FileMode.Open);
+            board = new piece[8,8];
+            board = (piece[,])reader.Deserialize(loadStream);
+            loadStream.Close();
+
+            firstGame = true;
+            movablePieceSelected = false;
+            offensiveTeam = "light";//
+            onePlayer = true;//
+            medMode = false;//
+            hardMode = false;//
+            mForm.showLastMoveToolStripMenuItem.Checked = true;//
+            themeIndex = 0;//
+            setTheme();
+            changeTheme();
         }
 
         public void newGame()

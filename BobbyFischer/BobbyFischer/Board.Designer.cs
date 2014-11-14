@@ -104,6 +104,7 @@
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.saveGameOnExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.gridPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -230,7 +231,8 @@
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.changeThemeToolStripMenuItem,
             this.toolStripSeparator1,
-            this.showLastMoveToolStripMenuItem});
+            this.showLastMoveToolStripMenuItem,
+            this.saveGameOnExitToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
@@ -239,14 +241,14 @@
             // 
             this.changeThemeToolStripMenuItem.Name = "changeThemeToolStripMenuItem";
             this.changeThemeToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.changeThemeToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.changeThemeToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.changeThemeToolStripMenuItem.Text = "Change Theme";
             this.changeThemeToolStripMenuItem.Click += new System.EventHandler(this.changeThemeToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(176, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(186, 6);
             // 
             // showLastMoveToolStripMenuItem
             // 
@@ -256,7 +258,7 @@
             this.showLastMoveToolStripMenuItem.Name = "showLastMoveToolStripMenuItem";
             this.showLastMoveToolStripMenuItem.ShortcutKeyDisplayString = "";
             this.showLastMoveToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
-            this.showLastMoveToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.showLastMoveToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.showLastMoveToolStripMenuItem.Text = "Show Last Move";
             this.showLastMoveToolStripMenuItem.Click += new System.EventHandler(this.showLastMoveToolStripMenuItem_Click);
             // 
@@ -1184,6 +1186,16 @@
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox_Click);
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseMove);
             // 
+            // saveGameOnExitToolStripMenuItem
+            // 
+            this.saveGameOnExitToolStripMenuItem.Checked = true;
+            this.saveGameOnExitToolStripMenuItem.CheckOnClick = true;
+            this.saveGameOnExitToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.saveGameOnExitToolStripMenuItem.Name = "saveGameOnExitToolStripMenuItem";
+            this.saveGameOnExitToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.saveGameOnExitToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.saveGameOnExitToolStripMenuItem.Text = "Save Game on Exit";
+            // 
             // Board
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1348,6 +1360,7 @@
         private System.Windows.Forms.ToolStripMenuItem changeThemeToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        public System.Windows.Forms.ToolStripMenuItem saveGameOnExitToolStripMenuItem;
     }
 }
 

@@ -23,7 +23,16 @@ namespace BobbyFischer
             game = new Chess(this);
             game.tryDlls();
             this.Show();
-            game.newGame();
+
+            if (System.IO.File.Exists(game.filePath))
+            {
+                game.loadState();
+            }
+
+            else
+            {
+                game.newGame();
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
