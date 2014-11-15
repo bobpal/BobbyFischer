@@ -60,6 +60,12 @@ namespace BobbyFischer
             if(showLastMoveToolStripMenuItem.Checked == false)
             {
                 game.clearToAndFrom();
+                game.lastMove = false;
+            }
+
+            else
+            {
+                game.lastMove = true;
             }
         }
 

@@ -33,7 +33,7 @@ namespace BobbyFischer
         public string offensiveTeam;                                //which side is on the offense
         public bool medMode;                                        //difficulty level
         public bool hardMode;                                       //difficulty level
-        public bool firstGame;                                      //has newGame() been called yet?
+        public bool firstGame;                                      //has a game been setup yet?
         private coordinate prevSelected;                            //where the cursor clicked previously
         public List<Assembly> themeList;
         public int themeIndex;                                      //which theme is currently in use
@@ -51,6 +51,7 @@ namespace BobbyFischer
         private Image dPawn;
 
         public Stack<historyNode> history = new Stack<historyNode>();   //stores all moves on a stack
+        public bool lastMove = true;                                    //is lastMove menu option checked?
         public bool movablePieceSelected = false;                       //if true, the next click will move the selected piece if possible
         private List<move> possible = new List<move>();                 //list of all possible moves
         public string dirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BobbyFischer";
@@ -556,7 +557,7 @@ namespace BobbyFischer
                         history.Push(node);
                         mForm.undoToolStripMenuItem.Enabled = true;
 
-                        if (mForm.showLastMoveToolStripMenuItem.Checked == true)
+                        if (lastMove == true)
                         {
                             clearToAndFrom();
                             coordinateToPictureBox(curTurn.pieceSpot).BackgroundImage = Resources.from;
@@ -657,7 +658,7 @@ namespace BobbyFischer
 
             history.Push(node);
 
-            if (mForm.showLastMoveToolStripMenuItem.Checked == true)
+            if (lastMove == true)
             {
                 clearToAndFrom();
                 coordinateToPictureBox(curTurn.pieceSpot).BackgroundImage = Resources.from;
@@ -1262,7 +1263,7 @@ namespace BobbyFischer
                 }
             }
             //find default theme
-            themeIndex = themeList.FindIndex(x => x.GetName().ToString() == "Figure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
+            themeIndex = themeList.FindIndex(x => x.GetName().Name == "Figure");
 
             if(themeIndex == -1)    //if can't find default
             {
@@ -1325,10 +1326,12 @@ namespace BobbyFischer
             {
                 if(firstGame == true)
                 {
+                    string theme = themeList[themeIndex].GetName().Name;
+                    saveData sData = new saveData(board, offensiveTeam, theme, onePlayer, medMode, hardMode, lastMove);
                     System.IO.Directory.CreateDirectory(dirPath);
                     BinaryFormatter writer = new BinaryFormatter();
                     FileStream saveStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
-                    writer.Serialize(saveStream, board);
+                    writer.Serialize(saveStream, sData);
                     saveStream.Close();
                 }
             }
@@ -1343,20 +1346,38 @@ namespace BobbyFischer
         {
             BinaryFormatter reader = new BinaryFormatter();
             FileStream loadStream = new FileStream(filePath, FileMode.Open);
-            board = new piece[8,8];
-            board = (piece[,])reader.Deserialize(loadStream);
-            loadStream.Close();
 
-            firstGame = true;
-            movablePieceSelected = false;
-            offensiveTeam = "light";//
-            onePlayer = true;//
-            medMode = false;//
-            hardMode = false;//
-            mForm.showLastMoveToolStripMenuItem.Checked = true;//
-            themeIndex = 0;//
-            setTheme();
-            changeTheme();
+            try
+            {
+                saveData lData = (saveData)reader.Deserialize(loadStream);
+                loadStream.Close();
+                board = new piece[8, 8];
+                firstGame = true;
+                movablePieceSelected = false;
+                board = lData.sBoard;
+                offensiveTeam = lData.sOffensiveTeam;
+                string theme = lData.sTheme;
+                onePlayer = lData.sOnePlayer;
+                medMode = lData.sMedMode;
+                hardMode = lData.sHardMode;
+                mForm.showLastMoveToolStripMenuItem.Checked = lData.sLastMove;
+                lastMove = lData.sLastMove;
+
+                for (int i = 0; i < themeList.Count(); i++)
+                {
+                    if (themeList[i].GetName().Name == theme)
+                    {
+                        themeIndex = i;
+                    }
+                }
+
+                setTheme();
+                changeTheme();
+            }
+            catch(InvalidCastException)
+            {
+                newGame();
+            }
         }
 
         public void newGame()
@@ -1369,6 +1390,29 @@ namespace BobbyFischer
         {
             ChangeTheme change = new ChangeTheme(this);
             change.ShowDialog();
+        }
+
+        [Serializable]
+        private class saveData
+        {
+            public piece[,] sBoard { get; private set; }
+            public string sOffensiveTeam { get; private set; }
+            public string sTheme { get; private set; }
+            public bool sOnePlayer { get; private set; }
+            public bool sMedMode { get; private set; }
+            public bool sHardMode { get; private set; }
+            public bool sLastMove { get; private set; }
+
+            public saveData(piece[,] p1, string p2, string p3, bool p4, bool p5, bool p6, bool p7)
+            {
+                this.sBoard = p1;
+                this.sOffensiveTeam = p2;
+                this.sTheme = p3;
+                this.sOnePlayer = p4;
+                this.sMedMode = p5;
+                this.sHardMode = p6;
+                this.sLastMove = p7;
+            }
         }
 
         [Serializable]

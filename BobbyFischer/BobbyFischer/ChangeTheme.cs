@@ -29,20 +29,15 @@ namespace BobbyFischer
 
         private void populate()
         {
-            string rawString;
-            string edited;
-
             previewBox.Image = game.lKing;
 
             for (int i = 0; i < game.themeList.Count(); i++)
             {
-                rawString = game.themeList[i].GetName().ToString();
-                edited = rawString.Substring(0, rawString.IndexOf(","));
-                themeBox.Items.Add(edited);
+                themeBox.Items.Add(game.themeList[i].GetName().Name);
 
                 if(i == index)
                 {
-                    themeBox.Text = edited;
+                    themeBox.Text = game.themeList[i].GetName().Name;
                 }
             }
         }
