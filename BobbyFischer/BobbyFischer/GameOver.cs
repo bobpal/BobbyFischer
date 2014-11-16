@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 //dialog displays when checkmate is reached by either side
 
@@ -14,15 +15,15 @@ namespace BobbyFischer
 {
     public partial class GameOver : Form
     {
-        Chess game;
-        private string losingTeam;
-        private string winningTeam;
+        private Chess game;
+        private Board mForm;
 
-        public GameOver(Chess chess, string team)
+        public GameOver(Chess chess, string losingTeam, Board brd)
         {
             InitializeComponent();
             this.game = chess;
-            this.losingTeam = team;
+            this.mForm = brd;
+            string winningTeam;
 
             if (game.onePlayer == false)
             {
@@ -41,7 +42,7 @@ namespace BobbyFischer
 
             else
             {
-                if (losingTeam == "dark")
+                if (losingTeam == game.compTeam)
                 {
                     label1.Text = "Congratulations!\n\nYou have slain the evil king\n and saved the princess!";
                 }

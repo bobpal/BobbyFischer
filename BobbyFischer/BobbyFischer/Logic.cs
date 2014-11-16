@@ -30,7 +30,9 @@ namespace BobbyFischer
         public piece[,] board;                                      //8x8 array of pieces
         public Board mForm;                                         //main form
         public bool onePlayer;                                      //versus computer or human
+        public string compTeam;                                     //color of computer team
         public string offensiveTeam;                                //which side is on the offense
+        public string baseOnBottom;                                 //which side is on bottom, going up
         public bool medMode;                                        //difficulty level
         public bool hardMode;                                       //difficulty level
         public bool firstGame;                                      //has a game been setup yet?
@@ -67,7 +69,17 @@ namespace BobbyFischer
         {
             //creates new array with pieces in starting position
 
+            string defensiveTeam;
             board = new piece[8, 8];
+
+            if(offensiveTeam == "light")
+            {
+                defensiveTeam = "dark";
+            }
+            else
+            {
+                defensiveTeam = "light";
+            }
                 
             for (int y = 0; y < 8; y++)
             {
@@ -75,26 +87,26 @@ namespace BobbyFischer
                 {
                     if (y == 0)
                     {
-                        board[x, 0].color = "light";
+                        board[x, 0].color = offensiveTeam;
                     }
 
                     else if (y == 1)
                     {
-                        board[x, 1].color = "light";
+                        board[x, 1].color = offensiveTeam;
                         board[x, 1].job = "Pawn";
                         board[x, 1].firstMove = true;
                     }
 
                     else if (y == 6)
                     {
-                        board[x, 6].color = "dark";
+                        board[x, 6].color = defensiveTeam;
                         board[x, 6].job = "Pawn";
                         board[x, 6].firstMove = true;
                     }
 
                     else if(y == 7)
                     {
-                        board[x, 7].color = "dark";
+                        board[x, 7].color = defensiveTeam;
                     }
 
                     else
@@ -429,7 +441,7 @@ namespace BobbyFischer
 
             if(possibleWithoutCheck.Count == 0)//if no moves available that don't go into check
             {
-                GameOver gameEnd = new GameOver(this, teamInQuestion);
+                GameOver gameEnd = new GameOver(this, teamInQuestion, mForm);
                 gameEnd.ShowDialog();
                 return true;
             }
@@ -446,7 +458,7 @@ namespace BobbyFischer
             coordinate toSpot = shift.moveSpot;
             coordinate fromSpot = shift.pieceSpot;
 
-            if(offensiveTeam == "light")
+            if(offensiveTeam == baseOnBottom)
             {
                 yCoor = 0;
             }
@@ -486,6 +498,7 @@ namespace BobbyFischer
             //human player's turn, gets called when player clicks on spot
             bool movableSpot;
             historyNode node;
+            string baseOnTop;
             move curTurn = new move();
 
             if (firstGame == true)  //blocks functionality if game hasn't started yet
@@ -529,14 +542,23 @@ namespace BobbyFischer
 
                         if (board[currentCell.x, currentCell.y].job == "Pawn")
                         {
-                            if (board[currentCell.x, currentCell.y].color == "light" && currentCell.y == 7)
+                            if(baseOnBottom == "light")
+                            {
+                                baseOnTop = "dark";
+                            }
+                            else
+                            {
+                                baseOnTop = "light";
+                            }
+
+                            if (board[currentCell.x, currentCell.y].color == baseOnBottom && currentCell.y == 7)
                             {
                                 PawnTransformation transform = new PawnTransformation(currentCell, this);
                                 transform.ShowDialog();
                                 node = new historyNode(curTurn, captured, true, false, false);
                             }
 
-                            else if (board[currentCell.x, currentCell.y].color == "dark" && currentCell.y == 0)
+                            else if (board[currentCell.x, currentCell.y].color == baseOnTop && currentCell.y == 0)
                             {
                                 PawnTransformation transform = new PawnTransformation(currentCell, this);
                                 transform.ShowDialog();
@@ -585,23 +607,35 @@ namespace BobbyFischer
             {
                 offensiveTeam = "dark";
                 endOfGame = isInCheckmate(offensiveTeam, getDarkPieces());  //did previous turn put other team in checkmate?
+
+                if (endOfGame == false && onePlayer == true)
+                {
+                    foreach (coordinate cell in getDarkPieces())
+                    {
+                        possibleWithoutCheck.AddRange(getCheckRestrictedMoves(cell));
+                    }
+
+                    compTurn(possibleWithoutCheck);
+                    isInCheckmate("light", getLightPieces()); //did computer turn put player in checkmate?
+                    offensiveTeam = "light";
+                }
             }
             else
             {
                 offensiveTeam = "light";
-                endOfGame = isInCheckmate(offensiveTeam, getLightPieces());
-            }
+                endOfGame = isInCheckmate(offensiveTeam, getLightPieces()); //did previous turn put other team in checkmate?
 
-            if (endOfGame == false && onePlayer == true)
-            {
-                foreach (coordinate cell in getDarkPieces()) //for all dark pieces
+                if (endOfGame == false && onePlayer == true)
                 {
-                    possibleWithoutCheck.AddRange(getCheckRestrictedMoves(cell));  //get all moves possible without going into check
-                }
+                    foreach (coordinate cell in getLightPieces())
+                    {
+                        possibleWithoutCheck.AddRange(getCheckRestrictedMoves(cell));
+                    }
 
-                compTurn(possibleWithoutCheck);
-                isInCheckmate("light", getLightPieces()); //did computer turn put player in checkmate?
-                offensiveTeam = "light";
+                    compTurn(possibleWithoutCheck);
+                    isInCheckmate("dark", getDarkPieces()); //did computer turn put player in checkmate?
+                    offensiveTeam = "dark";
+                }
             }
         }
 
@@ -627,26 +661,54 @@ namespace BobbyFischer
             if (board[newSpot.x, newSpot.y].job == "Pawn" && newSpot.y == 0)//if pawn makes it to last row
             {
                 r = rnd.Next(0, 4); //choose random piece to transform into
-                switch (r)
+
+                if(compTeam == "dark")
                 {
-                    case 0:
-                        board[newSpot.x, newSpot.y].job = "Queen";
-                        coordinateToPictureBox(newSpot).Image = dQueen;
-                        break;
-                    case 1:
-                        board[newSpot.x, newSpot.y].job = "Rook";
-                        coordinateToPictureBox(newSpot).Image = dRook;
-                        break;
-                    case 2:
-                        board[newSpot.x, newSpot.y].job = "Bishop";
-                        coordinateToPictureBox(newSpot).Image = dBishop;
-                        break;
-                    case 3:
-                        board[newSpot.x, newSpot.y].job = "Knight";
-                        coordinateToPictureBox(newSpot).Image = dKnight;
-                        break;
-                    default:
-                        break;
+                    switch (r)
+                    {
+                        case 0:
+                            board[newSpot.x, newSpot.y].job = "Queen";
+                            coordinateToPictureBox(newSpot).Image = dQueen;
+                            break;
+                        case 1:
+                            board[newSpot.x, newSpot.y].job = "Rook";
+                            coordinateToPictureBox(newSpot).Image = dRook;
+                            break;
+                        case 2:
+                            board[newSpot.x, newSpot.y].job = "Bishop";
+                            coordinateToPictureBox(newSpot).Image = dBishop;
+                            break;
+                        case 3:
+                            board[newSpot.x, newSpot.y].job = "Knight";
+                            coordinateToPictureBox(newSpot).Image = dKnight;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (r)
+                    {
+                        case 0:
+                            board[newSpot.x, newSpot.y].job = "Queen";
+                            coordinateToPictureBox(newSpot).Image = lQueen;
+                            break;
+                        case 1:
+                            board[newSpot.x, newSpot.y].job = "Rook";
+                            coordinateToPictureBox(newSpot).Image = lRook;
+                            break;
+                        case 2:
+                            board[newSpot.x, newSpot.y].job = "Bishop";
+                            coordinateToPictureBox(newSpot).Image = lBishop;
+                            break;
+                        case 3:
+                            board[newSpot.x, newSpot.y].job = "Knight";
+                            coordinateToPictureBox(newSpot).Image = lKnight;
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 node = new historyNode(curTurn, captured, true, true, false);
             }
@@ -1114,7 +1176,7 @@ namespace BobbyFischer
             mForm.pictureBox64.BackgroundImage = null;
         }
 
-        public void setImages()
+        public void playAsLight()
         {
             //sets images on board for new game
 
@@ -1182,6 +1244,76 @@ namespace BobbyFischer
             mForm.pictureBox62.Image = lBishop;
             mForm.pictureBox63.Image = lKnight;
             mForm.pictureBox64.Image = lRook;
+        }
+
+        public void playAsDark()
+        {
+            //sets images on board for new game
+
+            mForm.pictureBox1.Image = lRook;
+            mForm.pictureBox2.Image = lKnight;
+            mForm.pictureBox3.Image = lBishop;
+            mForm.pictureBox4.Image = lQueen;
+            mForm.pictureBox5.Image = lKing;
+            mForm.pictureBox6.Image = lBishop;
+            mForm.pictureBox7.Image = lKnight;
+            mForm.pictureBox8.Image = lRook;
+            mForm.pictureBox9.Image = lPawn;
+            mForm.pictureBox10.Image = lPawn;
+            mForm.pictureBox11.Image = lPawn;
+            mForm.pictureBox12.Image = lPawn;
+            mForm.pictureBox13.Image = lPawn;
+            mForm.pictureBox14.Image = lPawn;
+            mForm.pictureBox15.Image = lPawn;
+            mForm.pictureBox16.Image = lPawn;
+            mForm.pictureBox17.Image = null;
+            mForm.pictureBox18.Image = null;
+            mForm.pictureBox19.Image = null;
+            mForm.pictureBox20.Image = null;
+            mForm.pictureBox21.Image = null;
+            mForm.pictureBox22.Image = null;
+            mForm.pictureBox23.Image = null;
+            mForm.pictureBox24.Image = null;
+            mForm.pictureBox25.Image = null;
+            mForm.pictureBox26.Image = null;
+            mForm.pictureBox27.Image = null;
+            mForm.pictureBox28.Image = null;
+            mForm.pictureBox29.Image = null;
+            mForm.pictureBox30.Image = null;
+            mForm.pictureBox31.Image = null;
+            mForm.pictureBox32.Image = null;
+            mForm.pictureBox33.Image = null;
+            mForm.pictureBox34.Image = null;
+            mForm.pictureBox35.Image = null;
+            mForm.pictureBox36.Image = null;
+            mForm.pictureBox37.Image = null;
+            mForm.pictureBox38.Image = null;
+            mForm.pictureBox39.Image = null;
+            mForm.pictureBox40.Image = null;
+            mForm.pictureBox41.Image = null;
+            mForm.pictureBox42.Image = null;
+            mForm.pictureBox43.Image = null;
+            mForm.pictureBox44.Image = null;
+            mForm.pictureBox45.Image = null;
+            mForm.pictureBox46.Image = null;
+            mForm.pictureBox47.Image = null;
+            mForm.pictureBox48.Image = null;
+            mForm.pictureBox49.Image = dPawn;
+            mForm.pictureBox50.Image = dPawn;
+            mForm.pictureBox51.Image = dPawn;
+            mForm.pictureBox52.Image = dPawn;
+            mForm.pictureBox53.Image = dPawn;
+            mForm.pictureBox54.Image = dPawn;
+            mForm.pictureBox55.Image = dPawn;
+            mForm.pictureBox56.Image = dPawn;
+            mForm.pictureBox57.Image = dRook;
+            mForm.pictureBox58.Image = dKnight;
+            mForm.pictureBox59.Image = dBishop;
+            mForm.pictureBox60.Image = dQueen;
+            mForm.pictureBox61.Image = dKing;
+            mForm.pictureBox62.Image = dBishop;
+            mForm.pictureBox63.Image = dKnight;
+            mForm.pictureBox64.Image = dRook;
         }
 
         public void changeTheme()
@@ -1322,13 +1454,14 @@ namespace BobbyFischer
 
         public void saveState()
         {
+            System.IO.Directory.CreateDirectory(dirPath);
+
             if (mForm.saveGameOnExitToolStripMenuItem.Checked == true)
             {
                 if(firstGame == true)
                 {
                     string theme = themeList[themeIndex].GetName().Name;
                     saveData sData = new saveData(board, offensiveTeam, theme, onePlayer, medMode, hardMode, lastMove);
-                    System.IO.Directory.CreateDirectory(dirPath);
                     BinaryFormatter writer = new BinaryFormatter();
                     FileStream saveStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
                     writer.Serialize(saveStream, sData);
@@ -1362,6 +1495,17 @@ namespace BobbyFischer
                 hardMode = lData.sHardMode;
                 mForm.showLastMoveToolStripMenuItem.Checked = lData.sLastMove;
                 lastMove = lData.sLastMove;
+
+                if(offensiveTeam == "light")
+                {
+                    baseOnBottom = "light";
+                    compTeam = "dark";
+                }
+                else
+                {
+                    baseOnBottom = "dark";
+                    compTeam = "light";
+                }
 
                 for (int i = 0; i < themeList.Count(); i++)
                 {
@@ -2030,7 +2174,7 @@ namespace BobbyFischer
             //search for castleing opportunity
             if (board[current.x, current.y].firstMove == true)//if king's first move
             {
-                if (pieceColor == "light")
+                if (pieceColor == baseOnBottom)
                 {
                     if (board[0, 0].firstMove == true)//if left rook's first move
                     {
@@ -2055,7 +2199,7 @@ namespace BobbyFischer
                     }
                 }
 
-                else if(pieceColor == "dark")
+                else
                 {
                     if (board[0, 7].firstMove == true)//if left rook's first move
                     {
@@ -2094,10 +2238,17 @@ namespace BobbyFischer
             string pieceColor = board[current.x, current.y].color;
             availableMove.pieceSpot = current;
 
-            if (pieceColor == "light")
+            if(pieceColor == "light")
             {
                 oppositeColor = "dark";
+            }
+            else
+            {
+                oppositeColor = "light";
+            }
 
+            if (pieceColor == baseOnBottom)
+            {
                 //search up
                 availableY++;
                 if (availableY < 8)
@@ -2154,8 +2305,6 @@ namespace BobbyFischer
 
             else
             {
-                oppositeColor = "light";
-
                 //search down
                 availableY--;
                 if (availableY >= 0)

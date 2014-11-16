@@ -16,8 +16,8 @@ namespace BobbyFischer
 {
     public partial class PawnTransformation : Form
     {
-        Chess.coordinate spot;
-        Chess game;
+        private Chess.coordinate spot;
+        private Chess game;
 
         public PawnTransformation(Chess.coordinate point, Chess chess)
         {

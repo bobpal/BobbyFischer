@@ -30,7 +30,6 @@
         {
             this.onePlayer = new System.Windows.Forms.RadioButton();
             this.twoPlayer = new System.Windows.Forms.RadioButton();
-            this.label1 = new System.Windows.Forms.Label();
             this.difficultyPanel = new System.Windows.Forms.Panel();
             this.hard = new System.Windows.Forms.RadioButton();
             this.medium = new System.Windows.Forms.RadioButton();
@@ -38,8 +37,13 @@
             this.ok = new System.Windows.Forms.Button();
             this.cancel = new System.Windows.Forms.Button();
             this.logo = new System.Windows.Forms.PictureBox();
+            this.colorPanel = new System.Windows.Forms.Panel();
+            this.light = new System.Windows.Forms.RadioButton();
+            this.dark = new System.Windows.Forms.RadioButton();
+            this.label1 = new System.Windows.Forms.Label();
             this.difficultyPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logo)).BeginInit();
+            this.colorPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // onePlayer
@@ -66,24 +70,16 @@
             this.twoPlayer.UseVisualStyleBackColor = true;
             this.twoPlayer.CheckedChanged += new System.EventHandler(this.twoPlayer_CheckedChanged);
             // 
-            // label1
-            // 
-            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label1.Location = new System.Drawing.Point(15, 100);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(150, 2);
-            this.label1.TabIndex = 3;
-            // 
             // difficultyPanel
             // 
-            this.difficultyPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.difficultyPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.difficultyPanel.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.difficultyPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.difficultyPanel.Controls.Add(this.hard);
             this.difficultyPanel.Controls.Add(this.medium);
             this.difficultyPanel.Controls.Add(this.easy);
             this.difficultyPanel.Location = new System.Drawing.Point(15, 110);
             this.difficultyPanel.Name = "difficultyPanel";
-            this.difficultyPanel.Size = new System.Drawing.Size(150, 110);
+            this.difficultyPanel.Size = new System.Drawing.Size(127, 110);
             this.difficultyPanel.TabIndex = 4;
             // 
             // hard
@@ -148,6 +144,45 @@
             this.logo.TabIndex = 2;
             this.logo.TabStop = false;
             // 
+            // colorPanel
+            // 
+            this.colorPanel.Controls.Add(this.dark);
+            this.colorPanel.Controls.Add(this.light);
+            this.colorPanel.Location = new System.Drawing.Point(175, 110);
+            this.colorPanel.Name = "colorPanel";
+            this.colorPanel.Size = new System.Drawing.Size(116, 94);
+            this.colorPanel.TabIndex = 5;
+            // 
+            // light
+            // 
+            this.light.AutoSize = true;
+            this.light.Checked = true;
+            this.light.Location = new System.Drawing.Point(10, 15);
+            this.light.Name = "light";
+            this.light.Size = new System.Drawing.Size(81, 17);
+            this.light.TabIndex = 0;
+            this.light.TabStop = true;
+            this.light.Text = "Play as light";
+            this.light.UseVisualStyleBackColor = true;
+            // 
+            // dark
+            // 
+            this.dark.AutoSize = true;
+            this.dark.Location = new System.Drawing.Point(10, 45);
+            this.dark.Name = "dark";
+            this.dark.Size = new System.Drawing.Size(83, 17);
+            this.dark.TabIndex = 1;
+            this.dark.Text = "Play as dark";
+            this.dark.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label1.Location = new System.Drawing.Point(15, 100);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(150, 2);
+            this.label1.TabIndex = 3;
+            // 
             // NewGame
             // 
             this.AcceptButton = this.ok;
@@ -156,6 +191,7 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.CancelButton = this.cancel;
             this.ClientSize = new System.Drawing.Size(319, 296);
+            this.Controls.Add(this.colorPanel);
             this.Controls.Add(this.cancel);
             this.Controls.Add(this.ok);
             this.Controls.Add(this.difficultyPanel);
@@ -173,6 +209,8 @@
             this.difficultyPanel.ResumeLayout(false);
             this.difficultyPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logo)).EndInit();
+            this.colorPanel.ResumeLayout(false);
+            this.colorPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -183,12 +221,15 @@
         private System.Windows.Forms.RadioButton onePlayer;
         private System.Windows.Forms.RadioButton twoPlayer;
         private System.Windows.Forms.PictureBox logo;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel difficultyPanel;
         private System.Windows.Forms.RadioButton hard;
         private System.Windows.Forms.RadioButton medium;
         private System.Windows.Forms.RadioButton easy;
         private System.Windows.Forms.Button ok;
         private System.Windows.Forms.Button cancel;
+        private System.Windows.Forms.Panel colorPanel;
+        private System.Windows.Forms.RadioButton dark;
+        private System.Windows.Forms.RadioButton light;
+        private System.Windows.Forms.Label label1;
     }
 }

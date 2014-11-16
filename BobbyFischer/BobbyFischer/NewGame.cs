@@ -39,36 +39,30 @@ namespace BobbyFischer
 
         private void ok_Click(object sender, EventArgs e)
         {
-            game.medMode = false;
-            game.hardMode = false;
-
-            if(onePlayer.Checked == true)
+            if (dark.Checked == true)
             {
-                game.onePlayer = true;
-
-                if(medium.Checked == true)
-                {
-                    game.medMode = true;
-                }
-
-                else if(hard.Checked == true)
-                {
-                    game.hardMode = true;
-                }
+                game.offensiveTeam = "dark";
+                game.baseOnBottom = "dark";
+                game.createGrid();
+                game.playAsDark();
+                game.compTeam = "light";
             }
-
             else
             {
-                game.onePlayer = false;
+                game.offensiveTeam = "light";
+                game.baseOnBottom = "light";
+                game.createGrid();
+                game.playAsLight();
+                game.compTeam = "dark";
             }
 
-            game.createGrid();
-            game.setImages();
+            game.onePlayer = onePlayer.Checked;
+            game.medMode = medium.Checked;
+            game.hardMode = hard.Checked;
             game.firstGame = true;
             game.clearToAndFrom();
             game.clearSelectedOrPossible();
             game.movablePieceSelected = false;
-            game.offensiveTeam = "light";
             this.Close();
         }
     }
