@@ -53,7 +53,9 @@ namespace BobbyFischer
         private Image dPawn;
 
         public Stack<historyNode> history = new Stack<historyNode>();   //stores all moves on a stack
+        public bool gameOverExit = false;                               //Did player exit from game over screen?
         public bool lastMove = true;                                    //is lastMove menu option checked?
+        public bool saveGame = true;                                    //Save game on exit?
         public bool movablePieceSelected = false;                       //if true, the next click will move the selected piece if possible
         private List<move> possible = new List<move>();                 //list of all possible moves
         public string dirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BobbyFischer";
@@ -441,7 +443,7 @@ namespace BobbyFischer
 
             if(possibleWithoutCheck.Count == 0)//if no moves available that don't go into check
             {
-                GameOver gameEnd = new GameOver(this, teamInQuestion, mForm);
+                GameOver gameEnd = new GameOver(this, teamInQuestion);
                 gameEnd.ShowDialog();
                 return true;
             }
@@ -1454,24 +1456,15 @@ namespace BobbyFischer
 
         public void saveState()
         {
-            System.IO.Directory.CreateDirectory(dirPath);
-
-            if (mForm.saveGameOnExitToolStripMenuItem.Checked == true)
+            if(firstGame == true)
             {
-                if(firstGame == true)
-                {
-                    string theme = themeList[themeIndex].GetName().Name;
-                    saveData sData = new saveData(board, offensiveTeam, theme, onePlayer, medMode, hardMode, lastMove);
-                    BinaryFormatter writer = new BinaryFormatter();
-                    FileStream saveStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
-                    writer.Serialize(saveStream, sData);
-                    saveStream.Close();
-                }
-            }
-
-            else if(Directory.Exists(dirPath))
-            {
-                File.Delete(filePath);
+                string theme = themeList[themeIndex].GetName().Name;
+                saveData sData = new saveData(board, offensiveTeam, theme, baseOnBottom, onePlayer, medMode, hardMode, lastMove, saveGame, gameOverExit);
+                System.IO.Directory.CreateDirectory(dirPath);
+                BinaryFormatter writer = new BinaryFormatter();
+                FileStream saveStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+                writer.Serialize(saveStream, sData);
+                saveStream.Close();
             }
         }
 
@@ -1482,30 +1475,47 @@ namespace BobbyFischer
 
             try
             {
-                saveData lData = (saveData)reader.Deserialize(loadStream);
+                saveData lData = (saveData)reader.Deserialize(loadStream);  //load file
                 loadStream.Close();
-                board = new piece[8, 8];
-                firstGame = true;
-                movablePieceSelected = false;
-                board = lData.sBoard;
-                offensiveTeam = lData.sOffensiveTeam;
-                string theme = lData.sTheme;
-                onePlayer = lData.sOnePlayer;
-                medMode = lData.sMedMode;
-                hardMode = lData.sHardMode;
-                mForm.showLastMoveToolStripMenuItem.Checked = lData.sLastMove;
-                lastMove = lData.sLastMove;
 
-                if(offensiveTeam == "light")
+                if(lData.sSaveGame == true)
                 {
-                    baseOnBottom = "light";
-                    compTeam = "dark";
+                    if(lData.sGameOverExit == false)
+                    {
+                        board = new piece[8, 8];
+                        firstGame = true;
+                        movablePieceSelected = false;
+                        board = lData.sBoard;
+                        offensiveTeam = lData.sOffensiveTeam;
+                        baseOnBottom = lData.sBaseOnBottom;
+                        onePlayer = lData.sOnePlayer;
+                        medMode = lData.sMedMode;
+                        hardMode = lData.sHardMode;
+
+                        if (offensiveTeam == "light")
+                        {
+                            compTeam = "dark";
+                        }
+                        else
+                        {
+                            compTeam = "light";
+                        }
+                    }
+                    else    //Exit on Game Over
+                    {
+                        newGame();
+                    }
                 }
-                else
+                else    //Exit with saveGame set to false
                 {
-                    baseOnBottom = "dark";
-                    compTeam = "light";
+                    saveGame = false;
+                    mForm.saveGameOnExitToolStripMenuItem.Checked = false;
+                    newGame();
                 }
+                //load preferences regardless of whether saveGame was enabled
+                lastMove = lData.sLastMove;
+                mForm.showLastMoveToolStripMenuItem.Checked = lastMove;
+                string theme = lData.sTheme;
 
                 for (int i = 0; i < themeList.Count(); i++)
                 {
@@ -1514,11 +1524,14 @@ namespace BobbyFischer
                         themeIndex = i;
                     }
                 }
-
                 setTheme();
-                changeTheme();
+
+                if(firstGame == true)
+                {
+                    changeTheme();
+                }
             }
-            catch(InvalidCastException)
+            catch(InvalidCastException) //Error loading data
             {
                 newGame();
             }
@@ -1542,20 +1555,26 @@ namespace BobbyFischer
             public piece[,] sBoard { get; private set; }
             public string sOffensiveTeam { get; private set; }
             public string sTheme { get; private set; }
+            public string sBaseOnBottom { get; private set; }
             public bool sOnePlayer { get; private set; }
             public bool sMedMode { get; private set; }
             public bool sHardMode { get; private set; }
             public bool sLastMove { get; private set; }
+            public bool sSaveGame { get; private set; }
+            public bool sGameOverExit { get; private set; }
 
-            public saveData(piece[,] p1, string p2, string p3, bool p4, bool p5, bool p6, bool p7)
+            public saveData(piece[,] p1, string p2, string p3, string p4, bool p5, bool p6, bool p7, bool p8, bool p9, bool p10)
             {
                 this.sBoard = p1;
                 this.sOffensiveTeam = p2;
                 this.sTheme = p3;
-                this.sOnePlayer = p4;
-                this.sMedMode = p5;
-                this.sHardMode = p6;
-                this.sLastMove = p7;
+                this.sBaseOnBottom = p4;
+                this.sOnePlayer = p5;
+                this.sMedMode = p6;
+                this.sHardMode = p7;
+                this.sLastMove = p8;
+                this.sSaveGame = p9;
+                this.sGameOverExit = p10;
             }
         }
 

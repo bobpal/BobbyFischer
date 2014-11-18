@@ -16,13 +16,11 @@ namespace BobbyFischer
     public partial class GameOver : Form
     {
         private Chess game;
-        private Board mForm;
 
-        public GameOver(Chess chess, string losingTeam, Board brd)
+        public GameOver(Chess chess, string losingTeam)
         {
             InitializeComponent();
             this.game = chess;
-            this.mForm = brd;
             string winningTeam;
 
             if (game.onePlayer == false)
@@ -62,6 +60,7 @@ namespace BobbyFischer
 
         private void exit_Click(object sender, EventArgs e)
         {
+            game.gameOverExit = true;
             Application.Exit();
         }
     }

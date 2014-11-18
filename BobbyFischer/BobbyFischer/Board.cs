@@ -116,5 +116,10 @@ namespace BobbyFischer
         {
             game.saveState();
         }
+
+        private void saveGameOnExitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            game.saveGame = saveGameOnExitToolStripMenuItem.Checked;
+        }
     }
 }

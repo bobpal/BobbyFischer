@@ -39,6 +39,7 @@
             this.changeThemeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.showLastMoveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveGameOnExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gridPanel = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
@@ -104,7 +105,6 @@
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.saveGameOnExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.gridPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -261,6 +261,17 @@
             this.showLastMoveToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.showLastMoveToolStripMenuItem.Text = "Show Last Move";
             this.showLastMoveToolStripMenuItem.Click += new System.EventHandler(this.showLastMoveToolStripMenuItem_Click);
+            // 
+            // saveGameOnExitToolStripMenuItem
+            // 
+            this.saveGameOnExitToolStripMenuItem.Checked = true;
+            this.saveGameOnExitToolStripMenuItem.CheckOnClick = true;
+            this.saveGameOnExitToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.saveGameOnExitToolStripMenuItem.Name = "saveGameOnExitToolStripMenuItem";
+            this.saveGameOnExitToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.saveGameOnExitToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.saveGameOnExitToolStripMenuItem.Text = "Save Game on Exit";
+            this.saveGameOnExitToolStripMenuItem.Click += new System.EventHandler(this.saveGameOnExitToolStripMenuItem_Click);
             // 
             // gridPanel
             // 
@@ -1185,16 +1196,6 @@
             this.pictureBox1.WaitOnLoad = true;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox_Click);
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseMove);
-            // 
-            // saveGameOnExitToolStripMenuItem
-            // 
-            this.saveGameOnExitToolStripMenuItem.Checked = true;
-            this.saveGameOnExitToolStripMenuItem.CheckOnClick = true;
-            this.saveGameOnExitToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.saveGameOnExitToolStripMenuItem.Name = "saveGameOnExitToolStripMenuItem";
-            this.saveGameOnExitToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.saveGameOnExitToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.saveGameOnExitToolStripMenuItem.Text = "Save Game on Exit";
             // 
             // Board
             // 
