@@ -11,6 +11,8 @@ using System.IO;
 using System.Reflection;
 using BobbyFischer.Properties;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading;
+using System.Timers;
 
 //the back-end where all the business logic is determined
 
@@ -37,6 +39,8 @@ namespace BobbyFischer
         public bool hardMode;                                       //difficulty level
         public bool firstGame;                                      //has a game been setup yet?
         private coordinate prevSelected;                            //where the cursor clicked previously
+        private coordinate toCoor;
+        private coordinate fromCoor;
         public List<Assembly> themeList;
         public int themeIndex;                                      //which theme is currently in use
         public Image lKing;
@@ -56,6 +60,7 @@ namespace BobbyFischer
         public bool gameOverExit = false;                               //Did player exit from game over screen?
         public bool lastMove = true;                                    //is lastMove menu option checked?
         public bool saveGame = true;                                    //Save game on exit?
+        public bool rotate = true;                                      //Rotate board between turns on 2Player mode?
         public bool movablePieceSelected = false;                       //if true, the next click will move the selected piece if possible
         private List<move> possible = new List<move>();                 //list of all possible moves
         public string dirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BobbyFischer";
@@ -586,6 +591,8 @@ namespace BobbyFischer
                             clearToAndFrom();
                             coordinateToPictureBox(curTurn.pieceSpot).BackgroundImage = Resources.from;
                             coordinateToPictureBox(curTurn.moveSpot).BackgroundImage = Resources.to;
+                            toCoor = curTurn.moveSpot;
+                            fromCoor = curTurn.pieceSpot;
                         }
 
                         if (board[currentCell.x, currentCell.y].job == "King")
@@ -603,6 +610,8 @@ namespace BobbyFischer
             //In between light and dark's turns
             List<move> possibleWithoutCheck = new List<move>();
             bool endOfGame;
+
+            firstGame = false;  //So player can't click anything between turns
 
             //change teams
             if (offensiveTeam == "light")
@@ -639,6 +648,12 @@ namespace BobbyFischer
                     offensiveTeam = "dark";
                 }
             }
+
+            if(onePlayer == false && rotate == true)    //rotate
+            {
+                rotateBoard();
+            }
+            firstGame = true;
         }
 
         private void compTurn(List<move> poss)
@@ -727,12 +742,139 @@ namespace BobbyFischer
                 clearToAndFrom();
                 coordinateToPictureBox(curTurn.pieceSpot).BackgroundImage = Resources.from;
                 coordinateToPictureBox(curTurn.moveSpot).BackgroundImage = Resources.to;
+                toCoor = curTurn.moveSpot;
+                fromCoor = curTurn.pieceSpot;
             }
 
             if (board[newSpot.x, newSpot.y].job == "King")
             {
                 castling(curTurn);//check if move is a castling
             }
+        }
+
+        private void rotateBoard()
+        {
+            if (baseOnBottom == "light")
+            {
+                baseOnBottom = "dark";
+            }
+            else
+            {
+                baseOnBottom = "light";
+            }
+
+            clearToAndFrom();
+
+            for (int i = 1; i <= 210; i++)
+            {
+                if (i % 15 == 0)
+                {
+                    moveRing(0, 7);
+                    mForm.Refresh();
+                }
+                if (i % 21 == 0)
+                {
+                    moveRing(1, 6);
+                    mForm.Refresh();
+                }
+                if (i % 35 == 0)
+                {
+                    moveRing(2, 5);
+                    mForm.Refresh();
+                }
+                if (i % 105 == 0)
+                {
+                    moveRing(3, 4);
+                    mForm.Refresh();
+                }
+                Thread.Sleep(10);
+            }
+            rotatePieces();
+            rotateToAndFrom();
+        }
+
+        private void rotatePieces()
+        {
+            piece[,] bufferBoard = new piece[8,8];
+            int newX;
+            int newY;
+
+            foreach(coordinate piece in getAllPieces())
+            {
+                newX = 7 - piece.x;
+                newY = 7 - piece.y;
+                bufferBoard[newX, newY] = board[piece.x, piece.y];
+            }
+            board = bufferBoard;
+        }
+
+        private void rotateToAndFrom()
+        {
+            coordinate temp;
+            temp = new coordinate(7 - toCoor.x, 7 - toCoor.y);
+            coordinateToPictureBox(temp).BackgroundImage = Resources.to;
+            toCoor = temp;
+            temp = new coordinate(7 - fromCoor.x, 7 - fromCoor.y);
+            coordinateToPictureBox(temp).BackgroundImage = Resources.from;
+            fromCoor = temp;
+        }
+
+        private void moveRing(int small, int big)
+        {
+            string direction;
+            Image saved = coordinateToPictureBox(new coordinate(small, big)).Image; //first image moved
+
+            direction = "down";
+            for (int y = big; y > small; y--)
+            {
+                saved = moveImage(small, y, direction, saved);
+            }
+
+            direction = "right";
+            for (int x = small; x < big; x++)
+            {
+                saved = moveImage(x, small, direction, saved);
+            }
+
+            direction = "up";
+            for (int y = small; y < big; y++)
+            {
+                saved = moveImage(big, y, direction, saved);
+            }
+
+            direction = "left";
+            for (int x = big; x > small; x--)
+            {
+                saved = moveImage(x, big, direction, saved);
+            }
+        }
+
+        private Image moveImage(int fromX, int fromY, string dir, Image overwrite)
+        {
+            Image replace;
+            coordinate toCoor;
+            coordinate fromCoor = new coordinate(fromX, fromY);
+
+            if(dir == "down")
+            {
+                toCoor = new coordinate(fromX, fromY - 1);
+            }
+            else if (dir == "right")
+            {
+                toCoor = new coordinate(fromX + 1, fromY);
+            }
+            else if (dir == "up")
+            {
+                toCoor = new coordinate(fromX, fromY + 1);
+            }
+            else//left
+            {
+                toCoor = new coordinate(fromX - 1, fromY);
+            }
+
+            replace = coordinateToPictureBox(toCoor).Image;
+            coordinateToPictureBox(toCoor).Image = overwrite;
+            return replace;
         }
 
         private void movePiece(coordinate newCell, piece pPiece, coordinate oldCell)
@@ -746,7 +888,8 @@ namespace BobbyFischer
             board[oldCell.x, oldCell.y].job = null;
 
             //overwrite current image
-            coordinateToPictureBox(newCell).Image = matchPicture(pPiece);  //take previous piece picture and put it in current cell picture box
+            //take previous piece picture and put it in current cell picture box
+            coordinateToPictureBox(newCell).Image = matchPicture(pPiece);
 
             //delete prev image
             coordinateToPictureBox(oldCell).Image = null;
@@ -1112,70 +1255,8 @@ namespace BobbyFischer
 
         public void clearToAndFrom()
         {
-            mForm.pictureBox1.BackgroundImage = null;
-            mForm.pictureBox2.BackgroundImage = null;
-            mForm.pictureBox3.BackgroundImage = null;
-            mForm.pictureBox4.BackgroundImage = null;
-            mForm.pictureBox5.BackgroundImage = null;
-            mForm.pictureBox6.BackgroundImage = null;
-            mForm.pictureBox7.BackgroundImage = null;
-            mForm.pictureBox8.BackgroundImage = null;
-            mForm.pictureBox9.BackgroundImage = null;
-            mForm.pictureBox10.BackgroundImage = null;
-            mForm.pictureBox11.BackgroundImage = null;
-            mForm.pictureBox12.BackgroundImage = null;
-            mForm.pictureBox13.BackgroundImage = null;
-            mForm.pictureBox14.BackgroundImage = null;
-            mForm.pictureBox15.BackgroundImage = null;
-            mForm.pictureBox16.BackgroundImage = null;
-            mForm.pictureBox17.BackgroundImage = null;
-            mForm.pictureBox18.BackgroundImage = null;
-            mForm.pictureBox19.BackgroundImage = null;
-            mForm.pictureBox20.BackgroundImage = null;
-            mForm.pictureBox21.BackgroundImage = null;
-            mForm.pictureBox22.BackgroundImage = null;
-            mForm.pictureBox23.BackgroundImage = null;
-            mForm.pictureBox24.BackgroundImage = null;
-            mForm.pictureBox25.BackgroundImage = null;
-            mForm.pictureBox26.BackgroundImage = null;
-            mForm.pictureBox27.BackgroundImage = null;
-            mForm.pictureBox28.BackgroundImage = null;
-            mForm.pictureBox29.BackgroundImage = null;
-            mForm.pictureBox30.BackgroundImage = null;
-            mForm.pictureBox31.BackgroundImage = null;
-            mForm.pictureBox32.BackgroundImage = null;
-            mForm.pictureBox33.BackgroundImage = null;
-            mForm.pictureBox34.BackgroundImage = null;
-            mForm.pictureBox35.BackgroundImage = null;
-            mForm.pictureBox36.BackgroundImage = null;
-            mForm.pictureBox37.BackgroundImage = null;
-            mForm.pictureBox38.BackgroundImage = null;
-            mForm.pictureBox39.BackgroundImage = null;
-            mForm.pictureBox40.BackgroundImage = null;
-            mForm.pictureBox41.BackgroundImage = null;
-            mForm.pictureBox42.BackgroundImage = null;
-            mForm.pictureBox43.BackgroundImage = null;
-            mForm.pictureBox44.BackgroundImage = null;
-            mForm.pictureBox45.BackgroundImage = null;
-            mForm.pictureBox46.BackgroundImage = null;
-            mForm.pictureBox47.BackgroundImage = null;
-            mForm.pictureBox48.BackgroundImage = null;
-            mForm.pictureBox49.BackgroundImage = null;
-            mForm.pictureBox50.BackgroundImage = null;
-            mForm.pictureBox51.BackgroundImage = null;
-            mForm.pictureBox52.BackgroundImage = null;
-            mForm.pictureBox53.BackgroundImage = null;
-            mForm.pictureBox54.BackgroundImage = null;
-            mForm.pictureBox55.BackgroundImage = null;
-            mForm.pictureBox56.BackgroundImage = null;
-            mForm.pictureBox57.BackgroundImage = null;
-            mForm.pictureBox58.BackgroundImage = null;
-            mForm.pictureBox59.BackgroundImage = null;
-            mForm.pictureBox60.BackgroundImage = null;
-            mForm.pictureBox61.BackgroundImage = null;
-            mForm.pictureBox62.BackgroundImage = null;
-            mForm.pictureBox63.BackgroundImage = null;
-            mForm.pictureBox64.BackgroundImage = null;
+            coordinateToPictureBox(toCoor).BackgroundImage = null;
+            coordinateToPictureBox(fromCoor).BackgroundImage = null;
         }
 
         public void playAsLight()
@@ -1321,11 +1402,7 @@ namespace BobbyFischer
         public void changeTheme()
         {
             //calls matchPicture() on each piece and puts image in PictureBox
-            List<coordinate> pieceList = new List<coordinate>();
-
-            pieceList = getAllPieces();
-
-            foreach (coordinate spot in pieceList)
+            foreach (coordinate spot in getAllPieces())
             {
                 coordinateToPictureBox(spot).Image = matchPicture(board[spot.x, spot.y]);
             }
@@ -1334,18 +1411,30 @@ namespace BobbyFischer
         public void setTheme()
         {
             //sets image variables based on themeIndex
-            System.IO.Stream lKingFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lKing.png");
-            System.IO.Stream lQueenFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lQueen.png");
-            System.IO.Stream lBishopFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lBishop.png");
-            System.IO.Stream lKnightFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lKnight.png");
-            System.IO.Stream lRookFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lRook.png");
-            System.IO.Stream lPawnFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lPawn.png");
-            System.IO.Stream dKingFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dKing.png");
-            System.IO.Stream dQueenFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dQueen.png");
-            System.IO.Stream dBishopFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dBishop.png");
-            System.IO.Stream dKnightFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dKnight.png");
-            System.IO.Stream dRookFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dRook.png");
-            System.IO.Stream dPawnFile = themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dPawn.png");
+            System.IO.Stream lKingFile = 
+                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lKing.png");
+            System.IO.Stream lQueenFile = 
+                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lQueen.png");
+            System.IO.Stream lBishopFile = 
+                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lBishop.png");
+            System.IO.Stream lKnightFile = 
+                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lKnight.png");
+            System.IO.Stream lRookFile = 
+                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lRook.png");
+            System.IO.Stream lPawnFile = 
+                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lPawn.png");
+            System.IO.Stream dKingFile = 
+                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dKing.png");
+            System.IO.Stream dQueenFile = 
+                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dQueen.png");
+            System.IO.Stream dBishopFile = 
+                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dBishop.png");
+            System.IO.Stream dKnightFile = 
+                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dKnight.png");
+            System.IO.Stream dRookFile = 
+                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dRook.png");
+            System.IO.Stream dPawnFile = 
+                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dPawn.png");
 
             try
             {
@@ -1459,7 +1548,9 @@ namespace BobbyFischer
             if(firstGame == true)
             {
                 string theme = themeList[themeIndex].GetName().Name;
-                saveData sData = new saveData(board, offensiveTeam, theme, baseOnBottom, onePlayer, medMode, hardMode, lastMove, saveGame, gameOverExit);
+                saveData sData = new saveData(board, offensiveTeam, theme, baseOnBottom, onePlayer, medMode, hardMode, 
+                    lastMove, saveGame, gameOverExit, rotate);
+
                 System.IO.Directory.CreateDirectory(dirPath);
                 BinaryFormatter writer = new BinaryFormatter();
                 FileStream saveStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
@@ -1500,6 +1591,15 @@ namespace BobbyFischer
                         {
                             compTeam = "light";
                         }
+
+                        if (onePlayer == true)
+                        {
+                            mForm.rotateBoardToolStripMenuItem.Enabled = false;
+                        }
+                        else
+                        {
+                            mForm.rotateBoardToolStripMenuItem.Enabled = true;
+                        }
                     }
                     else    //Exit on Game Over
                     {
@@ -1515,6 +1615,8 @@ namespace BobbyFischer
                 //load preferences regardless of whether saveGame was enabled
                 lastMove = lData.sLastMove;
                 mForm.showLastMoveToolStripMenuItem.Checked = lastMove;
+                rotate = lData.sRotate;
+                mForm.rotateBoardToolStripMenuItem.Checked = rotate;
                 string theme = lData.sTheme;
 
                 for (int i = 0; i < themeList.Count(); i++)
@@ -1539,7 +1641,7 @@ namespace BobbyFischer
 
         public void newGame()
         {
-            NewGame play = new NewGame(this);
+            NewGame play = new NewGame(this, mForm);
             play.ShowDialog();
         }
 
@@ -1562,8 +1664,9 @@ namespace BobbyFischer
             public bool sLastMove { get; private set; }
             public bool sSaveGame { get; private set; }
             public bool sGameOverExit { get; private set; }
+            public bool sRotate { get; private set; }
 
-            public saveData(piece[,] p1, string p2, string p3, string p4, bool p5, bool p6, bool p7, bool p8, bool p9, bool p10)
+            public saveData(piece[,] p1, string p2, string p3, string p4, bool p5, bool p6, bool p7, bool p8, bool p9, bool p10, bool p11)
             {
                 this.sBoard = p1;
                 this.sOffensiveTeam = p2;
@@ -1575,6 +1678,7 @@ namespace BobbyFischer
                 this.sLastMove = p8;
                 this.sSaveGame = p9;
                 this.sGameOverExit = p10;
+                this.sRotate = p11;
             }
         }
 
@@ -2222,7 +2326,8 @@ namespace BobbyFischer
                 {
                     if (board[0, 7].firstMove == true)//if left rook's first move
                     {
-                        if (board[1, 7].job == null && board[2, 7].job == null && board[3, 7].job == null)//if clear path from rook to king
+                        //if clear path from rook to king
+                        if (board[1, 7].job == null && board[2, 7].job == null && board[3, 7].job == null)
                         {
                             moveCoor.x = 2;
                             moveCoor.y = 7;

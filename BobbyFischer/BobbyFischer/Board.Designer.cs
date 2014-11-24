@@ -39,6 +39,7 @@
             this.changeThemeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.showLastMoveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rotateBoardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveGameOnExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gridPanel = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
@@ -232,6 +233,7 @@
             this.changeThemeToolStripMenuItem,
             this.toolStripSeparator1,
             this.showLastMoveToolStripMenuItem,
+            this.rotateBoardToolStripMenuItem,
             this.saveGameOnExitToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
@@ -262,13 +264,24 @@
             this.showLastMoveToolStripMenuItem.Text = "Show Last Move";
             this.showLastMoveToolStripMenuItem.Click += new System.EventHandler(this.showLastMoveToolStripMenuItem_Click);
             // 
+            // rotateBoardToolStripMenuItem
+            // 
+            this.rotateBoardToolStripMenuItem.Checked = true;
+            this.rotateBoardToolStripMenuItem.CheckOnClick = true;
+            this.rotateBoardToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.rotateBoardToolStripMenuItem.Name = "rotateBoardToolStripMenuItem";
+            this.rotateBoardToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.rotateBoardToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.rotateBoardToolStripMenuItem.Text = "Rotate Board";
+            this.rotateBoardToolStripMenuItem.Click += new System.EventHandler(this.rotateBoardToolStripMenuItem_Click);
+            // 
             // saveGameOnExitToolStripMenuItem
             // 
             this.saveGameOnExitToolStripMenuItem.Checked = true;
             this.saveGameOnExitToolStripMenuItem.CheckOnClick = true;
             this.saveGameOnExitToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.saveGameOnExitToolStripMenuItem.Name = "saveGameOnExitToolStripMenuItem";
-            this.saveGameOnExitToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.saveGameOnExitToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
             this.saveGameOnExitToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.saveGameOnExitToolStripMenuItem.Text = "Save Game on Exit";
             this.saveGameOnExitToolStripMenuItem.Click += new System.EventHandler(this.saveGameOnExitToolStripMenuItem_Click);
@@ -1205,6 +1218,7 @@
             this.ClientSize = new System.Drawing.Size(724, 701);
             this.Controls.Add(this.gridPanel);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Board";
@@ -1362,6 +1376,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         public System.Windows.Forms.ToolStripMenuItem saveGameOnExitToolStripMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem rotateBoardToolStripMenuItem;
     }
 }
 

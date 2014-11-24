@@ -121,5 +121,10 @@ namespace BobbyFischer
         {
             game.saveGame = saveGameOnExitToolStripMenuItem.Checked;
         }
+
+        private void rotateBoardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            game.rotate = rotateBoardToolStripMenuItem.Checked;
+        }
     }
 }

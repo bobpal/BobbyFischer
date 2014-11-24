@@ -15,11 +15,13 @@ namespace BobbyFischer
     public partial class NewGame : Form
     {
         private Chess game;
+        private Board mForm;
 
-        public NewGame(Chess chess)
+        public NewGame(Chess chess, Board brd)
         {
             InitializeComponent();
             this.game = chess;
+            this.mForm = brd;
         }
 
         private void onePlayer_CheckedChanged(object sender, EventArgs e)
@@ -63,6 +65,16 @@ namespace BobbyFischer
             game.clearToAndFrom();
             game.clearSelectedOrPossible();
             game.movablePieceSelected = false;
+
+            if(game.onePlayer == true)
+            {
+                mForm.rotateBoardToolStripMenuItem.Enabled = false;
+            }
+            else
+            {
+                mForm.rotateBoardToolStripMenuItem.Enabled = true;
+            }
+
             this.Close();
         }
     }
