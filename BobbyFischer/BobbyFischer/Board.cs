@@ -126,5 +126,31 @@ namespace BobbyFischer
         {
             game.rotate = rotateBoardToolStripMenuItem.Checked;
         }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            game.tick++;
+
+            if (game.tick % 15 == 0)
+            {
+                game.moveRing(0, 7);
+                this.Refresh();
+            }
+            if (game.tick % 21 == 0)
+            {
+                game.moveRing(1, 6);
+                this.Refresh();
+            }
+            if (game.tick % 35 == 0)
+            {
+                game.moveRing(2, 5);
+                this.Refresh();
+            }
+            if (game.tick % 105 == 0)
+            {
+                game.moveRing(3, 4);
+                this.Refresh();
+            }
+        }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Board));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -106,6 +107,7 @@
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.timer = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.gridPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -1210,6 +1212,11 @@
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox_Click);
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseMove);
             // 
+            // timer
+            // 
+            this.timer.Interval = 10;
+            this.timer.Tick += new System.EventHandler(this.timer_Tick);
+            // 
             // Board
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1377,6 +1384,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         public System.Windows.Forms.ToolStripMenuItem saveGameOnExitToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem rotateBoardToolStripMenuItem;
+        public System.Windows.Forms.Timer timer;
     }
 }
 

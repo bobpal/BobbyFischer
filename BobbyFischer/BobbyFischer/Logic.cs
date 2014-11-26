@@ -43,6 +43,7 @@ namespace BobbyFischer
         private coordinate fromCoor;
         public List<Assembly> themeList;
         public int themeIndex;                                      //which theme is currently in use
+        public int tick;
         public Image lKing;
         public Image lQueen;
         public Image lBishop;
@@ -754,6 +755,18 @@ namespace BobbyFischer
 
         private void rotateBoard()
         {
+            tick = 0;
+            clearToAndFrom();
+            mForm.timer.Start();
+            while(tick < 210)
+            {
+                Application.DoEvents();
+            }
+            
+            mForm.timer.Stop();
+            rotatePieces();
+            rotateToAndFrom();
+
             if (baseOnBottom == "light")
             {
                 baseOnBottom = "dark";
@@ -762,35 +775,6 @@ namespace BobbyFischer
             {
                 baseOnBottom = "light";
             }
-
-            clearToAndFrom();
-
-            for (int i = 1; i <= 210; i++)
-            {
-                if (i % 15 == 0)
-                {
-                    moveRing(0, 7);
-                    mForm.Refresh();
-                }
-                if (i % 21 == 0)
-                {
-                    moveRing(1, 6);
-                    mForm.Refresh();
-                }
-                if (i % 35 == 0)
-                {
-                    moveRing(2, 5);
-                    mForm.Refresh();
-                }
-                if (i % 105 == 0)
-                {
-                    moveRing(3, 4);
-                    mForm.Refresh();
-                }
-                Thread.Sleep(10);
-            }
-            rotatePieces();
-            rotateToAndFrom();
         }
 
         private void rotatePieces()
@@ -819,7 +803,7 @@ namespace BobbyFischer
             fromCoor = temp;
         }
 
-        private void moveRing(int small, int big)
+        public void moveRing(int small, int big)
         {
             string direction;
             Image saved = coordinateToPictureBox(new coordinate(small, big)).Image; //first image moved
