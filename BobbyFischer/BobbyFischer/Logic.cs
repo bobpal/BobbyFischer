@@ -758,7 +758,7 @@ namespace BobbyFischer
             tick = 0;
             clearToAndFrom();
             mForm.timer.Start();
-            while(tick < 210)
+            while(tick < 42)
             {
                 Application.DoEvents();
             }

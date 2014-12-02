@@ -131,22 +131,22 @@ namespace BobbyFischer
         {
             game.tick++;
 
-            if (game.tick % 15 == 0)
+            if (game.tick % 3 == 0)
             {
                 game.moveRing(0, 7);
                 this.Refresh();
             }
-            if (game.tick % 21 == 0)
+            if (game.tick % 4 == 0)
             {
                 game.moveRing(1, 6);
                 this.Refresh();
             }
-            if (game.tick % 35 == 0)
+            if (game.tick % 7 == 0)
             {
                 game.moveRing(2, 5);
                 this.Refresh();
             }
-            if (game.tick % 105 == 0)
+            if (game.tick % 21 == 0)
             {
                 game.moveRing(3, 4);
                 this.Refresh();
