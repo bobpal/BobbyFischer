@@ -65,6 +65,7 @@ namespace BobbyFischer
             game.clearToAndFrom();
             game.clearSelectedOrPossible();
             game.movablePieceSelected = false;
+            game.history.Clear();
 
             if(game.onePlayer == true)
             {

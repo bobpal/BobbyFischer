@@ -34,7 +34,7 @@ namespace BobbyFischer
         public bool onePlayer;                                      //versus computer or human
         public string compTeam;                                     //color of computer team
         public string offensiveTeam;                                //which side is on the offense
-        public string baseOnBottom;                                 //which side is on bottom, going up
+        public string baseOnBottom;                                 //which side is currently on bottom, going up
         public bool medMode;                                        //difficulty level
         public bool hardMode;                                       //difficulty level
         public bool firstGame;                                      //has a game been setup yet?
@@ -259,62 +259,25 @@ namespace BobbyFischer
             }
             if(capturableMoves.Count > 0)//if there are any capturable moves
             {
-                pos.Clear();
-                pos.AddRange(capturableMoves);//replace possible list
-
-                if(hardMode == true)//priority system of most valuable piece to capture
+                foreach(move h in pos)
                 {
-                    //list of moves that can capture piece of said job
-
-                    List<move> queen = new List<move>();
-                    List<move> rook = new List<move>();
-                    List<move> bishop = new List<move>();
-                    List<move> knight = new List<move>();
-                    List<move> pawn = new List<move>();
-
-                    foreach(move h in pos)//put moves in apropriate list
+                    switch(board[h.moveSpot.x, h.moveSpot.y].job)
                     {
-                        switch(board[h.moveSpot.x, h.moveSpot.y].job)
-                        {
-                            case "Queen":
-                            queen.Add(h);
-                            break;
-                            case "Rook":
-                            rook.Add(h);
-                            break;
-                            case "Bishop":
-                            bishop.Add(h);
-                            break;
-                            case "Knight":
-                            knight.Add(h);
-                            break;
-                            default:
-                            pawn.Add(h);
-                            break;
-                        }
-                    }
-
-                    //queen capture gets first priority, then rook, and so on
-
-                    if(queen.Count > 0)
-                    {
-                        return queen;
-                    }
-                    else if(rook.Count > 0)
-                    {
-                        return rook;
-                    }
-                    else if(bishop.Count > 0)
-                    {
-                        return bishop;
-                    }
-                    else if(knight.Count > 0)
-                    {
-                        return knight;
-                    }
-                    else
-                    {
-                        return pawn;
+                        case "Queen":
+                        //add number to move value
+                        break;
+                        case "Rook":
+                        
+                        break;
+                        case "Bishop":
+                        
+                        break;
+                        case "Knight":
+                        
+                        break;
+                        default:
+                        
+                        break;
                     }
                 }
             }
@@ -483,7 +446,7 @@ namespace BobbyFischer
                     coordinate oldCastleCoor = new coordinate(0, yCoor);
                     castleMove.moveSpot = newCastleCoor;
                     castleMove.pieceSpot = oldCastleCoor;
-                    node = new historyNode(castleMove, board[3, yCoor], false, true, true);
+                    node = new historyNode(castleMove, board[3, yCoor], false, true, true, baseOnBottom);
                     history.Push(node);
                     movePiece(newCastleCoor, board[0, yCoor], oldCastleCoor);
                 }
@@ -494,7 +457,7 @@ namespace BobbyFischer
                     coordinate oldCastleCoor = new coordinate(7, yCoor);
                     castleMove.moveSpot = newCastleCoor;
                     castleMove.pieceSpot = oldCastleCoor;
-                    node = new historyNode(castleMove, board[5, yCoor], false, true, true);
+                    node = new historyNode(castleMove, board[5, yCoor], false, true, true, baseOnBottom);
                     history.Push(node);
                     movePiece(newCastleCoor, board[7, yCoor], oldCastleCoor);
                 }
@@ -563,25 +526,25 @@ namespace BobbyFischer
                             {
                                 PawnTransformation transform = new PawnTransformation(currentCell, this);
                                 transform.ShowDialog();
-                                node = new historyNode(curTurn, captured, true, false, false);
+                                node = new historyNode(curTurn, captured, true, false, false, baseOnBottom);
                             }
 
                             else if (board[currentCell.x, currentCell.y].color == baseOnTop && currentCell.y == 0)
                             {
                                 PawnTransformation transform = new PawnTransformation(currentCell, this);
                                 transform.ShowDialog();
-                                node = new historyNode(curTurn, captured, true, false, false);
+                                node = new historyNode(curTurn, captured, true, false, false, baseOnBottom);
                             }
 
                             else    //if pawn, but no transform
                             {
-                                node = new historyNode(curTurn, captured, false, false, virginMove);
+                                node = new historyNode(curTurn, captured, false, false, virginMove, baseOnBottom);
                             }
                         }
 
                         else    //not pawn
                         {
-                            node = new historyNode(curTurn, captured, false, false, virginMove);
+                            node = new historyNode(curTurn, captured, false, false, virginMove, baseOnBottom);
                         }
 
                         history.Push(node);
@@ -728,12 +691,12 @@ namespace BobbyFischer
                             break;
                     }
                 }
-                node = new historyNode(curTurn, captured, true, true, false);
+                node = new historyNode(curTurn, captured, true, true, false, baseOnBottom);
             }
 
             else
             {
-                node = new historyNode(curTurn, captured, false, true, virginMove);
+                node = new historyNode(curTurn, captured, false, true, virginMove, baseOnBottom);
             }
 
             history.Push(node);
@@ -886,10 +849,26 @@ namespace BobbyFischer
         {
             //moves pieces backwards
             Image pawnPic;
-
+            piece to;
+            piece from;
+            int xMove;
+            int yMove;
+            int xPiece;
+            int yPiece;
             historyNode node = history.Pop();
-            piece to = board[node.step.moveSpot.x, node.step.moveSpot.y];
-            piece from = board[node.step.pieceSpot.x, node.step.pieceSpot.y];
+
+            xMove = node.step.moveSpot.x;
+            yMove = node.step.moveSpot.y;
+            xPiece = node.step.pieceSpot.x;
+            yPiece = node.step.pieceSpot.y;
+
+            if (!node.whoIsOnBottom.Equals(baseOnBottom))
+            {
+                rotateBoard();
+            }
+
+            to = board[xMove, yMove];
+            from = board[xPiece, yPiece];
             offensiveTeam = to.color;
 
             if (node.pawnTransform == true)
@@ -904,24 +883,25 @@ namespace BobbyFischer
                     pawnPic = dPawn;
                 }
 
-                board[node.step.pieceSpot.x, node.step.pieceSpot.y].job = "Pawn";
-                coordinateToPictureBox(node.step.pieceSpot).Image = pawnPic;
+                board[xPiece, yPiece].job = "Pawn";
+                coordinateToPictureBox(new coordinate(xPiece, yPiece)).Image = pawnPic;
             }
 
             else
             {
-                board[node.step.pieceSpot.x, node.step.pieceSpot.y].job = to.job;
-                coordinateToPictureBox(node.step.pieceSpot).Image = matchPicture(to);
+                board[xPiece, yPiece].job = to.job;
+                coordinateToPictureBox(new coordinate(xPiece, yPiece)).Image = matchPicture(to);
             }
 
-            board[node.step.pieceSpot.x, node.step.pieceSpot.y].color = to.color;
-            board[node.step.pieceSpot.x, node.step.pieceSpot.y].firstMove = node.virgin;
+            board[xPiece, yPiece].color = to.color;
+            board[xPiece, yPiece].firstMove = node.virgin;
 
             //put captured piece back
-            board[node.step.moveSpot.x, node.step.moveSpot.y].job = node.captured.job;
-            board[node.step.moveSpot.x, node.step.moveSpot.y].color = node.captured.color;
-            board[node.step.moveSpot.x, node.step.moveSpot.y].firstMove = node.captured.firstMove;
-            coordinateToPictureBox(node.step.moveSpot).Image = matchPicture(node.captured);
+            board[xMove, yMove].job = node.captured.job;
+            coordinateToPictureBox(new coordinate(xMove, yMove)).Image = matchPicture(node.captured);
+            board[xMove, yMove].color = node.captured.color;
+            board[xMove, yMove].firstMove = node.captured.firstMove;
+
 
             if (node.skip == true)
             {
@@ -1698,19 +1678,21 @@ namespace BobbyFischer
         [Serializable]
         public struct historyNode
         {
-            public move step;           //move that happened previously
-            public piece captured;      //piece that move captured, if no capture, use null
-            public bool pawnTransform;  //did a pawn transformation happen?
-            public bool skip;           //undo next move also
-            public bool virgin;         //was this the piece's first move?
+            public move step;               //move that happened previously
+            public piece captured;          //piece that move captured, if no capture, use null
+            public bool pawnTransform;      //did a pawn transformation happen?
+            public bool skip;               //undo next move also
+            public bool virgin;             //was this the piece's first move?
+            public string whoIsOnBottom;    //who is going from bottom to top?
 
-            public historyNode(move p1, piece p2, bool p3, bool p4, bool p5)
+            public historyNode(move p1, piece p2, bool p3, bool p4, bool p5, string p6)
             {
                 this.step = p1;
                 this.captured = p2;
                 this.pawnTransform = p3;
                 this.skip = p4;
                 this.virgin = p5;
+                this.whoIsOnBottom = p6;
             }
         }
 
