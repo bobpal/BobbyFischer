@@ -244,44 +244,67 @@ namespace BobbyFischer
             }
         }
 
-        private List<move> hardLogic(List<move> pos)
+        private move medLogic(List<move> pos)
         {
-            //gets executed if player selects medium or hard mode
-
+            //gets executed if player selects medium mode
             List<move> capturableMoves = new List<move>();
+            string humanTeam;
+
+            if(compTeam == "dark")
+            {
+                humanTeam = "light";
+            }
+            else
+            {
+                humanTeam = "dark";
+            }
 
             foreach(move p in pos)//only look at moves that can capture a piece
             {
-                if(board[p.moveSpot.x, p.moveSpot.y].color == "light")
+                if(board[p.moveSpot.x, p.moveSpot.y].color == humanTeam)
                 {
                     capturableMoves.Add(p);
                 }
             }
             if(capturableMoves.Count > 0)//if there are any capturable moves
             {
-                foreach(move h in pos)
+                for (int i = 0; i < capturableMoves.Count; i++)
                 {
-                    switch(board[h.moveSpot.x, h.moveSpot.y].job)
+                    switch (board[capturableMoves[i].moveSpot.x, capturableMoves[i].moveSpot.y].job)
                     {
                         case "Queen":
-                        //add number to move value
-                        break;
+                            capturableMoves[i].value = 5;
+                            break;
                         case "Rook":
-                        
-                        break;
+                            capturableMoves[i].value = 4;
+                            break;
                         case "Bishop":
-                        
-                        break;
+                            capturableMoves[i].value = 3;
+                            break;
                         case "Knight":
-                        
-                        break;
+                            capturableMoves[i].value = 2;
+                            break;
+                        case "Pawn":
+                            capturableMoves[i].value = 1;
+                            break;
                         default:
-                        
-                        break;
+                            capturableMoves[i].value = 0;
+                            break;
                     }
                 }
+                capturableMoves.Sort((x, y) => y.value.CompareTo(x.value)); //descending order sort
+                return capturableMoves[0];
             }
-            return pos;//if no capturable moves, return list given, same as easy mode
+            return pos[rnd.Next(0, pos.Count)]; //if no capturable moves
+        }
+
+        private move hardLogic(List<move> pos)
+        {
+            //gets executed if player selects hard mode
+            List<move> capturableMoves = new List<move>();
+
+
+            return pos[rnd.Next(0, pos.Count)]; //if no capturable moves
         }
 
         private bool isInCheck(string teamInQuestion)
@@ -624,16 +647,27 @@ namespace BobbyFischer
         {
             //computer's turn
             historyNode node;
+            move bestMove;
+            int r;
 
-            if (medMode == true || hardMode == true)
+            if(medMode == true)
             {
-                hardLogic(poss);
+                bestMove = medLogic(poss);
             }
 
-            int r = rnd.Next(0, poss.Count);//choose random move
-            move curTurn = poss[r];
-            coordinate newSpot = new coordinate(curTurn.moveSpot.x, curTurn.moveSpot.y);
-            coordinate oldSpot = new coordinate(curTurn.pieceSpot.x, curTurn.pieceSpot.y);
+            else if(hardMode == true)
+            {
+                bestMove = hardLogic(poss);
+            }
+
+            else
+            {
+                r = rnd.Next(0, poss.Count);//choose random move
+                bestMove = poss[r];
+            }
+
+            coordinate newSpot = new coordinate(bestMove.moveSpot.x, bestMove.moveSpot.y);
+            coordinate oldSpot = new coordinate(bestMove.pieceSpot.x, bestMove.pieceSpot.y);
 
             piece captured = board[newSpot.x, newSpot.y];
             bool virginMove = board[oldSpot.x, oldSpot.y].firstMove;
@@ -691,12 +725,12 @@ namespace BobbyFischer
                             break;
                     }
                 }
-                node = new historyNode(curTurn, captured, true, true, false, baseOnBottom);
+                node = new historyNode(bestMove, captured, true, true, false, baseOnBottom);
             }
 
             else
             {
-                node = new historyNode(curTurn, captured, false, true, virginMove, baseOnBottom);
+                node = new historyNode(bestMove, captured, false, true, virginMove, baseOnBottom);
             }
 
             history.Push(node);
@@ -704,15 +738,15 @@ namespace BobbyFischer
             if (lastMove == true)
             {
                 clearToAndFrom();
-                coordinateToPictureBox(curTurn.pieceSpot).BackgroundImage = Resources.from;
-                coordinateToPictureBox(curTurn.moveSpot).BackgroundImage = Resources.to;
-                toCoor = curTurn.moveSpot;
-                fromCoor = curTurn.pieceSpot;
+                coordinateToPictureBox(bestMove.pieceSpot).BackgroundImage = Resources.from;
+                coordinateToPictureBox(bestMove.moveSpot).BackgroundImage = Resources.to;
+                toCoor = bestMove.moveSpot;
+                fromCoor = bestMove.pieceSpot;
             }
 
             if (board[newSpot.x, newSpot.y].job == "King")
             {
-                castling(curTurn);//check if move is a castling
+                castling(bestMove);//check if move is a castling
             }
         }
 
@@ -1668,11 +1702,21 @@ namespace BobbyFischer
         }
 
         [Serializable]
-        public struct move
+        public class move
         {
-            //represents a move that a piece can do, includes starting position and ending position
-            public coordinate pieceSpot { get; set; }    //starting position
-            public coordinate moveSpot { get; set; }     //ending position
+            //represents a move that a piece can do
+            public coordinate pieceSpot { get; set; }   //starting position
+            public coordinate moveSpot { get; set; }    //ending position
+            public int value { get; set; }              //how good the move is
+
+            public move(coordinate p1, coordinate p2, int p3)
+            {
+                this.pieceSpot = p1;
+                this.moveSpot = p2;
+                this.value = p3;
+            }
+
+            public move() { }
         }
 
         [Serializable]
@@ -1708,7 +1752,6 @@ namespace BobbyFischer
             int availableY = current.y;
             List<move> availableList = new List<move>();
             coordinate moveCoor = new coordinate(); //when found possible move, put in this variable to add to list
-            availableMove.pieceSpot = current;
             string pieceColor = board[current.x, current.y].color;
 
             if (pieceColor == "light")
@@ -1734,7 +1777,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);       //add to list
                     break;                                  //can't go past
                 }
@@ -1743,7 +1786,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);       //add to list
                     availableY++;                           //try next spot
                 }
@@ -1764,7 +1807,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                     break;
                 }
@@ -1773,7 +1816,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                     availableX--;
                 }
@@ -1794,7 +1837,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                     break;
                 }
@@ -1803,7 +1846,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                     availableY--;
                 }
@@ -1824,7 +1867,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                     break;
                 }
@@ -1833,7 +1876,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                     availableX++;
                 }
@@ -1849,7 +1892,6 @@ namespace BobbyFischer
             List<move> availableList = new List<move>();
             coordinate moveCoor = new coordinate();
             string pieceColor = board[current.x, current.y].color;
-            availableMove.pieceSpot = current;
                     
             //search up.right
             availableY += 2;
@@ -1860,7 +1902,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                 }
             }
@@ -1876,7 +1918,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                 }
             }
@@ -1892,7 +1934,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                 }
             }
@@ -1908,7 +1950,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                 }
             }
@@ -1924,7 +1966,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                 }
             }
@@ -1940,7 +1982,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                 }
             }
@@ -1956,7 +1998,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                 }
             }
@@ -1972,7 +2014,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                 }
             }
@@ -1988,7 +2030,6 @@ namespace BobbyFischer
             List<move> availableList = new List<move>();
             coordinate moveCoor = new coordinate();
             string pieceColor = board[current.x, current.y].color;
-            availableMove.pieceSpot = current;
 
             if (pieceColor == "light")
             {
@@ -2014,7 +2055,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                     break;
                 }
@@ -2023,7 +2064,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                     availableX++;
                     availableY++;
@@ -2046,7 +2087,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                     break;
                 }
@@ -2055,7 +2096,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                     availableX--;
                     availableY++;
@@ -2078,7 +2119,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                     break;
                 }
@@ -2087,7 +2128,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                     availableX--;
                     availableY--;
@@ -2110,7 +2151,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                     break;
                 }
@@ -2119,7 +2160,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                     availableX++;
                     availableY--;
@@ -2135,7 +2176,6 @@ namespace BobbyFischer
             int availableY = current.y;
             List<move> availableList = new List<move>();
             coordinate moveCoor = new coordinate();
-            availableMove.pieceSpot = current;
             string pieceColor = board[current.x, current.y].color;
 
             //search up
@@ -2146,7 +2186,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                 }
             }
@@ -2162,7 +2202,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                 }
             }
@@ -2177,7 +2217,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                 }
             }
@@ -2193,7 +2233,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                 }
             }
@@ -2208,7 +2248,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                 }
             }
@@ -2224,7 +2264,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                 }
             }
@@ -2239,7 +2279,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                 }
             }
@@ -2255,7 +2295,7 @@ namespace BobbyFischer
                 {
                     moveCoor.x = availableX;
                     moveCoor.y = availableY;
-                    availableMove.moveSpot = moveCoor;
+                    availableMove = new move(current, moveCoor, 0);
                     availableList.Add(availableMove);
                 }
             }
@@ -2271,7 +2311,7 @@ namespace BobbyFischer
                         {
                             moveCoor.x = 2;
                             moveCoor.y = 0;
-                            availableMove.moveSpot = moveCoor;
+                            availableMove = new move(current, moveCoor, 0);
                             availableList.Add(availableMove);
                         }
                     }
@@ -2282,7 +2322,7 @@ namespace BobbyFischer
                         {
                             moveCoor.x = 6;
                             moveCoor.y = 0;
-                            availableMove.moveSpot = moveCoor;
+                            availableMove = new move(current, moveCoor, 0);
                             availableList.Add(availableMove);
                         }
                     }
@@ -2297,7 +2337,7 @@ namespace BobbyFischer
                         {
                             moveCoor.x = 2;
                             moveCoor.y = 7;
-                            availableMove.moveSpot = moveCoor;
+                            availableMove = new move(current, moveCoor, 0);
                             availableList.Add(availableMove);
                         }
                     }
@@ -2308,7 +2348,7 @@ namespace BobbyFischer
                         {
                             moveCoor.x = 6;
                             moveCoor.y = 7;
-                            availableMove.moveSpot = moveCoor;
+                            availableMove = new move(current, moveCoor, 0);
                             availableList.Add(availableMove);
                         }
                     }
@@ -2326,7 +2366,6 @@ namespace BobbyFischer
             List<move> availableList = new List<move>();
             coordinate moveCoor = new coordinate();
             string pieceColor = board[current.x, current.y].color;
-            availableMove.pieceSpot = current;
 
             if(pieceColor == "light")
             {
@@ -2347,7 +2386,7 @@ namespace BobbyFischer
                     {
                         moveCoor.x = availableX;
                         moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
+                        availableMove = new move(current, moveCoor, 0);
                         availableList.Add(availableMove);
 
                         //search first move
@@ -2358,7 +2397,7 @@ namespace BobbyFischer
                             {
                                 moveCoor.x = availableX;
                                 moveCoor.y = availableY;
-                                availableMove.moveSpot = moveCoor;
+                                availableMove = new move(current, moveCoor, 0);
                                 availableList.Add(availableMove);
                             }
                         }
@@ -2374,7 +2413,7 @@ namespace BobbyFischer
                     {
                         moveCoor.x = availableX;
                         moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
+                        availableMove = new move(current, moveCoor, 0);
                         availableList.Add(availableMove);
                     }
                 }
@@ -2387,7 +2426,7 @@ namespace BobbyFischer
                     {
                         moveCoor.x = availableX;
                         moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
+                        availableMove = new move(current, moveCoor, 0);
                         availableList.Add(availableMove);
                     }
                 }
@@ -2403,7 +2442,7 @@ namespace BobbyFischer
                     {
                         moveCoor.x = availableX;
                         moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
+                        availableMove = new move(current, moveCoor, 0);
                         availableList.Add(availableMove);
 
                         //search first move
@@ -2414,7 +2453,7 @@ namespace BobbyFischer
                             {
                                 moveCoor.x = availableX;
                                 moveCoor.y = availableY;
-                                availableMove.moveSpot = moveCoor;
+                                availableMove = new move(current, moveCoor, 0);
                                 availableList.Add(availableMove);
                             }
                         }
@@ -2430,7 +2469,7 @@ namespace BobbyFischer
                     {
                         moveCoor.x = availableX;
                         moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
+                        availableMove = new move(current, moveCoor, 0);
                         availableList.Add(availableMove);
                     }
                 }
@@ -2443,7 +2482,7 @@ namespace BobbyFischer
                     {
                         moveCoor.x = availableX;
                         moveCoor.y = availableY;
-                        availableMove.moveSpot = moveCoor;
+                        availableMove = new move(current, moveCoor, 0);
                         availableList.Add(availableMove);
                     }
                 }
