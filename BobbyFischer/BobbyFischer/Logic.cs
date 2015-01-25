@@ -247,64 +247,130 @@ namespace BobbyFischer
         private move medLogic(List<move> pos)
         {
             //gets executed if player selects medium mode
-            List<move> capturableMoves = new List<move>();
-            string humanTeam;
-
-            if(compTeam == "dark")
+            for (int i = 0; i < pos.Count; i++)
             {
-                humanTeam = "light";
-            }
-            else
-            {
-                humanTeam = "dark";
-            }
-
-            foreach(move p in pos)//only look at moves that can capture a piece
-            {
-                if(board[p.moveSpot.x, p.moveSpot.y].color == humanTeam)
+                switch (board[pos[i].moveSpot.x, pos[i].moveSpot.y].job)
                 {
-                    capturableMoves.Add(p);
+                    case "Queen":
+                        pos[i].value = 5;
+                        break;
+                    case "Rook":
+                        pos[i].value = 4;
+                        break;
+                    case "Bishop":
+                        pos[i].value = 3;
+                        break;
+                    case "Knight":
+                        pos[i].value = 2;
+                        break;
+                    case "Pawn":
+                        pos[i].value = 1;
+                        break;
+                    default:
+                        pos[i].value = 0;
+                        break;
                 }
             }
-            if(capturableMoves.Count > 0)//if there are any capturable moves
-            {
-                for (int i = 0; i < capturableMoves.Count; i++)
-                {
-                    switch (board[capturableMoves[i].moveSpot.x, capturableMoves[i].moveSpot.y].job)
-                    {
-                        case "Queen":
-                            capturableMoves[i].value = 5;
-                            break;
-                        case "Rook":
-                            capturableMoves[i].value = 4;
-                            break;
-                        case "Bishop":
-                            capturableMoves[i].value = 3;
-                            break;
-                        case "Knight":
-                            capturableMoves[i].value = 2;
-                            break;
-                        case "Pawn":
-                            capturableMoves[i].value = 1;
-                            break;
-                        default:
-                            capturableMoves[i].value = 0;
-                            break;
-                    }
-                }
-                capturableMoves.Sort((x, y) => y.value.CompareTo(x.value)); //descending order sort
-                return capturableMoves[0];
-            }
-            return pos[rnd.Next(0, pos.Count)]; //if no capturable moves
+            pos.Sort((x, y) => y.value.CompareTo(x.value)); //descending order sort
+            return pos[0];
         }
 
         private move hardLogic(List<move> pos)
         {
             //gets executed if player selects hard mode
-            List<move> capturableMoves = new List<move>();
+            List<move> humanMoves = new List<move>();
+            List<coordinate> humanPiecesAfterMove = new List<coordinate>();
+            coordinate to;
+            coordinate from;
+            string fromColor;
+            string toColor;
+            string toJob;
 
+            for (int i = 0; i < pos.Count; i++) //go through all moves
+            {
+                switch (board[pos[i].moveSpot.x, pos[i].moveSpot.y].job)    //find value of computer move
+                {
+                    case "Queen":
+                        pos[i].value = 5;
+                        break;
+                    case "Rook":
+                        pos[i].value = 4;
+                        break;
+                    case "Bishop":
+                        pos[i].value = 3;
+                        break;
+                    case "Knight":
+                        pos[i].value = 2;
+                        break;
+                    case "Pawn":
+                        pos[i].value = 1;
+                        break;
+                    default:
+                        pos[i].value = 0;
+                        break;
+                }
+                to = pos[i].moveSpot;
+                toColor = board[to.x, to.y].color;
+                toJob = board[to.x, to.y].job;
+                from = pos[i].pieceSpot;
+                fromColor = board[from.x, from.y].color;
 
-            return pos[rnd.Next(0, pos.Count)]; //if no capturable moves
+                //do move
+                board[to.x, to.y].color = fromColor;
+                board[to.x, to.y].job = board[from.x, from.y].job.ToString();
+                board[from.x, from.y].color = null;
+                board[from.x, from.y].job = null;
+
+                //human turn
+                if(compTeam == "dark")
+                {
+                    humanPiecesAfterMove = getLightPieces();
+                }
+                else
+                {
+                    humanPiecesAfterMove = getDarkPieces();
+                }
+
+                foreach(coordinate c in humanPiecesAfterMove)   //go through each human piece
+                {
+                    humanMoves.AddRange(getCheckRestrictedMoves(c));
+                }
+                
+                for (int j = 0; j < humanMoves.Count; j++)
+                {
+                    switch (board[humanMoves[j].moveSpot.x, humanMoves[j].moveSpot.y].job)
+                    {
+                        case "Queen":
+                            humanMoves[j].value = 5;
+                            break;
+                        case "Rook":
+                            humanMoves[j].value = 4;
+                            break;
+                        case "Bishop":
+                            humanMoves[j].value = 3;
+                            break;
+                        case "Knight":
+                            humanMoves[j].value = 2;
+                            break;
+                        case "Pawn":
+                            humanMoves[j].value = 1;
+                            break;
+                        default:    //empty cell
+                            humanMoves[j].value = 0;
+                            break;
+                    }
+                }
+                humanMoves.Sort((x, y) => x.value.CompareTo(y.value));  //sort ascending
+                pos[i].value -= humanMoves[0].value; //score of computer move - human reaction move
+
+                //reset pieces
+                board[from.x, from.y].color = board[to.x, to.y].color;
+                board[from.x, from.y].job = board[to.x, to.y].job;
+                board[to.x, to.y].color = toColor;
+                board[to.x, to.y].job = toJob;
+            }
+            pos.Sort((x, y) => y.value.CompareTo(x.value)); //descending order sort
+            return pos[0];
         }
 
         private bool isInCheck(string teamInQuestion)
@@ -351,6 +417,7 @@ namespace BobbyFischer
             List<move> possibleWithoutCheck = new List<move>();
             coordinate to;
             coordinate from;
+            string fromColor;
             string toColor;
             string toJob;
             bool inCheck;
@@ -363,15 +430,16 @@ namespace BobbyFischer
                 toColor = board[to.x, to.y].color;
                 toJob = board[to.x, to.y].job;
                 from = m.pieceSpot;
+                fromColor = board[from.x, from.y].color;
 
                 //do moves
-                board[to.x, to.y].color = offensiveTeam;
+                board[to.x, to.y].color = fromColor;
                 board[to.x, to.y].job = board[from.x, from.y].job.ToString();
                 board[from.x, from.y].color = null;
                 board[from.x, from.y].job = null;
 
                 //see if in check
-                inCheck = isInCheck(offensiveTeam);
+                inCheck = isInCheck(fromColor);
 
                 if(inCheck == false)//if not in check
                 {
@@ -861,7 +929,7 @@ namespace BobbyFischer
         private void movePiece(coordinate newCell, piece pPiece, coordinate oldCell)
         {
             //overwrite current cell
-            board[newCell.x, newCell.y].color = offensiveTeam;
+            board[newCell.x, newCell.y].color = pPiece.color;
             board[newCell.x, newCell.y].job = pPiece.job;
 
             //delete prev cell
