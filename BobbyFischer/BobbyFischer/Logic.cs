@@ -247,38 +247,71 @@ namespace BobbyFischer
         private move medLogic(List<move> pos)
         {
             //gets executed if player selects medium mode
+            List<move> bestMovesList = new List<move>();
+
             for (int i = 0; i < pos.Count; i++)
             {
-                switch (board[pos[i].moveSpot.x, pos[i].moveSpot.y].job)
+                switch (board[pos[i].moveSpot.x, pos[i].moveSpot.y].job)    //what piece can you capture
                 {
                     case "Queen":
-                        pos[i].value = 5;
+                        pos[i].value = 30;
                         break;
                     case "Rook":
-                        pos[i].value = 4;
+                        pos[i].value = 24;
                         break;
                     case "Bishop":
-                        pos[i].value = 3;
+                        pos[i].value = 18;
                         break;
                     case "Knight":
-                        pos[i].value = 2;
+                        pos[i].value = 12;
                         break;
                     case "Pawn":
-                        pos[i].value = 1;
+                        pos[i].value = 6;
                         break;
-                    default:
+                    default:    //empty cell
                         pos[i].value = 0;
+                        break;
+                }
+
+                switch (board[pos[i].pieceSpot.x, pos[i].pieceSpot.y].job)    //what piece does that capturing
+                {
+                    case "King":
+                        pos[i].value -= 5;
+                        break;
+                    case "Queen":
+                        pos[i].value -= 4;
+                        break;
+                    case "Rook":
+                        pos[i].value -= 3;
+                        break;
+                    case "Bishop":
+                        pos[i].value -= 2;
+                        break;
+                    case "Knight":
+                        pos[i].value -= 1;
+                        break;
+                    default:    //pawn
                         break;
                 }
             }
             pos.Sort((x, y) => y.value.CompareTo(x.value)); //descending order sort
-            return pos[0];
+
+            for (int j = 0; j < pos.Count; j++)
+            {
+                if(pos[j].value != pos[0].value)    //find all moves with highest value
+                {
+                    break;
+                }
+                bestMovesList.Add(pos[j]);  //add them to list
+            }
+            return bestMovesList[rnd.Next(0, bestMovesList.Count)]; //choose random move from bestMovesList
         }
 
         private move hardLogic(List<move> pos)
         {
             //gets executed if player selects hard mode
             List<move> humanMoves = new List<move>();
+            List<move> bestMovesList = new List<move>();
             List<coordinate> humanPiecesAfterMove = new List<coordinate>();
             coordinate to;
             coordinate from;
@@ -291,22 +324,43 @@ namespace BobbyFischer
                 switch (board[pos[i].moveSpot.x, pos[i].moveSpot.y].job)    //find value of computer move
                 {
                     case "Queen":
-                        pos[i].value = 5;
+                        pos[i].value = 900;
                         break;
                     case "Rook":
-                        pos[i].value = 4;
+                        pos[i].value = 720;
                         break;
                     case "Bishop":
-                        pos[i].value = 3;
+                        pos[i].value = 540;
                         break;
                     case "Knight":
-                        pos[i].value = 2;
+                        pos[i].value = 360;
                         break;
                     case "Pawn":
-                        pos[i].value = 1;
+                        pos[i].value = 180;
                         break;
                     default:
                         pos[i].value = 0;
+                        break;
+                }
+
+                switch (board[pos[i].pieceSpot.x, pos[i].pieceSpot.y].job)    //what piece does the capturing
+                {
+                    case "King":
+                        pos[i].value -= 150;
+                        break;
+                    case "Queen":
+                        pos[i].value -= 120;
+                        break;
+                    case "Rook":
+                        pos[i].value -= 90;
+                        break;
+                    case "Bishop":
+                        pos[i].value -= 60;
+                        break;
+                    case "Knight":
+                        pos[i].value -= 30;
+                        break;
+                    default:    //pawn
                         break;
                 }
                 to = pos[i].moveSpot;
@@ -341,27 +395,57 @@ namespace BobbyFischer
                     switch (board[humanMoves[j].moveSpot.x, humanMoves[j].moveSpot.y].job)
                     {
                         case "Queen":
-                            humanMoves[j].value = 5;
+                            humanMoves[j].value = 30;
                             break;
                         case "Rook":
-                            humanMoves[j].value = 4;
+                            humanMoves[j].value = 24;
                             break;
                         case "Bishop":
-                            humanMoves[j].value = 3;
+                            humanMoves[j].value = 18;
                             break;
                         case "Knight":
-                            humanMoves[j].value = 2;
+                            humanMoves[j].value = 12;
                             break;
                         case "Pawn":
-                            humanMoves[j].value = 1;
+                            humanMoves[j].value = 6;
                             break;
                         default:    //empty cell
                             humanMoves[j].value = 0;
                             break;
                     }
+
+                    switch (board[humanMoves[j].pieceSpot.x, humanMoves[j].pieceSpot.y].job)    //what piece does the capturing
+                    {
+                        case "King":
+                            humanMoves[j].value -= 5;
+                            break;
+                        case "Queen":
+                            humanMoves[j].value -= 4;
+                            break;
+                        case "Rook":
+                            humanMoves[j].value -= 3;
+                            break;
+                        case "Bishop":
+                            humanMoves[j].value -= 2;
+                            break;
+                        case "Knight":
+                            humanMoves[j].value -= 1;
+                            break;
+                        default:    //pawn
+                            break;
+                    }
                 }
                 humanMoves.Sort((x, y) => x.value.CompareTo(y.value));  //sort ascending
-                pos[i].value -= humanMoves[0].value; //score of computer move - human reaction move
+
+                for (int j = 0; j < humanMoves.Count; j++)
+                {
+                    if (humanMoves[j].value != humanMoves[0].value)    //find all moves with highest value
+                    {
+                        break;
+                    }
+                    bestMovesList.Add(humanMoves[j]);  //add them to list
+                }
+                pos[i].value -= bestMovesList[rnd.Next(0, bestMovesList.Count)].value; //score of computer move - human reaction move
 
                 //reset pieces
                 board[from.x, from.y].color = board[to.x, to.y].color;
@@ -370,7 +454,17 @@ namespace BobbyFischer
                 board[to.x, to.y].job = toJob;
             }
             pos.Sort((x, y) => y.value.CompareTo(x.value)); //descending order sort
-            return pos[0];
+            bestMovesList.Clear();
+
+            for (int i = 0; i < pos.Count; i++)
+            {
+                if (pos[i].value != pos[0].value)    //find all moves with highest value
+                {
+                    break;
+                }
+                bestMovesList.Add(pos[i]);  //add them to list
+            }
+            return bestMovesList[rnd.Next(0, bestMovesList.Count)]; //choose random move from bestMovesList
         }
 
         private bool isInCheck(string teamInQuestion)
@@ -666,8 +760,6 @@ namespace BobbyFischer
             List<move> possibleWithoutCheck = new List<move>();
             bool endOfGame;
 
-            firstGame = false;  //So player can't click anything between turns
-
             //change teams
             if (offensiveTeam == "light")
             {
@@ -708,7 +800,6 @@ namespace BobbyFischer
             {
                 rotateBoard();
             }
-            firstGame = true;
         }
 
         private void compTurn(List<move> poss)
@@ -820,6 +911,7 @@ namespace BobbyFischer
 
         private void rotateBoard()
         {
+            firstGame = false;  //So can't click anything during animation
             tick = 0;
             clearToAndFrom();
             mForm.timer.Start();
@@ -840,6 +932,7 @@ namespace BobbyFischer
             {
                 baseOnBottom = "light";
             }
+            firstGame = true;
         }
 
         private void rotatePieces()
