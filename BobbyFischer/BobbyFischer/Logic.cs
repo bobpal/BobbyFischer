@@ -1,18 +1,13 @@
-﻿using System;
+﻿using BobbyFischer.Properties;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Drawing;
-using System.ComponentModel;
-using System.Data;
-using System.Text;
 using System.IO;
+using System.Linq;
 using System.Reflection;
-using BobbyFischer.Properties;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Threading;
-using System.Timers;
+using System.Windows.Forms;
+using Trinet.Core.IO.Ntfs;
 
 //the back-end where all the business logic is determined
 
@@ -1657,13 +1652,12 @@ namespace BobbyFischer
         private void loadDlls()
         {
             //searches dlls in working directory and loads themes
-            string path;
             AssemblyName an;
             Assembly assembly;
             themeList = new List<Assembly>();
             string[] dllFilePathArray = null;
             List<string> ignore = new List<string>();
-            path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             bool themesFound = false;
 
             while (themesFound == false)
@@ -1674,9 +1668,15 @@ namespace BobbyFischer
 
                     foreach (string dllFilePath in dllFilePathArray.Except(ignore))
                     {
+                        FileInfo file = new FileInfo(dllFilePath);
+                        file.DeleteAlternateDataStream("Zone.Identifier");
                         an = AssemblyName.GetAssemblyName(dllFilePath);
                         assembly = Assembly.Load(an);
-                        themeList.Add(assembly);
+                        
+                        if(!themeList.Contains(assembly))
+                        {
+                            themeList.Add(assembly);
+                        }
                     }
                 }
                 catch (BadImageFormatException ex)
