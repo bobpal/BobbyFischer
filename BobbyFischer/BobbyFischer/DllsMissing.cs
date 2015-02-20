@@ -10,11 +10,20 @@ using System.Windows.Forms;
 
 namespace BobbyFischer
 {
-    public partial class NoThemes : Form
+    public partial class DllsMissing : Form
     {
-        public NoThemes()
+        public DllsMissing(bool ntfs)
         {
             InitializeComponent();
+            
+            if(ntfs == true)
+            {
+                this.label1.Text = "Required dll not found.\n\nPlace 'Trinet.Core.IO.Ntfs.dll'\nin directory containing 'BobbyFischer.exe'";
+            }
+            else
+	        {
+                this.label1.Text = "No themes found.\n\nPlace theme dll in directory containing 'BobbyFischer.exe'";
+	        }
         }
 
         private void retry_Click(object sender, EventArgs e)

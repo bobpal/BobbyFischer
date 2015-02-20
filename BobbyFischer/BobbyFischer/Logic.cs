@@ -61,6 +61,7 @@ namespace BobbyFischer
         private List<move> possible = new List<move>();                 //list of all possible moves
         public string dirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BobbyFischer";
         public string filePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BobbyFischer\\save.chess";
+        private string pwd = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         private static Random rnd = new Random();
 
         public Chess(Board mainForm)
@@ -1616,11 +1617,16 @@ namespace BobbyFischer
             //calls loadDlls() and setTheme() till found all themes
             bool dllsFound = false;
             int originalSize;
+            DllsMissing ntfs = new DllsMissing(true);
+
+            while (!File.Exists(pwd + "//Trinet.Core.IO.Ntfs.dll"))
+            {
+                ntfs.ShowDialog();
+            }
 
             while (dllsFound == false)
             {
                 loadDlls();
-
                 originalSize = themeList.Count;
 
                 for (int i = 0; i < originalSize; i++)
@@ -1631,7 +1637,7 @@ namespace BobbyFischer
 
                 if (themeList.Count < 1)
                 {
-                    NoThemes none = new NoThemes();
+                    DllsMissing none = new DllsMissing(false);
                     none.ShowDialog();
                 }
                 else
@@ -1642,7 +1648,7 @@ namespace BobbyFischer
             //find default theme
             themeIndex = themeList.FindIndex(x => x.GetName().Name == "Figure");
 
-            if(themeIndex == -1)    //if can't find default
+            if (themeIndex == -1)    //if can't find default
             {
                 themeIndex = 0;
             }
@@ -1657,14 +1663,13 @@ namespace BobbyFischer
             themeList = new List<Assembly>();
             string[] dllFilePathArray = null;
             List<string> ignore = new List<string>();
-            string path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             bool themesFound = false;
 
             while (themesFound == false)
             {
                 try
                 {
-                    dllFilePathArray = Directory.GetFiles(path, "*.dll");
+                    dllFilePathArray = Directory.GetFiles(pwd, "*.dll");
 
                     foreach (string dllFilePath in dllFilePathArray.Except(ignore))
                     {
@@ -1672,8 +1677,8 @@ namespace BobbyFischer
                         file.DeleteAlternateDataStream("Zone.Identifier");
                         an = AssemblyName.GetAssemblyName(dllFilePath);
                         assembly = Assembly.Load(an);
-                        
-                        if(!themeList.Contains(assembly))
+
+                        if (!themeList.Contains(assembly))
                         {
                             themeList.Add(assembly);
                         }
@@ -1681,7 +1686,7 @@ namespace BobbyFischer
                 }
                 catch (BadImageFormatException ex)
                 {
-                    ignore.Add(path + "\\" + ex.FileName);
+                    ignore.Add(pwd + "\\" + ex.FileName);
                     themeList.Clear();
                 }
 
@@ -1690,7 +1695,7 @@ namespace BobbyFischer
                     //if 0 bad files <OR> bad files = total dll files
                     if (ignore.Count < 1 || ignore.Count == dllFilePathArray.Count())
                     {
-                        NoThemes none = new NoThemes();
+                        DllsMissing none = new DllsMissing(false);
                         none.ShowDialog();
                         ignore.Clear();
                     }

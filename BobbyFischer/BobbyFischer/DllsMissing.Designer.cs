@@ -1,6 +1,6 @@
 ﻿namespace BobbyFischer
 {
-    partial class NoThemes
+    partial class DllsMissing
     {
         /// <summary>
         /// Required designer variable.
@@ -35,12 +35,10 @@
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 22);
+            this.label1.Location = new System.Drawing.Point(6, 15);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(272, 39);
+            this.label1.Size = new System.Drawing.Size(270, 70);
             this.label1.TabIndex = 0;
-            this.label1.Text = "No themes found.\r\n\r\nPlace theme dll in directory containing BobbyFischer.exe";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // retry
@@ -55,6 +53,7 @@
             // 
             // exit
             // 
+            this.exit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.exit.Location = new System.Drawing.Point(166, 100);
             this.exit.Name = "exit";
             this.exit.Size = new System.Drawing.Size(75, 23);
@@ -63,7 +62,7 @@
             this.exit.UseVisualStyleBackColor = true;
             this.exit.Click += new System.EventHandler(this.exit_Click);
             // 
-            // NoThemes
+            // DllsMissing
             // 
             this.AcceptButton = this.retry;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -77,12 +76,11 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "NoThemes";
+            this.Name = "DllsMissing";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "NoThemes";
+            this.Text = "Dll Missing";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
