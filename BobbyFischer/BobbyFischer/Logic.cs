@@ -320,21 +320,21 @@ namespace BobbyFischer
                 switch (board[pos[i].moveSpot.x, pos[i].moveSpot.y].job)    //find value of computer move
                 {
                     case "Queen":
-                        pos[i].value = 900;
+                        pos[i].value = 60;
                         break;
                     case "Rook":
-                        pos[i].value = 720;
+                        pos[i].value = 48;
                         break;
                     case "Bishop":
-                        pos[i].value = 540;
+                        pos[i].value = 36;
                         break;
                     case "Knight":
-                        pos[i].value = 360;
+                        pos[i].value = 24;
                         break;
                     case "Pawn":
-                        pos[i].value = 180;
+                        pos[i].value = 12;
                         break;
-                    default:
+                    default:    //empty cell
                         pos[i].value = 0;
                         break;
                 }
@@ -342,19 +342,19 @@ namespace BobbyFischer
                 switch (board[pos[i].pieceSpot.x, pos[i].pieceSpot.y].job)    //what piece does the capturing
                 {
                     case "King":
-                        pos[i].value -= 150;
+                        pos[i].value -= 5;
                         break;
                     case "Queen":
-                        pos[i].value -= 120;
+                        pos[i].value -= 4;
                         break;
                     case "Rook":
-                        pos[i].value -= 90;
+                        pos[i].value -= 3;
                         break;
                     case "Bishop":
-                        pos[i].value -= 60;
+                        pos[i].value -= 2;
                         break;
                     case "Knight":
-                        pos[i].value -= 30;
+                        pos[i].value -= 1;
                         break;
                     default:    //pawn
                         break;
