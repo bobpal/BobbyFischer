@@ -24,21 +24,21 @@ namespace BobbyFischer
             Application.Run(new Board());
         }
 
-        public piece[,] board;                                      //8x8 array of pieces
-        public Board mForm;                                         //main form
-        public bool onePlayer;                                      //versus computer or human
-        public string compTeam;                                     //color of computer team
-        public string offensiveTeam;                                //which side is on the offense
-        public string baseOnBottom;                                 //which side is currently on bottom, going up
-        public bool medMode;                                        //difficulty level
-        public bool hardMode;                                       //difficulty level
-        public bool firstGame;                                      //has a game been setup yet?
-        private coordinate prevSelected;                            //where the cursor clicked previously
-        private coordinate toCoor;
-        private coordinate fromCoor;
-        public List<Assembly> themeList;
-        public int themeIndex;                                      //which theme is currently in use
-        public int tick;
+        public piece[,] board;              //8x8 array of pieces
+        public Board mForm;                 //main form
+        public bool onePlayer;              //versus computer or human
+        public string compTeam;             //color of computer team
+        public string offensiveTeam;        //which side is on the offense
+        public string baseOnBottom;         //which side is currently on bottom, going up
+        public bool medMode;                //difficulty level
+        public bool hardMode;               //difficulty level
+        public bool firstGame;              //has a game been setup yet?
+        private coordinate prevSelected;    //where the cursor clicked previously
+        private coordinate toCoor;          //where to.png is located
+        private coordinate fromCoor;        //where from.png is located
+        public List<Assembly> themeList;    //list of themes
+        public int themeIndex;              //which theme is currently in use
+        public int tick;                    //timestep for board rotation
         public Image lKing;
         public Image lQueen;
         public Image lBishop;
@@ -53,12 +53,12 @@ namespace BobbyFischer
         private Image dPawn;
 
         public Stack<historyNode> history = new Stack<historyNode>();   //stores all moves on a stack
+        private List<move> possible = new List<move>();                 //list of all possible moves
         public bool gameOverExit = false;                               //Did player exit from game over screen?
         public bool lastMove = true;                                    //is lastMove menu option checked?
         public bool saveGame = true;                                    //Save game on exit?
         public bool rotate = true;                                      //Rotate board between turns on 2Player mode?
         public bool movablePieceSelected = false;                       //if true, the next click will move the selected piece if possible
-        private List<move> possible = new List<move>();                 //list of all possible moves
         public string dirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BobbyFischer";
         public string filePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BobbyFischer\\save.chess";
         private string pwd = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -651,7 +651,17 @@ namespace BobbyFischer
             bool movableSpot;
             historyNode node;
             string baseOnTop;
+            string defensiveTeam;
             move curTurn = new move();
+
+            if(offensiveTeam == "light")
+            {
+                defensiveTeam = "dark";
+            }
+            else
+            {
+                defensiveTeam = "light";
+            }
 
             if (firstGame == true)  //blocks functionality if game hasn't started yet
             {
@@ -668,7 +678,14 @@ namespace BobbyFischer
 
                     foreach (move m in possible)
                     {
-                        coordinateToPictureBox(m.moveSpot).BackColor = System.Drawing.Color.LawnGreen;
+                        if(board[m.moveSpot.x, m.moveSpot.y].color == defensiveTeam)
+                        {
+                            coordinateToPictureBox(m.moveSpot).BackColor = System.Drawing.Color.DarkOrange;
+                        }
+                        else
+                        {
+                            coordinateToPictureBox(m.moveSpot).BackColor = System.Drawing.Color.LawnGreen;
+                        }
                     }
                 }
 
@@ -745,6 +762,11 @@ namespace BobbyFischer
                             castling(curTurn);//check if move is a castling
                         }
                         betweenTurns();
+                    }
+                    else    //if didn't select movable spot
+                    {
+                        clearSelectedOrPossible();
+                        movablePieceSelected = false;
                     }
                 }
             }
@@ -1886,7 +1908,7 @@ namespace BobbyFischer
         }
 
         [Serializable]
-        public struct historyNode
+        public class historyNode
         {
             public move step;               //move that happened previously
             public piece captured;          //piece that move captured, if no capture, use null

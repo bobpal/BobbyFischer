@@ -97,6 +97,11 @@ namespace BobbyFischer
                     picBox.Cursor = System.Windows.Forms.Cursors.Hand;
                 }
 
+                else if (picBox.BackColor == System.Drawing.Color.DarkOrange)
+                {
+                    picBox.Cursor = System.Windows.Forms.Cursors.Hand;
+                }
+
                 else
                 {
                     picBox.Cursor = System.Windows.Forms.Cursors.Default;
