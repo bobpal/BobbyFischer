@@ -98,25 +98,19 @@ namespace BobbyFischer
                     {
                         board[x, 1].color = offensiveTeam;
                         board[x, 1].job = "Pawn";
-                        board[x, 1].firstMove = true;
+                        board[x, 1].virgin = true;
                     }
 
                     else if (y == 6)
                     {
                         board[x, 6].color = defensiveTeam;
                         board[x, 6].job = "Pawn";
-                        board[x, 6].firstMove = true;
+                        board[x, 6].virgin = true;
                     }
 
                     else if(y == 7)
                     {
                         board[x, 7].color = defensiveTeam;
-                    }
-
-                    else
-                    {
-                        board[x, y].color = null;
-                        board[x, y].job = null;
                     }
                 }
             }
@@ -138,12 +132,12 @@ namespace BobbyFischer
             board[6, 7].job = "Knight";
             board[7, 7].job = "Rook";
 
-            board[0,0].firstMove = true;
-            board[4,0].firstMove = true;
-            board[7,0].firstMove = true;
-            board[0,7].firstMove = true;
-            board[4,7].firstMove = true;
-            board[7,7].firstMove = true;
+            board[0,0].virgin = true;
+            board[4,0].virgin = true;
+            board[7,0].virgin = true;
+            board[0,7].virgin = true;
+            board[4,7].virgin = true;
+            board[7,7].virgin = true;
         }
 
         private List<coordinate> getDarkPieces()
@@ -214,7 +208,7 @@ namespace BobbyFischer
 
         private List<move> getMoves(coordinate spot)
         {
-            //returns all possible moves of spot given in argument disregarding check restrictions
+            //returns all possible moves of spot disregarding check restrictions
             //determines job of piece and calls apropriate function to get correct move list
 
             List<move> temp = new List<move>();
@@ -243,6 +237,7 @@ namespace BobbyFischer
         private move medLogic(List<move> pos)
         {
             //gets executed if player selects medium mode
+
             List<move> bestMovesList = new List<move>();
 
             for (int i = 0; i < pos.Count; i++)
@@ -306,6 +301,7 @@ namespace BobbyFischer
         private move hardLogic(List<move> pos)
         {
             //gets executed if player selects hard mode
+
             List<move> humanMoves = new List<move>();
             List<move> bestMovesList = new List<move>();
             List<coordinate> humanPiecesAfterMove = new List<coordinate>();
@@ -465,7 +461,7 @@ namespace BobbyFischer
 
         private bool isInCheck(string teamInQuestion)
         {
-            //returns whether team in question is in check
+            //returns whether or not team in question is in check
 
             List<coordinate> spots;
             List<move> poss = new List<move>();
@@ -648,6 +644,7 @@ namespace BobbyFischer
         public void clicker(coordinate currentCell)
         {
             //human player's turn, gets called when player clicks on spot
+
             bool movableSpot;
             historyNode node;
             string baseOnTop;
@@ -670,7 +667,7 @@ namespace BobbyFischer
                 if (currentPiece.color == offensiveTeam)//if selected own piece
                 {
                     movablePieceSelected = true;
-                    clearSelectedOrPossible();
+                    clearSelectedAndPossible();
                     coordinateToPictureBox(currentCell).BackColor = System.Drawing.Color.DeepSkyBlue;
                     prevSelected = currentCell;
                     possible.Clear();
@@ -705,9 +702,9 @@ namespace BobbyFischer
                     if (movableSpot == true)
                     {
                         piece captured = board[currentCell.x, currentCell.y];
-                        bool virginMove = board[prevSelected.x, prevSelected.y].firstMove;
+                        bool virginMove = board[prevSelected.x, prevSelected.y].virgin;
                         movePiece(currentCell, board[prevSelected.x, prevSelected.y], prevSelected);
-                        clearSelectedOrPossible();
+                        clearSelectedAndPossible();
 
                         if (board[currentCell.x, currentCell.y].job == "Pawn")
                         {
@@ -765,7 +762,7 @@ namespace BobbyFischer
                     }
                     else    //if didn't select movable spot
                     {
-                        clearSelectedOrPossible();
+                        clearSelectedAndPossible();
                         movablePieceSelected = false;
                     }
                 }
@@ -775,6 +772,7 @@ namespace BobbyFischer
         private void betweenTurns()
         {
             //In between light and dark's turns
+
             List<move> possibleWithoutCheck = new List<move>();
             bool endOfGame;
 
@@ -823,6 +821,7 @@ namespace BobbyFischer
         private void compTurn(List<move> poss)
         {
             //computer's turn
+
             historyNode node;
             move bestMove;
             int r;
@@ -847,7 +846,7 @@ namespace BobbyFischer
             coordinate oldSpot = new coordinate(bestMove.pieceSpot.x, bestMove.pieceSpot.y);
 
             piece captured = board[newSpot.x, newSpot.y];
-            bool virginMove = board[oldSpot.x, oldSpot.y].firstMove;
+            bool virginMove = board[oldSpot.x, oldSpot.y].virgin;
             movePiece(newSpot, board[oldSpot.x, oldSpot.y], oldSpot);
 
             if (board[newSpot.x, newSpot.y].job == "Pawn" && newSpot.y == 0)//if pawn makes it to last row
@@ -929,6 +928,8 @@ namespace BobbyFischer
 
         private void rotateBoard()
         {
+            //performs rotate animation
+
             firstGame = false;  //So can't click anything during animation
             tick = 0;
             clearToAndFrom();
@@ -955,6 +956,8 @@ namespace BobbyFischer
 
         private void rotatePieces()
         {
+            //rotates pieces in array, not pictures
+
             piece[,] bufferBoard = new piece[8,8];
             int newX;
             int newY;
@@ -970,6 +973,8 @@ namespace BobbyFischer
 
         private void rotateToAndFrom()
         {
+            //rotate last move indicators
+
             coordinate temp;
             temp = new coordinate(7 - toCoor.x, 7 - toCoor.y);
             coordinateToPictureBox(temp).BackgroundImage = Resources.to;
@@ -979,38 +984,44 @@ namespace BobbyFischer
             fromCoor = temp;
         }
 
-        public void moveRing(int small, int big)
+        public void rotateRing(int min)
         {
-            string direction;
-            Image saved = coordinateToPictureBox(new coordinate(small, big)).Image; //first image moved
+            //takes one ring and rotates all images
 
-            direction = "down";
-            for (int y = big; y > small; y--)
-            {
-                saved = moveImage(small, y, direction, saved);
-            }
+            int max = 7 - min;
+            string direction;
+            Image next = coordinateToPictureBox(new coordinate(min, min)).Image; //first image moved
 
             direction = "right";
-            for (int x = small; x < big; x++)
+            for (int x = min; x < max; x++)
             {
-                saved = moveImage(x, small, direction, saved);
+                //takes previous image and puts it in next spot while returning next image
+                next = rotateImage(x, min, direction, next);
             }
 
             direction = "up";
-            for (int y = small; y < big; y++)
+            for (int y = min; y < max; y++)
             {
-                saved = moveImage(big, y, direction, saved);
+                next = rotateImage(max, y, direction, next);
             }
 
             direction = "left";
-            for (int x = big; x > small; x--)
+            for (int x = max; x > min; x--)
             {
-                saved = moveImage(x, big, direction, saved);
+                next = rotateImage(x, max, direction, next);
+            }
+
+            direction = "down";
+            for (int y = max; y > min; y--)
+            {
+                next = rotateImage(min, y, direction, next);
             }
         }
 
-        private Image moveImage(int fromX, int fromY, string dir, Image overwrite)
+        private Image rotateImage(int fromX, int fromY, string dir, Image overwrite)
         {
+            //moves one image to next cell for rotate animation
+
             Image replace;
             coordinate toCoor;
             coordinate fromCoor = new coordinate(fromX, fromY);
@@ -1039,6 +1050,8 @@ namespace BobbyFischer
 
         private void movePiece(coordinate newCell, piece pPiece, coordinate oldCell)
         {
+            //does standard piece move
+
             //overwrite current cell
             board[newCell.x, newCell.y].color = pPiece.color;
             board[newCell.x, newCell.y].job = pPiece.job;
@@ -1055,12 +1068,13 @@ namespace BobbyFischer
             coordinateToPictureBox(oldCell).Image = null;
 
             movablePieceSelected = false;
-            board[newCell.x, newCell.y].firstMove = false;
+            board[newCell.x, newCell.y].virgin = false;
         }
 
         public void undo()
         {
-            //moves pieces backwards
+            //completely undo previous move
+
             Image pawnPic;
             piece to;
             piece from;
@@ -1107,13 +1121,13 @@ namespace BobbyFischer
             }
 
             board[xPiece, yPiece].color = to.color;
-            board[xPiece, yPiece].firstMove = node.virgin;
+            board[xPiece, yPiece].virgin = node.firstMove;
 
             //put captured piece back
             board[xMove, yMove].job = node.captured.job;
             coordinateToPictureBox(new coordinate(xMove, yMove)).Image = matchPicture(node.captured);
             board[xMove, yMove].color = node.captured.color;
-            board[xMove, yMove].firstMove = node.captured.firstMove;
+            board[xMove, yMove].virgin = node.captured.virgin;
 
 
             if (node.skip == true)
@@ -1126,7 +1140,7 @@ namespace BobbyFischer
                 mForm.undoToolStripMenuItem.Enabled = false;
             }
             clearToAndFrom();
-            clearSelectedOrPossible();
+            clearSelectedAndPossible();
         }
 
         private Image matchPicture(piece figure)
@@ -1362,8 +1376,10 @@ namespace BobbyFischer
             }
         }
 
-        public void clearSelectedOrPossible()
+        public void clearSelectedAndPossible()
         {
+            //resets BackColor to get rid of green, blue, and red squares
+
             mForm.pictureBox1.BackColor = System.Drawing.Color.White;
             mForm.pictureBox2.BackColor = System.Drawing.Color.DarkGray;
             mForm.pictureBox3.BackColor = System.Drawing.Color.White;
@@ -1432,6 +1448,8 @@ namespace BobbyFischer
 
         public void clearToAndFrom()
         {
+            //clears last move indicators from board
+
             coordinateToPictureBox(toCoor).BackgroundImage = null;
             coordinateToPictureBox(fromCoor).BackgroundImage = null;
         }
@@ -1579,6 +1597,8 @@ namespace BobbyFischer
         public void changeTheme()
         {
             //calls matchPicture() on each piece and puts image in PictureBox
+            //called before setTheme()
+
             foreach (coordinate spot in getAllPieces())
             {
                 coordinateToPictureBox(spot).Image = matchPicture(board[spot.x, spot.y]);
@@ -1588,30 +1608,21 @@ namespace BobbyFischer
         public void setTheme()
         {
             //sets image variables based on themeIndex
-            System.IO.Stream lKingFile = 
-                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lKing.png");
-            System.IO.Stream lQueenFile = 
-                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lQueen.png");
-            System.IO.Stream lBishopFile = 
-                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lBishop.png");
-            System.IO.Stream lKnightFile = 
-                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lKnight.png");
-            System.IO.Stream lRookFile = 
-                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lRook.png");
-            System.IO.Stream lPawnFile = 
-                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".lPawn.png");
-            System.IO.Stream dKingFile = 
-                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dKing.png");
-            System.IO.Stream dQueenFile = 
-                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dQueen.png");
-            System.IO.Stream dBishopFile = 
-                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dBishop.png");
-            System.IO.Stream dKnightFile = 
-                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dKnight.png");
-            System.IO.Stream dRookFile = 
-                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dRook.png");
-            System.IO.Stream dPawnFile = 
-                themeList[themeIndex].GetManifestResourceStream(themeList[themeIndex].GetName().Name + ".dPawn.png");
+
+            string themeName = themeList[themeIndex].GetName().Name;
+
+            Stream lKingFile = themeList[themeIndex].GetManifestResourceStream(themeName + ".lKing.png");
+            Stream lQueenFile = themeList[themeIndex].GetManifestResourceStream(themeName + ".lQueen.png");
+            Stream lBishopFile = themeList[themeIndex].GetManifestResourceStream(themeName + ".lBishop.png");
+            Stream lKnightFile = themeList[themeIndex].GetManifestResourceStream(themeName + ".lKnight.png");
+            Stream lRookFile = themeList[themeIndex].GetManifestResourceStream(themeName + ".lRook.png");
+            Stream lPawnFile = themeList[themeIndex].GetManifestResourceStream(themeName + ".lPawn.png");
+            Stream dKingFile = themeList[themeIndex].GetManifestResourceStream(themeName + ".dKing.png");
+            Stream dQueenFile = themeList[themeIndex].GetManifestResourceStream(themeName + ".dQueen.png");
+            Stream dBishopFile = themeList[themeIndex].GetManifestResourceStream(themeName + ".dBishop.png");
+            Stream dKnightFile = themeList[themeIndex].GetManifestResourceStream(themeName + ".dKnight.png");
+            Stream dRookFile = themeList[themeIndex].GetManifestResourceStream(themeName + ".dRook.png");
+            Stream dPawnFile = themeList[themeIndex].GetManifestResourceStream(themeName + ".dPawn.png");
 
             try
             {
@@ -1637,6 +1648,7 @@ namespace BobbyFischer
         public void tryDlls()
         {
             //calls loadDlls() and setTheme() till found all themes
+
             bool dllsFound = false;
             int originalSize;
             DllsMissing ntfs = new DllsMissing(true);
@@ -1680,6 +1692,7 @@ namespace BobbyFischer
         private void loadDlls()
         {
             //searches dlls in working directory and loads themes
+
             AssemblyName an;
             Assembly assembly;
             themeList = new List<Assembly>();
@@ -1731,6 +1744,9 @@ namespace BobbyFischer
 
         public void saveState()
         {
+            //saves game on exit
+            //if save game unchecked, still saves, but takes note not to load current game next time
+
             if(firstGame == true)
             {
                 string theme = themeList[themeIndex].GetName().Name;
@@ -1747,6 +1763,8 @@ namespace BobbyFischer
 
         public void loadState()
         {
+            //look for a game save and load it
+
             BinaryFormatter reader = new BinaryFormatter();
             FileStream loadStream = new FileStream(filePath, FileMode.Open);
 
@@ -1827,12 +1845,16 @@ namespace BobbyFischer
 
         public void newGame()
         {
+            // call newGame window
+
             NewGame play = new NewGame(this, mForm);
             play.ShowDialog();
         }
 
         public void themeForm()
         {
+            //call changeTheme window
+
             ChangeTheme change = new ChangeTheme(this);
             change.ShowDialog();
         }
@@ -1871,14 +1893,18 @@ namespace BobbyFischer
         [Serializable]
         public struct piece
         {
-            public string color { get; set; }
-            public string job { get; set; }
-            public bool firstMove { get; set; }
+            //
+
+            public string color { get; set; }   //on dark or light team?
+            public string job { get; set; }     //piece's job
+            public bool virgin { get; set; }    //has piece never moved?
         }
 
         [Serializable]
         public struct coordinate
         {
+            //a spot on the board
+
             public int x { get; set; }
             public int y { get; set; }
 
@@ -1893,6 +1919,7 @@ namespace BobbyFischer
         public class move
         {
             //represents a move that a piece can do
+
             public coordinate pieceSpot { get; set; }   //starting position
             public coordinate moveSpot { get; set; }    //ending position
             public int value { get; set; }              //how good the move is
@@ -1910,11 +1937,13 @@ namespace BobbyFischer
         [Serializable]
         public class historyNode
         {
+            //contains all information needed to undo move
+
             public move step;               //move that happened previously
             public piece captured;          //piece that move captured, if no capture, use null
             public bool pawnTransform;      //did a pawn transformation happen?
             public bool skip;               //undo next move also
-            public bool virgin;             //was this the piece's first move?
+            public bool firstMove;          //was this the piece's first move?
             public string whoIsOnBottom;    //who is going from bottom to top?
 
             public historyNode(move p1, piece p2, bool p3, bool p4, bool p5, string p6)
@@ -1923,7 +1952,7 @@ namespace BobbyFischer
                 this.captured = p2;
                 this.pawnTransform = p3;
                 this.skip = p4;
-                this.virgin = p5;
+                this.firstMove = p5;
                 this.whoIsOnBottom = p6;
             }
         }
@@ -2489,11 +2518,11 @@ namespace BobbyFischer
             }
 
             //search for castleing opportunity
-            if (board[current.x, current.y].firstMove == true)//if king's first move
+            if (board[current.x, current.y].virgin == true)//if king's first move
             {
                 if (pieceColor == baseOnBottom)
                 {
-                    if (board[0, 0].firstMove == true)//if left rook's first move
+                    if (board[0, 0].virgin == true)//if left rook's first move
                     {
                         if (board[1, 0].job == null && board[2, 0].job == null && board[3, 0].job == null)
                         {
@@ -2504,7 +2533,7 @@ namespace BobbyFischer
                         }
                     }
 
-                    if (board[7, 0].firstMove == true)//if right rook's first move
+                    if (board[7, 0].virgin == true)//if right rook's first move
                     {
                         if (board[6, 0].job == null && board[5, 0].job == null)
                         {
@@ -2518,7 +2547,7 @@ namespace BobbyFischer
 
                 else
                 {
-                    if (board[0, 7].firstMove == true)//if left rook's first move
+                    if (board[0, 7].virgin == true)//if left rook's first move
                     {
                         //if clear path from rook to king
                         if (board[1, 7].job == null && board[2, 7].job == null && board[3, 7].job == null)
@@ -2530,7 +2559,7 @@ namespace BobbyFischer
                         }
                     }
 
-                    if (board[7, 7].firstMove == true)//if right rook's first move
+                    if (board[7, 7].virgin == true)//if right rook's first move
                     {
                         if (board[6, 7].job == null && board[5, 7].job == null)
                         {
@@ -2579,7 +2608,7 @@ namespace BobbyFischer
 
                         //search first move
                         availableY++;
-                        if (availableY < 8 && board[current.x, current.y].firstMove == true)
+                        if (availableY < 8 && board[current.x, current.y].virgin == true)
                         {
                             if (board[availableX, availableY].color == null)
                             {
@@ -2635,7 +2664,7 @@ namespace BobbyFischer
 
                         //search first move
                         availableY--;
-                        if (availableY >= 0 && board[current.x, current.y].firstMove == true)
+                        if (availableY >= 0 && board[current.x, current.y].virgin == true)
                         {
                             if (board[availableX, availableY].color == null)
                             {

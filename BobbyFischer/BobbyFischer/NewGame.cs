@@ -63,7 +63,7 @@ namespace BobbyFischer
             game.hardMode = hard.Checked;
             game.firstGame = true;
             game.clearToAndFrom();
-            game.clearSelectedOrPossible();
+            game.clearSelectedAndPossible();
             game.movablePieceSelected = false;
             game.history.Clear();
 

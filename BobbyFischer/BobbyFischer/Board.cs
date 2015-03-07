@@ -35,16 +35,6 @@ namespace BobbyFischer
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void tableLayoutPanel1_Paint_1(object sender, PaintEventArgs e)
-        {
-            
-        }
-
         private void changeThemeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             game.themeForm();
@@ -134,26 +124,30 @@ namespace BobbyFischer
 
         private void timer_Tick(object sender, EventArgs e)
         {
+            //rotates board in rings
+            //called 42 times for each full board rotation
+            //interval controlled by Form.timer property
+
             game.tick++;
 
             if (game.tick % 3 == 0)
             {
-                game.moveRing(0, 7);
+                game.rotateRing(0);   //outer ring
                 this.Refresh();
             }
             if (game.tick % 4 == 0)
             {
-                game.moveRing(1, 6);
+                game.rotateRing(1);   //2nd ring
                 this.Refresh();
             }
             if (game.tick % 7 == 0)
             {
-                game.moveRing(2, 5);
+                game.rotateRing(2);   //3rd ring
                 this.Refresh();
             }
             if (game.tick % 21 == 0)
             {
-                game.moveRing(3, 4);
+                game.rotateRing(3);   //inner ring
                 this.Refresh();
             }
         }

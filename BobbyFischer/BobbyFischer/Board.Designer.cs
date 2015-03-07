@@ -377,7 +377,6 @@
             this.gridPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.gridPanel.Size = new System.Drawing.Size(640, 640);
             this.gridPanel.TabIndex = 0;
-            this.gridPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint_1);
             // 
             // pictureBox3
             // 
@@ -1232,7 +1231,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Gone Fischin\'";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Close_Game);
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.gridPanel.ResumeLayout(false);
