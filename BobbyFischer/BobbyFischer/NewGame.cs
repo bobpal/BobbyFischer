@@ -61,7 +61,7 @@ namespace BobbyFischer
             game.onePlayer = onePlayer.Checked;
             game.medMode = medium.Checked;
             game.hardMode = hard.Checked;
-            game.firstGame = true;
+            game.ready = true;
             game.clearToAndFrom();
             game.clearSelectedAndPossible();
             game.movablePieceSelected = false;

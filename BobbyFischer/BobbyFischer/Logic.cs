@@ -32,7 +32,7 @@ namespace BobbyFischer
         public string baseOnBottom;         //which side is currently on bottom, going up
         public bool medMode;                //difficulty level
         public bool hardMode;               //difficulty level
-        public bool firstGame;              //has a game been setup yet?
+        public bool ready;                  //blocks functionality for unwanted circumstances
         private coordinate prevSelected;    //where the cursor clicked previously
         private coordinate toCoor;          //where to.png is located
         private coordinate fromCoor;        //where from.png is located
@@ -649,19 +649,19 @@ namespace BobbyFischer
             historyNode node;
             string baseOnTop;
             string defensiveTeam;
-            move curTurn = new move();
 
-            if(offensiveTeam == "light")
+            if (ready == true)  //blocks functionality if game hasn't started yet
             {
-                defensiveTeam = "dark";
-            }
-            else
-            {
-                defensiveTeam = "light";
-            }
+                if (offensiveTeam == "light")
+                {
+                    defensiveTeam = "dark";
+                }
+                else
+                {
+                    defensiveTeam = "light";
+                }
 
-            if (firstGame == true)  //blocks functionality if game hasn't started yet
-            {
+                move curTurn = new move();
                 piece currentPiece = board[currentCell.x, currentCell.y];
 
                 if (currentPiece.color == offensiveTeam)//if selected own piece
@@ -930,7 +930,6 @@ namespace BobbyFischer
         {
             //performs rotate animation
 
-            firstGame = false;  //So can't click anything during animation
             tick = 0;
             clearToAndFrom();
             mForm.timer.Start();
@@ -951,7 +950,6 @@ namespace BobbyFischer
             {
                 baseOnBottom = "light";
             }
-            firstGame = true;
         }
 
         private void rotatePieces()
@@ -1082,65 +1080,71 @@ namespace BobbyFischer
             int yMove;
             int xPiece;
             int yPiece;
-            historyNode node = history.Pop();
 
-            xMove = node.step.moveSpot.x;
-            yMove = node.step.moveSpot.y;
-            xPiece = node.step.pieceSpot.x;
-            yPiece = node.step.pieceSpot.y;
-
-            if (!node.whoIsOnBottom.Equals(baseOnBottom))
+            if(ready == true)
             {
-                rotateBoard();
-            }
+                ready = false;  //So can't undo while undoing in progress
+                historyNode node = history.Pop();
 
-            to = board[xMove, yMove];
-            from = board[xPiece, yPiece];
-            offensiveTeam = to.color;
+                xMove = node.step.moveSpot.x;
+                yMove = node.step.moveSpot.y;
+                xPiece = node.step.pieceSpot.x;
+                yPiece = node.step.pieceSpot.y;
 
-            if (node.pawnTransform == true)
-            {
-                if (to.color == "light")
+                if (node.whoIsOnBottom != baseOnBottom)
                 {
-                    pawnPic = lPawn;
+                    rotateBoard();
+                }
+
+                to = board[xMove, yMove];
+                from = board[xPiece, yPiece];
+                offensiveTeam = to.color;
+
+                if (node.pawnTransform == true)
+                {
+                    if (to.color == "light")
+                    {
+                        pawnPic = lPawn;
+                    }
+
+                    else
+                    {
+                        pawnPic = dPawn;
+                    }
+
+                    board[xPiece, yPiece].job = "Pawn";
+                    coordinateToPictureBox(new coordinate(xPiece, yPiece)).Image = pawnPic;
                 }
 
                 else
                 {
-                    pawnPic = dPawn;
+                    board[xPiece, yPiece].job = to.job;
+                    coordinateToPictureBox(new coordinate(xPiece, yPiece)).Image = matchPicture(to);
                 }
 
-                board[xPiece, yPiece].job = "Pawn";
-                coordinateToPictureBox(new coordinate(xPiece, yPiece)).Image = pawnPic;
+                board[xPiece, yPiece].color = to.color;
+                board[xPiece, yPiece].virgin = node.firstMove;
+
+                //put captured piece back
+                board[xMove, yMove].job = node.captured.job;
+                coordinateToPictureBox(new coordinate(xMove, yMove)).Image = matchPicture(node.captured);
+                board[xMove, yMove].color = node.captured.color;
+                board[xMove, yMove].virgin = node.captured.virgin;
+
+
+                if (node.skip == true)
+                {
+                    undo(); //call function again to undo another move
+                }
+
+                else if (history.Count == 0)    //if stack is empty, disable button; skip and empty stack can't both happen
+                {
+                    mForm.undoToolStripMenuItem.Enabled = false;
+                }
+                clearToAndFrom();
+                clearSelectedAndPossible();
+                ready = true;
             }
-
-            else
-            {
-                board[xPiece, yPiece].job = to.job;
-                coordinateToPictureBox(new coordinate(xPiece, yPiece)).Image = matchPicture(to);
-            }
-
-            board[xPiece, yPiece].color = to.color;
-            board[xPiece, yPiece].virgin = node.firstMove;
-
-            //put captured piece back
-            board[xMove, yMove].job = node.captured.job;
-            coordinateToPictureBox(new coordinate(xMove, yMove)).Image = matchPicture(node.captured);
-            board[xMove, yMove].color = node.captured.color;
-            board[xMove, yMove].virgin = node.captured.virgin;
-
-
-            if (node.skip == true)
-            {
-                undo(); //call function again to undo another move
-            }
-
-            else if (history.Count == 0)    //if stack is empty, disable button; skip and empty stack can't both happen
-            {
-                mForm.undoToolStripMenuItem.Enabled = false;
-            }
-            clearToAndFrom();
-            clearSelectedAndPossible();
         }
 
         private Image matchPicture(piece figure)
@@ -1747,7 +1751,7 @@ namespace BobbyFischer
             //saves game on exit
             //if save game unchecked, still saves, but takes note not to load current game next time
 
-            if(firstGame == true)
+            if(ready == true)   //if a game is being or has been played
             {
                 string theme = themeList[themeIndex].GetName().Name;
                 saveData sData = new saveData(board, offensiveTeam, theme, baseOnBottom, onePlayer, medMode, hardMode, 
@@ -1778,7 +1782,7 @@ namespace BobbyFischer
                     if(lData.sGameOverExit == false)
                     {
                         board = new piece[8, 8];
-                        firstGame = true;
+                        ready = true;
                         movablePieceSelected = false;
                         board = lData.sBoard;
                         offensiveTeam = lData.sOffensiveTeam;
@@ -1832,7 +1836,7 @@ namespace BobbyFischer
                 }
                 setTheme();
 
-                if(firstGame == true)
+                if(ready == true)
                 {
                     changeTheme();
                 }

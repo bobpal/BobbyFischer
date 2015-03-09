@@ -71,7 +71,7 @@ namespace BobbyFischer
 
         private void pictureBox_MouseMove(object sender, MouseEventArgs e)
         {
-            if(game.firstGame == true)
+            if (game.ready == true)  //if a game is being or has been played
             {
                 PictureBox picBox = (sender as PictureBox);
                 int row = 7 - gridPanel.GetRow(picBox);
