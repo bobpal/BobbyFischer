@@ -40,7 +40,7 @@ namespace BobbyFischer
 
             else
             {
-                if (losingTeam == game.compTeam)
+                if (losingTeam == game.opponent)
                 {
                     label1.Text = "Congratulations!\n\nYou have slain the evil king\n and saved the princess!";
                 }

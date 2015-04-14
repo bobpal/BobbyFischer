@@ -47,7 +47,7 @@ namespace BobbyFischer
                 game.baseOnBottom = "dark";
                 game.createGrid();
                 game.playAsDark();
-                game.compTeam = "light";
+                game.opponent = "light";
             }
             else
             {
@@ -55,7 +55,7 @@ namespace BobbyFischer
                 game.baseOnBottom = "light";
                 game.createGrid();
                 game.playAsLight();
-                game.compTeam = "dark";
+                game.opponent = "dark";
             }
 
             game.onePlayer = onePlayer.Checked;

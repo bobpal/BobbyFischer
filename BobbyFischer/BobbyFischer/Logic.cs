@@ -27,7 +27,7 @@ namespace BobbyFischer
         public piece[,] board;              //8x8 array of pieces
         public Board mainForm;              //window with chess board on it
         public bool onePlayer;              //versus computer or human
-        public string compTeam;             //color of computer team
+        public string opponent;             //color of computer or 2nd player
         public string offensiveTeam;        //which side is on the offense
         public string baseOnBottom;         //which side is currently on bottom, going up
         public bool medMode;                //difficulty level
@@ -367,7 +367,7 @@ namespace BobbyFischer
                 board[from.x, from.y].job = null;
 
                 //human turn
-                if(compTeam == "dark")
+                if(opponent == "dark")
                 {
                     humanPiecesAfterMove = getLightPieces();
                 }
@@ -643,34 +643,35 @@ namespace BobbyFischer
         public void clicker(coordinate currentCell)
         {
             //human player's turn, gets called when player clicks on spot
-
-            bool movableSpot;
-            historyNode node;
-            string baseOnTop;
-            string defensiveTeam;
-
+            
             if (ready == true)  //blocks functionality if game hasn't started yet
             {
-                if (offensiveTeam == "light")
-                {
-                    defensiveTeam = "dark";
-                }
-                else
-                {
-                    defensiveTeam = "light";
-                }
-
-                move curTurn = new move();
                 piece currentPiece = board[currentCell.x, currentCell.y];
 
-                if (currentPiece.color == offensiveTeam)//if selected own piece
+                if (coordinateToPictureBox(currentCell).BackColor == System.Drawing.Color.DeepSkyBlue)//if selected same piece
                 {
+                    movablePieceSelected = false;
+                    clearSelectedAndPossible();
+                }
+
+                else if (currentPiece.color == offensiveTeam)//if selected own piece
+                {
+                    string defensiveTeam;
                     movablePieceSelected = true;
                     clearSelectedAndPossible();
                     coordinateToPictureBox(currentCell).BackColor = System.Drawing.Color.DeepSkyBlue;
                     prevSelected = currentCell;
                     possible.Clear();
                     possible.AddRange(getCheckRestrictedMoves(currentCell));
+
+                    if (offensiveTeam == "light")
+                    {
+                        defensiveTeam = "dark";
+                    }
+                    else
+                    {
+                        defensiveTeam = "light";
+                    }
 
                     foreach (move m in possible)
                     {
@@ -687,7 +688,8 @@ namespace BobbyFischer
 
                 else if (movablePieceSelected == true)//if previously selected own piece
                 {
-                    movableSpot = false;
+                    move curTurn = new move();
+                    bool movableSpot = false;
 
                     foreach (move m in possible)
                     {
@@ -700,6 +702,7 @@ namespace BobbyFischer
 
                     if (movableSpot == true)
                     {
+                        historyNode node;
                         piece captured = board[currentCell.x, currentCell.y];
                         bool virginMove = board[prevSelected.x, prevSelected.y].virgin;
                         movePiece(currentCell, board[prevSelected.x, prevSelected.y], prevSelected);
@@ -707,6 +710,8 @@ namespace BobbyFischer
 
                         if (board[currentCell.x, currentCell.y].job == "Pawn")
                         {
+                            string baseOnTop;
+
                             if(baseOnBottom == "light")
                             {
                                 baseOnTop = "dark";
@@ -852,7 +857,7 @@ namespace BobbyFischer
             {
                 r = rnd.Next(0, 4); //choose random piece to transform into
 
-                if(compTeam == "dark")
+                if(opponent == "dark")
                 {
                     switch (r)
                     {
@@ -1753,19 +1758,11 @@ namespace BobbyFischer
             {
                 if (offensiveTeam != baseOnBottom)  //always start game with offense on bottom
                 {
-                    if (baseOnBottom == "light")
-                    {
-                        baseOnBottom = "dark";
-                    }
-                    else
-                    {
-                        baseOnBottom = "light";
-                    }
                     rotatePieces();
                 }
 
                 string theme = themeList[themeIndex].GetName().Name;
-                saveData sData = new saveData(board, offensiveTeam, theme, baseOnBottom, onePlayer, medMode, hardMode, 
+                saveData sData = new saveData(board, offensiveTeam, theme, onePlayer, medMode, hardMode, 
                     lastMove, saveGame, gameOverExit, rotate);
 
                 System.IO.Directory.CreateDirectory(dirPath);
@@ -1795,20 +1792,20 @@ namespace BobbyFischer
                         board = new piece[8, 8];
                         ready = true;
                         movablePieceSelected = false;
-                        baseOnBottom = lData.sBaseOnBottom;
                         board = lData.sBoard;
                         offensiveTeam = lData.sOffensiveTeam;
                         onePlayer = lData.sOnePlayer;
                         medMode = lData.sMedMode;
                         hardMode = lData.sHardMode;
+                        baseOnBottom = offensiveTeam;
 
                         if (offensiveTeam == "light")
                         {
-                            compTeam = "dark";
+                            opponent = "dark";
                         }
                         else
                         {
-                            compTeam = "light";
+                            opponent = "light";
                         }
 
                         if (onePlayer == true)
@@ -1872,7 +1869,7 @@ namespace BobbyFischer
 
             else if(rotate == false && onePlayer == false)  //if rotate is being deselected
             {
-                if(baseOnBottom == compTeam)
+                if(baseOnBottom == opponent)
                 {
                     rotateBoard();
                 }
@@ -1887,21 +1884,12 @@ namespace BobbyFischer
             play.ShowDialog();
         }
 
-        public void themeForm()
-        {
-            //call changeTheme window
-
-            ChangeTheme change = new ChangeTheme(this);
-            change.ShowDialog();
-        }
-
         [Serializable]
         private class saveData
         {
             public piece[,] sBoard { get; private set; }
             public string sOffensiveTeam { get; private set; }
             public string sTheme { get; private set; }
-            public string sBaseOnBottom { get; private set; }
             public bool sOnePlayer { get; private set; }
             public bool sMedMode { get; private set; }
             public bool sHardMode { get; private set; }
@@ -1910,19 +1898,18 @@ namespace BobbyFischer
             public bool sGameOverExit { get; private set; }
             public bool sRotate { get; private set; }
 
-            public saveData(piece[,] p1, string p2, string p3, string p4, bool p5, bool p6, bool p7, bool p8, bool p9, bool p10, bool p11)
+            public saveData(piece[,] p1, string p2, string p3, bool p4, bool p5, bool p6, bool p7, bool p8, bool p9, bool p10)
             {
                 this.sBoard = p1;
                 this.sOffensiveTeam = p2;
                 this.sTheme = p3;
-                this.sBaseOnBottom = p4;
-                this.sOnePlayer = p5;
-                this.sMedMode = p6;
-                this.sHardMode = p7;
-                this.sLastMove = p8;
-                this.sSaveGame = p9;
-                this.sGameOverExit = p10;
-                this.sRotate = p11;
+                this.sOnePlayer = p4;
+                this.sMedMode = p5;
+                this.sHardMode = p6;
+                this.sLastMove = p7;
+                this.sSaveGame = p8;
+                this.sGameOverExit = p9;
+                this.sRotate = p10;
             }
         }
 

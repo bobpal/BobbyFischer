@@ -37,7 +37,8 @@ namespace BobbyFischer
 
         private void changeThemeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            game.themeForm();
+            ChangeTheme change = new ChangeTheme(game);
+            change.ShowDialog();
         }
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
