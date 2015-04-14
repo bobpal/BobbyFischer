@@ -119,7 +119,7 @@ namespace BobbyFischer
 
         private void rotateBoardToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            game.rotate = rotateBoardToolStripMenuItem.Checked;
+            game.rotateMenuOption();
         }
 
         private void timer_Tick(object sender, EventArgs e)

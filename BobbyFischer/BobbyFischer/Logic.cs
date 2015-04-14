@@ -25,7 +25,7 @@ namespace BobbyFischer
         }
 
         public piece[,] board;              //8x8 array of pieces
-        public Board mForm;                 //main form
+        public Board mainForm;              //window with chess board on it
         public bool onePlayer;              //versus computer or human
         public string compTeam;             //color of computer team
         public string offensiveTeam;        //which side is on the offense
@@ -51,7 +51,6 @@ namespace BobbyFischer
         public Image dKnight;
         public Image dRook;
         private Image dPawn;
-
         public Stack<historyNode> history = new Stack<historyNode>();   //stores all moves on a stack
         private List<move> possible = new List<move>();                 //list of all possible moves
         public bool gameOverExit = false;                               //Did player exit from game over screen?
@@ -59,14 +58,14 @@ namespace BobbyFischer
         public bool saveGame = true;                                    //Save game on exit?
         public bool rotate = true;                                      //Rotate board between turns on 2Player mode?
         public bool movablePieceSelected = false;                       //if true, the next click will move the selected piece if possible
-        public string dirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BobbyFischer";
-        public string filePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BobbyFischer\\save.chess";
+        private string dirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BobbyFischer";
+        public string filePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BobbyFischer\\chess.sav";
         private string pwd = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         private static Random rnd = new Random();
 
         public Chess(Board mainForm)
         {
-            this.mForm = mainForm;
+            this.mainForm = mainForm;
         }
 
         public void createGrid()
@@ -623,7 +622,7 @@ namespace BobbyFischer
                     coordinate oldCastleCoor = new coordinate(0, yCoor);
                     castleMove.moveSpot = newCastleCoor;
                     castleMove.pieceSpot = oldCastleCoor;
-                    node = new historyNode(castleMove, board[3, yCoor], false, true, true, baseOnBottom);
+                    node = new historyNode(castleMove, board[3, yCoor], false, true, true);
                     history.Push(node);
                     movePiece(newCastleCoor, board[0, yCoor], oldCastleCoor);
                 }
@@ -634,7 +633,7 @@ namespace BobbyFischer
                     coordinate oldCastleCoor = new coordinate(7, yCoor);
                     castleMove.moveSpot = newCastleCoor;
                     castleMove.pieceSpot = oldCastleCoor;
-                    node = new historyNode(castleMove, board[5, yCoor], false, true, true, baseOnBottom);
+                    node = new historyNode(castleMove, board[5, yCoor], false, true, true);
                     history.Push(node);
                     movePiece(newCastleCoor, board[7, yCoor], oldCastleCoor);
                 }
@@ -721,29 +720,29 @@ namespace BobbyFischer
                             {
                                 PawnTransformation transform = new PawnTransformation(currentCell, this);
                                 transform.ShowDialog();
-                                node = new historyNode(curTurn, captured, true, false, false, baseOnBottom);
+                                node = new historyNode(curTurn, captured, true, false, false);
                             }
 
                             else if (board[currentCell.x, currentCell.y].color == baseOnTop && currentCell.y == 0)
                             {
                                 PawnTransformation transform = new PawnTransformation(currentCell, this);
                                 transform.ShowDialog();
-                                node = new historyNode(curTurn, captured, true, false, false, baseOnBottom);
+                                node = new historyNode(curTurn, captured, true, false, false);
                             }
 
                             else    //if pawn, but no transform
                             {
-                                node = new historyNode(curTurn, captured, false, false, virginMove, baseOnBottom);
+                                node = new historyNode(curTurn, captured, false, false, virginMove);
                             }
                         }
 
                         else    //not pawn
                         {
-                            node = new historyNode(curTurn, captured, false, false, virginMove, baseOnBottom);
+                            node = new historyNode(curTurn, captured, false, false, virginMove);
                         }
 
                         history.Push(node);
-                        mForm.undoToolStripMenuItem.Enabled = true;
+                        mainForm.undoToolStripMenuItem.Enabled = true;
 
                         if (lastMove == true)
                         {
@@ -901,12 +900,12 @@ namespace BobbyFischer
                             break;
                     }
                 }
-                node = new historyNode(bestMove, captured, true, true, false, baseOnBottom);
+                node = new historyNode(bestMove, captured, true, true, false);
             }
 
             else
             {
-                node = new historyNode(bestMove, captured, false, true, virginMove, baseOnBottom);
+                node = new historyNode(bestMove, captured, false, true, virginMove);
             }
 
             history.Push(node);
@@ -930,25 +929,30 @@ namespace BobbyFischer
         {
             //performs rotate animation
 
-            tick = 0;
-            clearToAndFrom();
-            mForm.timer.Start();
-            while(tick < 42)
+            if (ready == true)
             {
-                Application.DoEvents();
-            }
-            
-            mForm.timer.Stop();
-            rotatePieces();
-            rotateToAndFrom();
+                ready = false;
+                tick = 0;
+                clearToAndFrom();
+                mainForm.timer.Start();
+                while (tick < 42)
+                {
+                    Application.DoEvents();
+                }
 
-            if (baseOnBottom == "light")
-            {
-                baseOnBottom = "dark";
-            }
-            else
-            {
-                baseOnBottom = "light";
+                mainForm.timer.Stop();
+                rotatePieces();
+                rotateToAndFrom();
+
+                if (baseOnBottom == "light")
+                {
+                    baseOnBottom = "dark";
+                }
+                else
+                {
+                    baseOnBottom = "light";
+                }
+                ready = true;
             }
         }
 
@@ -1080,71 +1084,66 @@ namespace BobbyFischer
             int yMove;
             int xPiece;
             int yPiece;
+            
+            historyNode node = history.Pop();
 
-            if(ready == true)
+            xMove = node.step.moveSpot.x;
+            yMove = node.step.moveSpot.y;
+            xPiece = node.step.pieceSpot.x;
+            yPiece = node.step.pieceSpot.y;
+
+            if (rotate == true && onePlayer == false)
             {
-                ready = false;  //So can't undo while undoing in progress
-                historyNode node = history.Pop();
+                rotateBoard();
+            }
 
-                xMove = node.step.moveSpot.x;
-                yMove = node.step.moveSpot.y;
-                xPiece = node.step.pieceSpot.x;
-                yPiece = node.step.pieceSpot.y;
+            to = board[xMove, yMove];
+            from = board[xPiece, yPiece];
+            offensiveTeam = to.color;
 
-                if (node.whoIsOnBottom != baseOnBottom)
+            if (node.pawnTransform == true)
+            {
+                if (to.color == "light")
                 {
-                    rotateBoard();
-                }
-
-                to = board[xMove, yMove];
-                from = board[xPiece, yPiece];
-                offensiveTeam = to.color;
-
-                if (node.pawnTransform == true)
-                {
-                    if (to.color == "light")
-                    {
-                        pawnPic = lPawn;
-                    }
-
-                    else
-                    {
-                        pawnPic = dPawn;
-                    }
-
-                    board[xPiece, yPiece].job = "Pawn";
-                    coordinateToPictureBox(new coordinate(xPiece, yPiece)).Image = pawnPic;
+                    pawnPic = lPawn;
                 }
 
                 else
                 {
-                    board[xPiece, yPiece].job = to.job;
-                    coordinateToPictureBox(new coordinate(xPiece, yPiece)).Image = matchPicture(to);
+                    pawnPic = dPawn;
                 }
 
-                board[xPiece, yPiece].color = to.color;
-                board[xPiece, yPiece].virgin = node.firstMove;
-
-                //put captured piece back
-                board[xMove, yMove].job = node.captured.job;
-                coordinateToPictureBox(new coordinate(xMove, yMove)).Image = matchPicture(node.captured);
-                board[xMove, yMove].color = node.captured.color;
-                board[xMove, yMove].virgin = node.captured.virgin;
-
-
-                if (node.skip == true)
-                {
-                    undo(); //call function again to undo another move
-                }
-
-                else if (history.Count == 0)    //if stack is empty, disable button; skip and empty stack can't both happen
-                {
-                    mForm.undoToolStripMenuItem.Enabled = false;
-                }
-                clearToAndFrom();
-                clearSelectedAndPossible();
-                ready = true;
+                board[xPiece, yPiece].job = "Pawn";
+                coordinateToPictureBox(new coordinate(xPiece, yPiece)).Image = pawnPic;
             }
+
+            else
+            {
+                board[xPiece, yPiece].job = to.job;
+                coordinateToPictureBox(new coordinate(xPiece, yPiece)).Image = matchPicture(to);
+            }
+
+            board[xPiece, yPiece].color = to.color;
+            board[xPiece, yPiece].virgin = node.firstMove;
+
+            //put captured piece back
+            board[xMove, yMove].job = node.captured.job;
+            coordinateToPictureBox(new coordinate(xMove, yMove)).Image = matchPicture(node.captured);
+            board[xMove, yMove].color = node.captured.color;
+            board[xMove, yMove].virgin = node.captured.virgin;
+
+
+            if (node.skip == true)
+            {
+                undo(); //call function again to undo another move
+            }
+
+            else if (history.Count == 0)    //if stack is empty, disable button; skip and empty stack can't both happen
+            {
+                mainForm.undoToolStripMenuItem.Enabled = false;
+            }
+            clearToAndFrom();
+            clearSelectedAndPossible();
         }
 
         private Image matchPicture(piece figure)
@@ -1203,21 +1202,21 @@ namespace BobbyFischer
                     switch (spot.x)
                     {
                         case 0:
-                            return mForm.pictureBox57;
+                            return mainForm.pictureBox57;
                         case 1:
-                            return mForm.pictureBox58;
+                            return mainForm.pictureBox58;
                         case 2:
-                            return mForm.pictureBox59;
+                            return mainForm.pictureBox59;
                         case 3:
-                            return mForm.pictureBox60;
+                            return mainForm.pictureBox60;
                         case 4:
-                            return mForm.pictureBox61;
+                            return mainForm.pictureBox61;
                         case 5:
-                            return mForm.pictureBox62;
+                            return mainForm.pictureBox62;
                         case 6:
-                            return mForm.pictureBox63;
+                            return mainForm.pictureBox63;
                         case 7:
-                            return mForm.pictureBox64;
+                            return mainForm.pictureBox64;
                         default:
                             return null;
                     }
@@ -1225,21 +1224,21 @@ namespace BobbyFischer
                     switch (spot.x)
                     {
                         case 0:
-                            return mForm.pictureBox49;
+                            return mainForm.pictureBox49;
                         case 1:
-                            return mForm.pictureBox50;
+                            return mainForm.pictureBox50;
                         case 2:
-                            return mForm.pictureBox51;
+                            return mainForm.pictureBox51;
                         case 3:
-                            return mForm.pictureBox52;
+                            return mainForm.pictureBox52;
                         case 4:
-                            return mForm.pictureBox53;
+                            return mainForm.pictureBox53;
                         case 5:
-                            return mForm.pictureBox54;
+                            return mainForm.pictureBox54;
                         case 6:
-                            return mForm.pictureBox55;
+                            return mainForm.pictureBox55;
                         case 7:
-                            return mForm.pictureBox56;
+                            return mainForm.pictureBox56;
                         default:
                             return null;
                     }
@@ -1247,21 +1246,21 @@ namespace BobbyFischer
                     switch (spot.x)
                     {
                         case 0:
-                            return mForm.pictureBox41;
+                            return mainForm.pictureBox41;
                         case 1:
-                            return mForm.pictureBox42;
+                            return mainForm.pictureBox42;
                         case 2:
-                            return mForm.pictureBox43;
+                            return mainForm.pictureBox43;
                         case 3:
-                            return mForm.pictureBox44;
+                            return mainForm.pictureBox44;
                         case 4:
-                            return mForm.pictureBox45;
+                            return mainForm.pictureBox45;
                         case 5:
-                            return mForm.pictureBox46;
+                            return mainForm.pictureBox46;
                         case 6:
-                            return mForm.pictureBox47;
+                            return mainForm.pictureBox47;
                         case 7:
-                            return mForm.pictureBox48;
+                            return mainForm.pictureBox48;
                         default:
                             return null;
                     }
@@ -1269,21 +1268,21 @@ namespace BobbyFischer
                     switch (spot.x)
                     {
                         case 0:
-                            return mForm.pictureBox33;
+                            return mainForm.pictureBox33;
                         case 1:
-                            return mForm.pictureBox34;
+                            return mainForm.pictureBox34;
                         case 2:
-                            return mForm.pictureBox35;
+                            return mainForm.pictureBox35;
                         case 3:
-                            return mForm.pictureBox36;
+                            return mainForm.pictureBox36;
                         case 4:
-                            return mForm.pictureBox37;
+                            return mainForm.pictureBox37;
                         case 5:
-                            return mForm.pictureBox38;
+                            return mainForm.pictureBox38;
                         case 6:
-                            return mForm.pictureBox39;
+                            return mainForm.pictureBox39;
                         case 7:
-                            return mForm.pictureBox40;
+                            return mainForm.pictureBox40;
                         default:
                             return null;
                     }
@@ -1291,21 +1290,21 @@ namespace BobbyFischer
                     switch (spot.x)
                     {
                         case 0:
-                            return mForm.pictureBox25;
+                            return mainForm.pictureBox25;
                         case 1:
-                            return mForm.pictureBox26;
+                            return mainForm.pictureBox26;
                         case 2:
-                            return mForm.pictureBox27;
+                            return mainForm.pictureBox27;
                         case 3:
-                            return mForm.pictureBox28;
+                            return mainForm.pictureBox28;
                         case 4:
-                            return mForm.pictureBox29;
+                            return mainForm.pictureBox29;
                         case 5:
-                            return mForm.pictureBox30;
+                            return mainForm.pictureBox30;
                         case 6:
-                            return mForm.pictureBox31;
+                            return mainForm.pictureBox31;
                         case 7:
-                            return mForm.pictureBox32;
+                            return mainForm.pictureBox32;
                         default:
                             return null;
                     }
@@ -1313,21 +1312,21 @@ namespace BobbyFischer
                     switch (spot.x)
                     {
                         case 0:
-                            return mForm.pictureBox17;
+                            return mainForm.pictureBox17;
                         case 1:
-                            return mForm.pictureBox18;
+                            return mainForm.pictureBox18;
                         case 2:
-                            return mForm.pictureBox19;
+                            return mainForm.pictureBox19;
                         case 3:
-                            return mForm.pictureBox20;
+                            return mainForm.pictureBox20;
                         case 4:
-                            return mForm.pictureBox21;
+                            return mainForm.pictureBox21;
                         case 5:
-                            return mForm.pictureBox22;
+                            return mainForm.pictureBox22;
                         case 6:
-                            return mForm.pictureBox23;
+                            return mainForm.pictureBox23;
                         case 7:
-                            return mForm.pictureBox24;
+                            return mainForm.pictureBox24;
                         default:
                             return null;
                     }
@@ -1335,21 +1334,21 @@ namespace BobbyFischer
                     switch (spot.x)
                     {
                         case 0:
-                            return mForm.pictureBox9;
+                            return mainForm.pictureBox9;
                         case 1:
-                            return mForm.pictureBox10;
+                            return mainForm.pictureBox10;
                         case 2:
-                            return mForm.pictureBox11;
+                            return mainForm.pictureBox11;
                         case 3:
-                            return mForm.pictureBox12;
+                            return mainForm.pictureBox12;
                         case 4:
-                            return mForm.pictureBox13;
+                            return mainForm.pictureBox13;
                         case 5:
-                            return mForm.pictureBox14;
+                            return mainForm.pictureBox14;
                         case 6:
-                            return mForm.pictureBox15;
+                            return mainForm.pictureBox15;
                         case 7:
-                            return mForm.pictureBox16;
+                            return mainForm.pictureBox16;
                         default:
                             return null;
                     }
@@ -1357,21 +1356,21 @@ namespace BobbyFischer
                     switch (spot.x)
                     {
                         case 0:
-                            return mForm.pictureBox1;
+                            return mainForm.pictureBox1;
                         case 1:
-                            return mForm.pictureBox2;
+                            return mainForm.pictureBox2;
                         case 2:
-                            return mForm.pictureBox3;
+                            return mainForm.pictureBox3;
                         case 3:
-                            return mForm.pictureBox4;
+                            return mainForm.pictureBox4;
                         case 4:
-                            return mForm.pictureBox5;
+                            return mainForm.pictureBox5;
                         case 5:
-                            return mForm.pictureBox6;
+                            return mainForm.pictureBox6;
                         case 6:
-                            return mForm.pictureBox7;
+                            return mainForm.pictureBox7;
                         case 7:
-                            return mForm.pictureBox8;
+                            return mainForm.pictureBox8;
                         default:
                             return null;
                     }
@@ -1384,70 +1383,70 @@ namespace BobbyFischer
         {
             //resets BackColor to get rid of green, blue, and red squares
 
-            mForm.pictureBox1.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox2.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox3.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox4.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox5.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox6.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox7.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox8.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox9.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox10.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox11.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox12.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox13.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox14.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox15.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox16.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox17.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox18.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox19.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox20.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox21.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox22.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox23.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox24.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox25.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox26.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox27.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox28.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox29.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox30.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox31.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox32.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox33.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox34.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox35.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox36.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox37.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox38.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox39.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox40.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox41.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox42.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox43.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox44.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox45.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox46.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox47.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox48.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox49.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox50.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox51.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox52.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox53.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox54.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox55.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox56.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox57.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox58.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox59.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox60.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox61.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox62.BackColor = System.Drawing.Color.White;
-            mForm.pictureBox63.BackColor = System.Drawing.Color.DarkGray;
-            mForm.pictureBox64.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox1.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox2.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox3.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox4.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox5.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox6.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox7.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox8.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox9.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox10.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox11.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox12.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox13.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox14.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox15.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox16.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox17.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox18.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox19.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox20.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox21.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox22.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox23.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox24.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox25.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox26.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox27.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox28.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox29.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox30.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox31.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox32.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox33.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox34.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox35.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox36.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox37.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox38.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox39.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox40.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox41.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox42.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox43.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox44.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox45.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox46.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox47.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox48.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox49.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox50.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox51.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox52.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox53.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox54.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox55.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox56.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox57.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox58.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox59.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox60.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox61.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox62.BackColor = System.Drawing.Color.White;
+            mainForm.pictureBox63.BackColor = System.Drawing.Color.DarkGray;
+            mainForm.pictureBox64.BackColor = System.Drawing.Color.White;
         }
 
         public void clearToAndFrom()
@@ -1462,146 +1461,145 @@ namespace BobbyFischer
         {
             //sets images on board for new game
 
-            mForm.pictureBox1.Image = dRook;
-            mForm.pictureBox2.Image = dKnight;
-            mForm.pictureBox3.Image = dBishop;
-            mForm.pictureBox4.Image = dQueen;
-            mForm.pictureBox5.Image = dKing;
-            mForm.pictureBox6.Image = dBishop;
-            mForm.pictureBox7.Image = dKnight;
-            mForm.pictureBox8.Image = dRook;
-            mForm.pictureBox9.Image = dPawn;
-            mForm.pictureBox10.Image = dPawn;
-            mForm.pictureBox11.Image = dPawn;
-            mForm.pictureBox12.Image = dPawn;
-            mForm.pictureBox13.Image = dPawn;
-            mForm.pictureBox14.Image = dPawn;
-            mForm.pictureBox15.Image = dPawn;
-            mForm.pictureBox16.Image = dPawn;
-            mForm.pictureBox17.Image = null;
-            mForm.pictureBox18.Image = null;
-            mForm.pictureBox19.Image = null;
-            mForm.pictureBox20.Image = null;
-            mForm.pictureBox21.Image = null;
-            mForm.pictureBox22.Image = null;
-            mForm.pictureBox23.Image = null;
-            mForm.pictureBox24.Image = null;
-            mForm.pictureBox25.Image = null;
-            mForm.pictureBox26.Image = null;
-            mForm.pictureBox27.Image = null;
-            mForm.pictureBox28.Image = null;
-            mForm.pictureBox29.Image = null;
-            mForm.pictureBox30.Image = null;
-            mForm.pictureBox31.Image = null;
-            mForm.pictureBox32.Image = null;
-            mForm.pictureBox33.Image = null;
-            mForm.pictureBox34.Image = null;
-            mForm.pictureBox35.Image = null;
-            mForm.pictureBox36.Image = null;
-            mForm.pictureBox37.Image = null;
-            mForm.pictureBox38.Image = null;
-            mForm.pictureBox39.Image = null;
-            mForm.pictureBox40.Image = null;
-            mForm.pictureBox41.Image = null;
-            mForm.pictureBox42.Image = null;
-            mForm.pictureBox43.Image = null;
-            mForm.pictureBox44.Image = null;
-            mForm.pictureBox45.Image = null;
-            mForm.pictureBox46.Image = null;
-            mForm.pictureBox47.Image = null;
-            mForm.pictureBox48.Image = null;
-            mForm.pictureBox49.Image = lPawn;
-            mForm.pictureBox50.Image = lPawn;
-            mForm.pictureBox51.Image = lPawn;
-            mForm.pictureBox52.Image = lPawn;
-            mForm.pictureBox53.Image = lPawn;
-            mForm.pictureBox54.Image = lPawn;
-            mForm.pictureBox55.Image = lPawn;
-            mForm.pictureBox56.Image = lPawn;
-            mForm.pictureBox57.Image = lRook;
-            mForm.pictureBox58.Image = lKnight;
-            mForm.pictureBox59.Image = lBishop;
-            mForm.pictureBox60.Image = lQueen;
-            mForm.pictureBox61.Image = lKing;
-            mForm.pictureBox62.Image = lBishop;
-            mForm.pictureBox63.Image = lKnight;
-            mForm.pictureBox64.Image = lRook;
+            mainForm.pictureBox1.Image = dRook;
+            mainForm.pictureBox2.Image = dKnight;
+            mainForm.pictureBox3.Image = dBishop;
+            mainForm.pictureBox4.Image = dQueen;
+            mainForm.pictureBox5.Image = dKing;
+            mainForm.pictureBox6.Image = dBishop;
+            mainForm.pictureBox7.Image = dKnight;
+            mainForm.pictureBox8.Image = dRook;
+            mainForm.pictureBox9.Image = dPawn;
+            mainForm.pictureBox10.Image = dPawn;
+            mainForm.pictureBox11.Image = dPawn;
+            mainForm.pictureBox12.Image = dPawn;
+            mainForm.pictureBox13.Image = dPawn;
+            mainForm.pictureBox14.Image = dPawn;
+            mainForm.pictureBox15.Image = dPawn;
+            mainForm.pictureBox16.Image = dPawn;
+            mainForm.pictureBox17.Image = null;
+            mainForm.pictureBox18.Image = null;
+            mainForm.pictureBox19.Image = null;
+            mainForm.pictureBox20.Image = null;
+            mainForm.pictureBox21.Image = null;
+            mainForm.pictureBox22.Image = null;
+            mainForm.pictureBox23.Image = null;
+            mainForm.pictureBox24.Image = null;
+            mainForm.pictureBox25.Image = null;
+            mainForm.pictureBox26.Image = null;
+            mainForm.pictureBox27.Image = null;
+            mainForm.pictureBox28.Image = null;
+            mainForm.pictureBox29.Image = null;
+            mainForm.pictureBox30.Image = null;
+            mainForm.pictureBox31.Image = null;
+            mainForm.pictureBox32.Image = null;
+            mainForm.pictureBox33.Image = null;
+            mainForm.pictureBox34.Image = null;
+            mainForm.pictureBox35.Image = null;
+            mainForm.pictureBox36.Image = null;
+            mainForm.pictureBox37.Image = null;
+            mainForm.pictureBox38.Image = null;
+            mainForm.pictureBox39.Image = null;
+            mainForm.pictureBox40.Image = null;
+            mainForm.pictureBox41.Image = null;
+            mainForm.pictureBox42.Image = null;
+            mainForm.pictureBox43.Image = null;
+            mainForm.pictureBox44.Image = null;
+            mainForm.pictureBox45.Image = null;
+            mainForm.pictureBox46.Image = null;
+            mainForm.pictureBox47.Image = null;
+            mainForm.pictureBox48.Image = null;
+            mainForm.pictureBox49.Image = lPawn;
+            mainForm.pictureBox50.Image = lPawn;
+            mainForm.pictureBox51.Image = lPawn;
+            mainForm.pictureBox52.Image = lPawn;
+            mainForm.pictureBox53.Image = lPawn;
+            mainForm.pictureBox54.Image = lPawn;
+            mainForm.pictureBox55.Image = lPawn;
+            mainForm.pictureBox56.Image = lPawn;
+            mainForm.pictureBox57.Image = lRook;
+            mainForm.pictureBox58.Image = lKnight;
+            mainForm.pictureBox59.Image = lBishop;
+            mainForm.pictureBox60.Image = lQueen;
+            mainForm.pictureBox61.Image = lKing;
+            mainForm.pictureBox62.Image = lBishop;
+            mainForm.pictureBox63.Image = lKnight;
+            mainForm.pictureBox64.Image = lRook;
         }
 
         public void playAsDark()
         {
             //sets images on board for new game
 
-            mForm.pictureBox1.Image = lRook;
-            mForm.pictureBox2.Image = lKnight;
-            mForm.pictureBox3.Image = lBishop;
-            mForm.pictureBox4.Image = lQueen;
-            mForm.pictureBox5.Image = lKing;
-            mForm.pictureBox6.Image = lBishop;
-            mForm.pictureBox7.Image = lKnight;
-            mForm.pictureBox8.Image = lRook;
-            mForm.pictureBox9.Image = lPawn;
-            mForm.pictureBox10.Image = lPawn;
-            mForm.pictureBox11.Image = lPawn;
-            mForm.pictureBox12.Image = lPawn;
-            mForm.pictureBox13.Image = lPawn;
-            mForm.pictureBox14.Image = lPawn;
-            mForm.pictureBox15.Image = lPawn;
-            mForm.pictureBox16.Image = lPawn;
-            mForm.pictureBox17.Image = null;
-            mForm.pictureBox18.Image = null;
-            mForm.pictureBox19.Image = null;
-            mForm.pictureBox20.Image = null;
-            mForm.pictureBox21.Image = null;
-            mForm.pictureBox22.Image = null;
-            mForm.pictureBox23.Image = null;
-            mForm.pictureBox24.Image = null;
-            mForm.pictureBox25.Image = null;
-            mForm.pictureBox26.Image = null;
-            mForm.pictureBox27.Image = null;
-            mForm.pictureBox28.Image = null;
-            mForm.pictureBox29.Image = null;
-            mForm.pictureBox30.Image = null;
-            mForm.pictureBox31.Image = null;
-            mForm.pictureBox32.Image = null;
-            mForm.pictureBox33.Image = null;
-            mForm.pictureBox34.Image = null;
-            mForm.pictureBox35.Image = null;
-            mForm.pictureBox36.Image = null;
-            mForm.pictureBox37.Image = null;
-            mForm.pictureBox38.Image = null;
-            mForm.pictureBox39.Image = null;
-            mForm.pictureBox40.Image = null;
-            mForm.pictureBox41.Image = null;
-            mForm.pictureBox42.Image = null;
-            mForm.pictureBox43.Image = null;
-            mForm.pictureBox44.Image = null;
-            mForm.pictureBox45.Image = null;
-            mForm.pictureBox46.Image = null;
-            mForm.pictureBox47.Image = null;
-            mForm.pictureBox48.Image = null;
-            mForm.pictureBox49.Image = dPawn;
-            mForm.pictureBox50.Image = dPawn;
-            mForm.pictureBox51.Image = dPawn;
-            mForm.pictureBox52.Image = dPawn;
-            mForm.pictureBox53.Image = dPawn;
-            mForm.pictureBox54.Image = dPawn;
-            mForm.pictureBox55.Image = dPawn;
-            mForm.pictureBox56.Image = dPawn;
-            mForm.pictureBox57.Image = dRook;
-            mForm.pictureBox58.Image = dKnight;
-            mForm.pictureBox59.Image = dBishop;
-            mForm.pictureBox60.Image = dQueen;
-            mForm.pictureBox61.Image = dKing;
-            mForm.pictureBox62.Image = dBishop;
-            mForm.pictureBox63.Image = dKnight;
-            mForm.pictureBox64.Image = dRook;
+            mainForm.pictureBox1.Image = lRook;
+            mainForm.pictureBox2.Image = lKnight;
+            mainForm.pictureBox3.Image = lBishop;
+            mainForm.pictureBox4.Image = lQueen;
+            mainForm.pictureBox5.Image = lKing;
+            mainForm.pictureBox6.Image = lBishop;
+            mainForm.pictureBox7.Image = lKnight;
+            mainForm.pictureBox8.Image = lRook;
+            mainForm.pictureBox9.Image = lPawn;
+            mainForm.pictureBox10.Image = lPawn;
+            mainForm.pictureBox11.Image = lPawn;
+            mainForm.pictureBox12.Image = lPawn;
+            mainForm.pictureBox13.Image = lPawn;
+            mainForm.pictureBox14.Image = lPawn;
+            mainForm.pictureBox15.Image = lPawn;
+            mainForm.pictureBox16.Image = lPawn;
+            mainForm.pictureBox17.Image = null;
+            mainForm.pictureBox18.Image = null;
+            mainForm.pictureBox19.Image = null;
+            mainForm.pictureBox20.Image = null;
+            mainForm.pictureBox21.Image = null;
+            mainForm.pictureBox22.Image = null;
+            mainForm.pictureBox23.Image = null;
+            mainForm.pictureBox24.Image = null;
+            mainForm.pictureBox25.Image = null;
+            mainForm.pictureBox26.Image = null;
+            mainForm.pictureBox27.Image = null;
+            mainForm.pictureBox28.Image = null;
+            mainForm.pictureBox29.Image = null;
+            mainForm.pictureBox30.Image = null;
+            mainForm.pictureBox31.Image = null;
+            mainForm.pictureBox32.Image = null;
+            mainForm.pictureBox33.Image = null;
+            mainForm.pictureBox34.Image = null;
+            mainForm.pictureBox35.Image = null;
+            mainForm.pictureBox36.Image = null;
+            mainForm.pictureBox37.Image = null;
+            mainForm.pictureBox38.Image = null;
+            mainForm.pictureBox39.Image = null;
+            mainForm.pictureBox40.Image = null;
+            mainForm.pictureBox41.Image = null;
+            mainForm.pictureBox42.Image = null;
+            mainForm.pictureBox43.Image = null;
+            mainForm.pictureBox44.Image = null;
+            mainForm.pictureBox45.Image = null;
+            mainForm.pictureBox46.Image = null;
+            mainForm.pictureBox47.Image = null;
+            mainForm.pictureBox48.Image = null;
+            mainForm.pictureBox49.Image = dPawn;
+            mainForm.pictureBox50.Image = dPawn;
+            mainForm.pictureBox51.Image = dPawn;
+            mainForm.pictureBox52.Image = dPawn;
+            mainForm.pictureBox53.Image = dPawn;
+            mainForm.pictureBox54.Image = dPawn;
+            mainForm.pictureBox55.Image = dPawn;
+            mainForm.pictureBox56.Image = dPawn;
+            mainForm.pictureBox57.Image = dRook;
+            mainForm.pictureBox58.Image = dKnight;
+            mainForm.pictureBox59.Image = dBishop;
+            mainForm.pictureBox60.Image = dQueen;
+            mainForm.pictureBox61.Image = dKing;
+            mainForm.pictureBox62.Image = dBishop;
+            mainForm.pictureBox63.Image = dKnight;
+            mainForm.pictureBox64.Image = dRook;
         }
 
         public void changeTheme()
         {
             //calls matchPicture() on each piece and puts image in PictureBox
-            //called before setTheme()
 
             foreach (coordinate spot in getAllPieces())
             {
@@ -1753,6 +1751,19 @@ namespace BobbyFischer
 
             if(ready == true)   //if a game is being or has been played
             {
+                if (offensiveTeam != baseOnBottom)  //always start game with offense on bottom
+                {
+                    if (baseOnBottom == "light")
+                    {
+                        baseOnBottom = "dark";
+                    }
+                    else
+                    {
+                        baseOnBottom = "light";
+                    }
+                    rotatePieces();
+                }
+
                 string theme = themeList[themeIndex].GetName().Name;
                 saveData sData = new saveData(board, offensiveTeam, theme, baseOnBottom, onePlayer, medMode, hardMode, 
                     lastMove, saveGame, gameOverExit, rotate);
@@ -1784,9 +1795,9 @@ namespace BobbyFischer
                         board = new piece[8, 8];
                         ready = true;
                         movablePieceSelected = false;
+                        baseOnBottom = lData.sBaseOnBottom;
                         board = lData.sBoard;
                         offensiveTeam = lData.sOffensiveTeam;
-                        baseOnBottom = lData.sBaseOnBottom;
                         onePlayer = lData.sOnePlayer;
                         medMode = lData.sMedMode;
                         hardMode = lData.sHardMode;
@@ -1802,11 +1813,11 @@ namespace BobbyFischer
 
                         if (onePlayer == true)
                         {
-                            mForm.rotateBoardToolStripMenuItem.Enabled = false;
+                            mainForm.rotateBoardToolStripMenuItem.Enabled = false;
                         }
                         else
                         {
-                            mForm.rotateBoardToolStripMenuItem.Enabled = true;
+                            mainForm.rotateBoardToolStripMenuItem.Enabled = true;
                         }
                     }
                     else    //Exit on Game Over
@@ -1817,14 +1828,14 @@ namespace BobbyFischer
                 else    //Exit with saveGame set to false
                 {
                     saveGame = false;
-                    mForm.saveGameOnExitToolStripMenuItem.Checked = false;
+                    mainForm.saveGameOnExitToolStripMenuItem.Checked = false;
                     newGame();
                 }
                 //load preferences regardless of whether saveGame was enabled
                 lastMove = lData.sLastMove;
-                mForm.showLastMoveToolStripMenuItem.Checked = lastMove;
+                mainForm.showLastMoveToolStripMenuItem.Checked = lastMove;
                 rotate = lData.sRotate;
-                mForm.rotateBoardToolStripMenuItem.Checked = rotate;
+                mainForm.rotateBoardToolStripMenuItem.Checked = rotate;
                 string theme = lData.sTheme;
 
                 for (int i = 0; i < themeList.Count(); i++)
@@ -1847,11 +1858,32 @@ namespace BobbyFischer
             }
         }
 
+        public void rotateMenuOption()
+        {
+            rotate = mainForm.rotateBoardToolStripMenuItem.Checked;
+
+            if(rotate == true && onePlayer == false)  //if rotate is being set
+            {
+                if(offensiveTeam != baseOnBottom)
+                {
+                    rotateBoard();
+                }
+            }
+
+            else if(rotate == false && onePlayer == false)  //if rotate is being deselected
+            {
+                if(baseOnBottom == compTeam)
+                {
+                    rotateBoard();
+                }
+            }
+        }
+
         public void newGame()
         {
-            // call newGame window
+            //call newGame window
 
-            NewGame play = new NewGame(this, mForm);
+            NewGame play = new NewGame(this, mainForm);
             play.ShowDialog();
         }
 
@@ -1946,18 +1978,16 @@ namespace BobbyFischer
             public move step;               //move that happened previously
             public piece captured;          //piece that move captured, if no capture, use null
             public bool pawnTransform;      //did a pawn transformation happen?
-            public bool skip;               //undo next move also
+            public bool skip;               //undo next move also if playing against computer
             public bool firstMove;          //was this the piece's first move?
-            public string whoIsOnBottom;    //who is going from bottom to top?
 
-            public historyNode(move p1, piece p2, bool p3, bool p4, bool p5, string p6)
+            public historyNode(move p1, piece p2, bool p3, bool p4, bool p5)
             {
                 this.step = p1;
                 this.captured = p2;
                 this.pawnTransform = p3;
                 this.skip = p4;
                 this.firstMove = p5;
-                this.whoIsOnBottom = p6;
             }
         }
 
