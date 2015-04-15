@@ -1756,13 +1756,8 @@ namespace BobbyFischer
 
             if(ready == true)   //if a game is being or has been played
             {
-                if (offensiveTeam != baseOnBottom)  //always start game with offense on bottom
-                {
-                    rotatePieces();
-                }
-
                 string theme = themeList[themeIndex].GetName().Name;
-                saveData sData = new saveData(board, offensiveTeam, theme, onePlayer, medMode, hardMode, 
+                saveData sData = new saveData(board, offensiveTeam, opponent, theme, onePlayer, medMode, hardMode, 
                     lastMove, saveGame, gameOverExit, rotate);
 
                 System.IO.Directory.CreateDirectory(dirPath);
@@ -1785,6 +1780,13 @@ namespace BobbyFischer
                 saveData lData = (saveData)reader.Deserialize(loadStream);  //load file
                 loadStream.Close();
 
+                //load preferences regardless of whether saveGame was enabled
+                lastMove = lData.sLastMove;
+                mainForm.showLastMoveToolStripMenuItem.Checked = lastMove;
+                rotate = lData.sRotate;
+                mainForm.rotateBoardToolStripMenuItem.Checked = rotate;
+                string theme = lData.sTheme;
+
                 if(lData.sSaveGame == true)
                 {
                     if(lData.sGameOverExit == false)
@@ -1794,26 +1796,36 @@ namespace BobbyFischer
                         movablePieceSelected = false;
                         board = lData.sBoard;
                         offensiveTeam = lData.sOffensiveTeam;
+                        opponent = lData.sOpponent;
                         onePlayer = lData.sOnePlayer;
                         medMode = lData.sMedMode;
                         hardMode = lData.sHardMode;
-                        baseOnBottom = offensiveTeam;
+                        string goodTeam;
 
-                        if (offensiveTeam == "light")
+                        if(opponent == "light")
                         {
-                            opponent = "dark";
+                            goodTeam = "dark";
                         }
                         else
                         {
-                            opponent = "light";
+                            goodTeam = "light";
                         }
 
                         if (onePlayer == true)
                         {
+                            baseOnBottom = offensiveTeam;
                             mainForm.rotateBoardToolStripMenuItem.Enabled = false;
                         }
                         else
                         {
+                            if(rotate == true)
+                            {
+                                baseOnBottom = offensiveTeam;
+                            }
+                            else
+                            {
+                                baseOnBottom = goodTeam;
+                            }
                             mainForm.rotateBoardToolStripMenuItem.Enabled = true;
                         }
                     }
@@ -1828,13 +1840,7 @@ namespace BobbyFischer
                     mainForm.saveGameOnExitToolStripMenuItem.Checked = false;
                     newGame();
                 }
-                //load preferences regardless of whether saveGame was enabled
-                lastMove = lData.sLastMove;
-                mainForm.showLastMoveToolStripMenuItem.Checked = lastMove;
-                rotate = lData.sRotate;
-                mainForm.rotateBoardToolStripMenuItem.Checked = rotate;
-                string theme = lData.sTheme;
-
+                
                 for (int i = 0; i < themeList.Count(); i++)
                 {
                     if (themeList[i].GetName().Name == theme)
@@ -1857,23 +1863,18 @@ namespace BobbyFischer
 
         public void rotateMenuOption()
         {
+            //when rotate option is toggled
+
+            if (onePlayer == false)  
+            {
+                if (offensiveTeam == opponent)  //if opponent's turn
+                {
+                    clearSelectedAndPossible();
+                    rotateBoard();
+                    clearToAndFrom();
+                }
+            }
             rotate = mainForm.rotateBoardToolStripMenuItem.Checked;
-
-            if(rotate == true && onePlayer == false)  //if rotate is being set
-            {
-                if(offensiveTeam != baseOnBottom)
-                {
-                    rotateBoard();
-                }
-            }
-
-            else if(rotate == false && onePlayer == false)  //if rotate is being deselected
-            {
-                if(baseOnBottom == opponent)
-                {
-                    rotateBoard();
-                }
-            }
         }
 
         public void newGame()
@@ -1887,8 +1888,11 @@ namespace BobbyFischer
         [Serializable]
         private class saveData
         {
+            //contains all the information needed to save the game
+
             public piece[,] sBoard { get; private set; }
             public string sOffensiveTeam { get; private set; }
+            public string sOpponent { get; private set; }
             public string sTheme { get; private set; }
             public bool sOnePlayer { get; private set; }
             public bool sMedMode { get; private set; }
@@ -1898,25 +1902,26 @@ namespace BobbyFischer
             public bool sGameOverExit { get; private set; }
             public bool sRotate { get; private set; }
 
-            public saveData(piece[,] p1, string p2, string p3, bool p4, bool p5, bool p6, bool p7, bool p8, bool p9, bool p10)
+            public saveData(piece[,] p1, string p2, string p3, string p4, bool p5, bool p6, bool p7, bool p8, bool p9, bool p10, bool p11)
             {
                 this.sBoard = p1;
                 this.sOffensiveTeam = p2;
-                this.sTheme = p3;
-                this.sOnePlayer = p4;
-                this.sMedMode = p5;
-                this.sHardMode = p6;
-                this.sLastMove = p7;
-                this.sSaveGame = p8;
-                this.sGameOverExit = p9;
-                this.sRotate = p10;
+                this.sOpponent = p3;
+                this.sTheme = p4;
+                this.sOnePlayer = p5;
+                this.sMedMode = p6;
+                this.sHardMode = p7;
+                this.sLastMove = p8;
+                this.sSaveGame = p9;
+                this.sGameOverExit = p10;
+                this.sRotate = p11;
             }
         }
 
         [Serializable]
         public struct piece
         {
-            //
+            //represents a movable piece
 
             public string color { get; set; }   //on dark or light team?
             public string job { get; set; }     //piece's job
