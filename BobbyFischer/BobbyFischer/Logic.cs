@@ -1654,7 +1654,7 @@ namespace BobbyFischer
 
         public void tryDlls()
         {
-            //calls loadDlls() and setTheme() till found all themes
+            //calls loadDlls() and setTheme() till found all dlls
 
             bool dllsFound = false;
             int originalSize;

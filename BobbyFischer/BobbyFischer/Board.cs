@@ -51,13 +51,8 @@ namespace BobbyFischer
             if(showLastMoveToolStripMenuItem.Checked == false)
             {
                 game.clearToAndFrom();
-                game.lastMove = false;
             }
-
-            else
-            {
-                game.lastMove = true;
-            }
+            game.lastMove = showLastMoveToolStripMenuItem.Checked;
         }
 
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
